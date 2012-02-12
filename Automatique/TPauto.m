@@ -32,8 +32,10 @@ Kc_Hall=92;
 
 Cor_av=tf([1.2*Tmeca 1],[1.2*0.1*Tmeca 1])
 
-
-
+Sys_Glo = Sys_elec * Sys_meca*Kc_Hall
+nichols(Sys_Glo);
+ngrid;
+figure;
 Sys_Glo = 40*Sys_elec * Sys_meca*Kc_Hall*Cor_av 
 nichols(Sys_Glo);
 ngrid;
