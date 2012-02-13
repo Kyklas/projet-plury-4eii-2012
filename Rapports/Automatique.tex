@@ -20,7 +20,10 @@
 \usepackage[frenchb]{babel}
 
 % Package pour le dessin
-\usepackage{Automatique/bodegraph}
+\usepackage{graphicx}
+\graphicspath{{../Automatique/}}
+\usepackage{schemabloc}
+\usepackage{amsmath}
 
 %%% HEADERS & FOOTERS
 %\usepackage{fancyhdr} % This should be set AFTER setting up the page geometry
@@ -36,6 +39,9 @@
 
 \begin{document}
 \maketitle
+
+
+
 \pagebreak
 
 \section{Introduction}
@@ -57,18 +63,14 @@ Le système physique est existant et imposé. Il consiste en une potence munie d
 \paragraph{Constantes requises}
 
 \section{Correcteur analogique}
+\input{Automatique/SchemaBloc}
 
+\includegraphics{MatBlack.pdf}
 \section{Correcteur numérique}
 \section{Conclusion}
 
-\section{First section}
 
-Your text goes here.
 
-\input{Automatique/black}
 
-\subsection{A subsection}
-
-More text.
 
 \end{document}

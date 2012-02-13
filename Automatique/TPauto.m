@@ -3,10 +3,11 @@ clc;close all;clear all;
 % Modèlisation analogique
 %*************************
 
+Constantes
+
 % Equation électrique
 
-R=2.4; %Ohm
-L=11.5e-3; %H
+
 Telec=L/R;
 Num_elec=1/R;
 Den_elec=[Telec,1];
@@ -14,7 +15,7 @@ Sys_elec=tf(Num_elec,Den_elec)
 
 % Equation mécanique
 
-m=0.160; %Kg
+m=0.1414; %Kg
 ki=0.3; %N.A-1
 kx=334; %N.m-1
 Tmeca=sqrt(m/kx);
@@ -34,16 +35,17 @@ Cor_av=tf([1.2*Tmeca 1],[1.2*0.1*Tmeca 1])
 
 Sys_Glo = Sys_elec * Sys_meca*Kc_Hall
 nichols(Sys_Glo);
-ngrid;
-figure;
+hold on;
 Sys_Glo = 40*Sys_elec * Sys_meca*Kc_Hall*Cor_av 
 nichols(Sys_Glo);
 ngrid;
-
+hold off;
+axis([-360,0,-100,10]);   
 %rltool(Sys_Glo);
 
 %rltool(Sys_elec * Sys_meca*Kc_Hall);
 
+stop
 
 % Version Numérique
 Felec = 1/(2*pi*Telec);
