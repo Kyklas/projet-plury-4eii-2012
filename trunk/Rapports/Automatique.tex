@@ -11,26 +11,23 @@
 \geometry{margin=1in} % for example, change the margins to 2 inches all round
 
 %%% PACKAGES
-%\usepackage{graphicx} % support the \includegraphics command and options
-% \usepackage{booktabs} % for much better looking tables
+\usepackage{graphicx} % support the \includegraphics command and options
+\usepackage{booktabs} % for much better looking tables
 \usepackage{array} % for better arrays (eg matrices) in maths
-%\usepackage{paralist} % very flexible & customisable lists (eg. enumerate/itemize, etc.)
-%\usepackage{verbatim} % adds environment for commenting out blocks of text & for better verbatim
-%\usepackage{subfig} % make it possible to include more than one captioned figure/table in a single float
+\usepackage{paralist} % very flexible & customisable lists (eg. enumerate/itemize, etc.)
+\usepackage{verbatim} % adds environment for commenting out blocks of text & for better verbatim
+\usepackage{subfig} % make it possible to include more than one captioned figure/table in a single float
 \usepackage[frenchb]{babel}
 
 % Package pour le dessin
-
 \usepackage{Automatique/bodegraph}
-
-% These packages are all incorporated in the memoir class to one degree or another...
 
 %%% HEADERS & FOOTERS
 %\usepackage{fancyhdr} % This should be set AFTER setting up the page geometry
 %\pagestyle{fancy} % options: empty , plain , fancy
 
 % Rapport projet pluridisciplinaire
-% : Xavier Galzin, Stan Bertrand, Romain Desille, Fred Meslin
+% : Xavier Galzin, Stanislas Bertrand, Romain Desille, Frédéric Meslin
 
 \title{Projet pluridisciplinaire : sustentation magnétique}
 \author{ Xavier GALZIN, Stan BERTRAND, Romain DESILLE, Fred MESLIN}
@@ -39,6 +36,30 @@
 
 \begin{document}
 \maketitle
+\pagebreak
+
+\section{Introduction}
+\paragraph{}
+	Dans le cadre du projet pluridisciplinaire de cette année, il nous est demandé de faire léviter un mobile dans l'air à l'aide d'un champ magnétique produit par une bobine. On appelle cet effet la sustentation magnétique. Ce projet est une version édulcorée d'un prototype de lampe décorative imaginée par une étudiante de l'école LISAA (Institut supérieur des arts appliqués) et réalisée en partenariat avec des chercheurs et ingénieurs de l'INSA de Rennes.
+
+L'étude demandée présente de nombreuses facettes : il faudra étudier et modéliser le système physique pour ensuite l'asservir à l'aide d'un dispositif d'automatique électronique. Ce dispositif sera réalisé de manière analogique puis de manière numérique. Dans ce rapport, on s'interessera uniquement à la description du système, sa modélisation et ses constantes prépondérantes ainsi qu'aux correcteurs que nous avons choisi d'implémenter pour maintenir le mobile en lévitation.
+
+\section{Description du système physique}
+\paragraph{}
+Le système physique est existant et imposé. Il consiste en une potence munie d'une bobine
+
+\paragraph{... mais instable}
+
+\section{Modélisation mathématique}
+
+\paragraph{Mise en équation}
+
+\paragraph{Constantes requises}
+
+\section{Correcteur analogique}
+
+\section{Correcteur numérique}
+\section{Conclusion}
 
 \section{First section}
 
