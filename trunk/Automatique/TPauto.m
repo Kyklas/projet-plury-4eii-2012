@@ -29,48 +29,52 @@ Tav = 1.2*Tmeca;
 Cor_av=tf([Tav 1],[0.1*Tav 1])
 
 % Système
+
 disp('Equation du Système (Elec + Meca + Hall)');
 Sys = Sys_elec * Sys_meca*Kc_Hall
 
-nichols(Sys);
-hold on;
-
-
-disp('Equation du Système Corrigé');
-Sys_Corr = Sys*Cor_av 
-
-nichols(Sys_Corr);
-ngrid;
-hold off;
-title('Diagrammes de Black Système et Système Corrigé');
-%axis([-360,0,-100,10]);  
+% nichols(Sys);
+% hold on;
+ 
+ disp('Equation du Système Corrigé');
+ Sys_Corr = Sys*Cor_av 
+ 
+% nichols(Sys_Corr);
+% ngrid;
+% hold off;
+% 
+% title('Diagrammes de Black Système et Système Corrigé');
+% axis([-360,0,-100,20]);  
 
 
 %rltool(Sys);
 
-figure;
-rlocusplot(Sys);
-axis([-400,100,-200,200]);
-title('Système Seul');
+% figure;
+% rlocusplot(Sys);
+% axis([-400,100,-200,200]);
+% title('Système Seul');
 
 %rltool(Sys_Corr);
 
-figure;
-rlocusplot(Sys_Corr);
-axis([-400,100,-200,200]);
-title('Système Corrigé');
+% figure;
+% rlocusplot(Sys_Corr);
+% axis([-400,100,-200,200]);
+% title('Système Corrigé');
 
-return
+%return
 
 % Version Numérique
 Felec = 1/(2*pi*Telec);
+Fav = 1/(2*pi*0.1*Tav);
 Te = 1/(Felec*24);
+Tav = 1/(Fav*6);
 
-Sys_Hd = C2d(Sys_elec * Sys_meca*Kc_Hall,Te,'ZOH');
+Sys_d = C2d(Sys,Te,'ZOH');
 
-Sys_Hc = C2d(Cor_av,Te,'Tustin');
+Correct_d = C2d(Cor_av,Te,'foh');
+rltool(Sys_d);
+rltool(Sys_d * Correct_d);
 
-rltool(40*Sys_Hc * Sys_Hd);
 
 
 
