@@ -11,41 +11,56 @@ Constantes
 Telec=L/R;
 Num_elec=1/R;
 Den_elec=[Telec,1];
+disp('Equation Electrique');
 Sys_elec=tf(Num_elec,Den_elec)
 
 % Equation mécanique
 
-m=0.1414; %Kg
-ki=0.3; %N.A-1
-kx=334; %N.m-1
 Tmeca=sqrt(m/kx);
 Num_meca=-ki/kx;
-%Num_meca=-3.7e-3;
 Den_meca=[-Tmeca^2 0 1];
-%Den_meca=[-(27e-3^2) 0 1];
+disp('Equation Mécanique');
 Sys_meca=tf(Num_meca,Den_meca)
-
-% Modèle capteur effet Hall
-
-Kc_Hall=92; 
 
 % Ajout d'un correcteur Avance de Phase
 
-Cor_av=tf([1.2*Tmeca 1],[1.2*0.1*Tmeca 1])
+Tav = 1.2*Tmeca;
 
-Sys_Glo = Sys_elec * Sys_meca*Kc_Hall
-nichols(Sys_Glo);
+Cor_av=tf([Tav 1],[0.1*Tav 1])
+
+% Système
+disp('Equation du Système (Elec + Meca + Hall)');
+Sys = Sys_elec * Sys_meca*Kc_Hall
+
+nichols(Sys);
 hold on;
-Sys_Glo = 40*Sys_elec * Sys_meca*Kc_Hall*Cor_av 
-nichols(Sys_Glo);
+
+
+disp('Equation du Système Corrigé');
+Sys_Corr = Sys*Cor_av 
+
+nichols(Sys_Corr);
 ngrid;
 hold off;
-axis([-360,0,-100,10]);   
-%rltool(Sys_Glo);
+title('Diagrammes de Black Système et Système Corrigé');
+%axis([-360,0,-100,10]);  
 
-%rltool(Sys_elec * Sys_meca*Kc_Hall);
 
-stop
+%rltool(Sys);
+
+figure;
+rlocusplot(Sys);
+axis([-400,100,-200,200]);
+title('Système Seul');
+
+%rltool(Sys_Corr);
+
+figure;
+rlocusplot(Sys_Corr);
+axis([-400,100,-200,200]);
+title('Système Corrigé');
+
+return
 
 % Version Numérique
 Felec = 1/(2*pi*Telec);
