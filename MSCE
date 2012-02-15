@@ -1,0 +1,23 @@
+ Spécification fonctionnelle :
+ 
+ 
+ Liste des E/S :
+ 
+ 
+ Convertisseur A/N :
+ 	Sortie : Sample, Type Donnée 		Permanente : 10 bits
+ 		
+Sortie : S_available, Type 		Événement
+ 		
+Entrée  : S_Query, Type 		Événement
+ 	
+ 	 	
+Ordinateur
+ 	Entrée : Tx,  Type Donnée 		Permanente : Bit
+ 		
+Sortie : Rx, Type Donnée 		Permanente : Bit
+ 	
+ 	 	
+Pilotage Bobine (PWM)
+ 	Entrée : Out, Type Donnée 		Permanente : 8 bits  		
+ 
