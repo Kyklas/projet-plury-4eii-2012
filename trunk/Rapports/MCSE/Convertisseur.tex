@@ -1,97 +1,31 @@
-\begin{tikzpicture}
+\newcommand{\InitEtape}[2]{
+\node[Etape,label=right:#2] (#1) {};
+}
+\newcommand{\pEtape}[3]{
 
-  %
-  % Styles for states, and state edges
-  %
-  \tikzstyle{state} = [draw, very thick, fill=white, rectangle, minimum height=3em, minimum width=7em, node distance=8em, font={\sffamily\bfseries}]
-  \tikzstyle{stateEdgePortion} = [black,thick];
-  \tikzstyle{stateEdge} = [stateEdgePortion,->];
-  \tikzstyle{edgeLabel} = [pos=0.5, text centered, font={\sffamily\small}];
+\node[Etape,label=right:#2] (#1) {};
+\draw[->] (I) -- (T);
+}
 
-  %
-  % Position States
-  %
-  \node[state, name=closedStart] {CLOSED};
-  \node[state, name=listen, below of=closedStart] {LISTEN};
-  \node[state, name=synSent, below of=listen, right of=listen, xshift=8em] {SYN\_SENT};
-  \node[state, name=synRcvd, below of=listen, left of=listen, xshift=-8em] {SYN\_RCVD};
-  \node[state, name=established, below of=listen, node distance=14em] {ESTABLISHED};
-  \node[state, name=finWait1, below of=established, left of=established, node distance=7em, xshift=-9em] {FIN\_WAIT\_1};
-  \node[state, name=finWait2, below of=finWait1] {FIN\_WAIT\_2};
-  \node[state, name=closeWait, below of=established, right of=established, node distance=7em, xshift=9em] {CLOSE\_WAIT};
-  \node[state, name=closing, below of=established, node distance=14em] {CLOSING};
-  \node[state, name=lastAck, below of=closeWait] {LAST\_ACK};
-  \node[state, name=timeWait, below of=closing] {TIME\_WAIT};
+\begin{tikzpicture}\shorthandoff{:}
 
-  %
-  % Connect States via edges
-  %
-  \draw ($(closedStart.south) + (-.5em,0)$) 
-      edge[stateEdge] node[edgeLabel, xshift=-3em]{\emph{Passive open}} 
-      ($(listen.north) + (-.5em,0)$); 
-  \draw ($(listen.north) + (.5em,0)$) 
-      edge[stateEdge] node[edgeLabel, xshift=2em]{\emph{Close}} 
-      ($(closedStart.south) + (.5em,0)$);
 
-  \draw ($(listen.south) + (-1em,0)$) 
-      edge[stateEdge, bend left=22.5] node[edgeLabel, xshift=-2em, yshift=1em]{SYN/SYN + ACK} 
-      ($(synRcvd.east) + (0,1em)$);
-  \draw ($(listen.south) + (1em,0)$) 
-      edge[stateEdge, bend right=22.5] node[edgeLabel, xshift=1em, yshift=1em]{\emph{Send}/SYN} 
-      ($(synSent.west) + (0,1em)$);
+	\tikzset{Etape/.style={draw,black,minimum size=0.7cm,inner sep=0pt,circle,font=\tiny}}
+	\tikzset{Trans/.style={draw,black,minimum width=0.7cm,minimum height=0.0cm,inner sep=0pt,outer sep=0pt,rectangle,font=\tiny}}
+	
+	\tikzset{Line/.style={path picture={\draw[black] (path picture bounding box.north west) -- (path picture bounding box.north east);}}}
 
-  \draw ($(synRcvd.north) + (.5em,0)$) 
-      edge[stateEdge, bend left=45] node[edgeLabel,xshift=-4em]{\emph{Timeout}/RST} 
-      ($(closedStart.west) + (0,-.5em)$);
 
-  \draw ($(synSent.north) + (-.5em,0)$) 
-      edge[stateEdge, bend right=45] node[edgeLabel,xshift=-1em, yshift=-1em]{\emph{Close}} 
-      ($(closedStart.east) + (0,-.5em)$);
-  \draw ($(closedStart.east) + (0,.5em)$) 
-      edge[stateEdge, bend left=45] node[edgeLabel,xshift=4em]{\emph{Active open}/SYN} 
-      ($(synSent.north) + (.5em,0)$);
+\node[Etape,label=right:Attente] (I) {};
+\node[Trans,align=center,below of=I] (T) {};
+\node[Line,align=center,anchor=north west,at =(T.east),xshift=10pt, label=above:Recep] {Envoie event};
 
-  \draw (synSent.west) 
-      edge[stateEdge] node[edgeLabel, yshift=1em]{SYN/SYN + ACK} 
-      (synRcvd.east);
-  \draw (synRcvd) 
-      edge[stateEdge] node[edgeLabel, xshift=-2.5em]{\emph{Close}/FIN} 
-      (finWait1);
 
-  \draw ($(synRcvd.east) + (0,-1em)$) 
-      edge[stateEdge, bend left=22.5] node[edgeLabel, xshift=-1em, yshift=-1em]{ACK} 
-      ($(established.north) + (-1em,0)$);
-  \draw ($(synSent.west) + (0,-1em)$) 
-      edge[stateEdge, bend right=22.5] node[edgeLabel, xshift=3em, yshift=-1em]{SYN + ACK/ACK} 
-      ($(established.north) + (1em,0)$);
+\draw[->] (I) -- (T);
 
-  \draw ($(established.south) + (-1em,0)$) 
-      edge[stateEdge, bend left=22.5] node[edgeLabel, xshift=-1em, yshift=1em]{\emph{Close}/FIN} 
-      ($(finWait1.east) + (0,.5em)$);
-  \draw ($(established.south) + (1em,0)$) 
-      edge[stateEdge, bend right=22.5] node[edgeLabel, xshift=1em, yshift=1em]{FIN/ACK} 
-      ($(closeWait.west) + (0,1em)$);
+\draw[->] (T) edge [bend left] (I.west);
 
-  \draw (finWait1.south) 
-      edge[stateEdge] node[edgeLabel, xshift=-2em]{ACK} 
-      (finWait2.north);
-  \draw ($(finWait1.east) + (0,-.5em)$) 
-      edge[stateEdge, bend left=22.5] node[edgeLabel, yshift=1em]{ACK} 
-      (closing.north);
-  \draw (finWait1.south east) 
-      edge[stateEdge] node[edgeLabel, xshift=1em, yshift=2em, text width=3em]{FIN + ACK/ACK} 
-      (timeWait.north west);
 
-  \draw (finWait2.south) 
-      edge[stateEdge, bend right=22.5] node[edgeLabel, xshift=-2em, yshift=-1em]{FIN/ACK} 
-      (timeWait.west);
-
-  \draw (closing) 
-      edge[stateEdge] node[edgeLabel, xshift=-2em]{ACK} 
-      (timeWait);
-
-  \draw (closeWait) 
-      edge[stateEdge] node[edgeLabel,xshift=2.5em]{\emph{Close}/FIN} 
-      (lastAck);
 
 \end{tikzpicture}
+
