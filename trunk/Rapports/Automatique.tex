@@ -19,8 +19,7 @@
 \usepackage{subfig} % make it possible to include more than one captioned figure/table in a single float
 \usepackage[frenchb]{babel}
 
-% Package pour le dessin
-\usepackage{graphicx}
+% Package pour le dessin schéma bloc
 \graphicspath{{../Automatique/}}
 \usepackage{schemabloc}
 \usepackage{amsmath}
@@ -39,9 +38,6 @@
 
 \begin{document}
 \maketitle
-
-
-
 \pagebreak
 
 \section{Introduction}
@@ -58,9 +54,57 @@ Le système physique est existant et imposé. Il consiste en une potence munie d
 
 \section{Modélisation mathématique}
 
-\paragraph{Mise en équation}
+\paragraph{Mise en équation du système}
 
-\paragraph{Constantes requises}
+Forces appliquées sur le système :
+\newline
+
+$ F_{bobine} = K \times \dfrac{i^2}{x^2}  $
+
+$ F_{poids} = -m \times g $
+
+On applique le principe de la dynamique :
+\newline
+
+$ \sum F_{exterieures}  = m \times {\dfrac{{d^2}x}{dt^2}} $
+
+Linéarisation de la force exercée par la bobine :
+\newline
+
+$ {\dfrac{dF(t)}{dt}}_{x = X_0, i = I_0} = \dfrac{\partial F(t)}{\partial x} \times dx + \dfrac{\partial F(t)}{\partial i} \times di $
+
+$ \dfrac{\partial F(t)}{\partial x} = K_x = \dfrac{-2K \times I_0^2}{X_0^3} $
+
+$ \dfrac{\partial F(t)}{\partial i} = K_i = \dfrac{2K \times I_0}{X_0^2} $
+
+Equation différentielle résultante :
+\newline
+
+$ m \times {\dfrac{{d^2}x}{dt^2}} = F_{bobine} - m \times g = K \times {\dfrac{I_0^2}{X_0^2}} + K_x \times Dx + K_i \times Di - m \times g $
+
+$ avec : Dx = x - X_0, Di = i - I_0 $
+
+On effectue une transformée de Laplace du système :
+\newline
+
+$ m \times x{s^2} = F_0 + K_x \times (x - X_0) + K_i \times (i - I_0) - m \times g $
+
+$ x \times (m{s^2} - K_x) = K_i \times i +(F_0 - K_x \times X_0 - K_i \times I_0 - m \times g) $
+
+$ H(s) = \dfrac{x(s)}{i(s)} = \dfrac{K_i}{m{s^2}- K_x}  $
+
+Etude du point d'équilibre :
+\newline
+
+$ \sum F_{exterieures}  = K \times {\dfrac{I_0^2}{X_0^2}} - m \times g = 0 $
+
+$ K = mg \times {\dfrac{X_0^2}{I_0^2}} $
+
+\paragraph{Constantes obtenues par le calcul}
+
+$ K_{bobine} = 1,459 \times 10^{-4} $
+$ K_x = 141,7 $
+$ K_i = 1,660 $
 
 \section{Correcteur analogique}
 \input{Automatique/SchemaBloc}
