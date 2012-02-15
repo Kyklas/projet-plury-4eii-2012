@@ -1,31 +1,75 @@
-\newcommand{\InitEtape}[2]{
+\shorthandoff{:}
+\newcommand{\Etape}[2]{
 \node[Etape,label=right:#2] (#1) {};
 }
-\newcommand{\pEtape}[3]{
-
-\node[Etape,label=right:#2] (#1) {};
-\draw[->] (I) -- (T);
+\newcommand{\EtapeLink}[3]{
+\node[Etape,below of=#3,label=right:#2] (#1) {};
+\draw[->] (#3) -- (#1);
+}
+\newcommand{\TransLink}[3]{
+\node[Trans,align=center,below of=#3] (#1) {};
+\node[align=center,anchor=west,at =(#1.east),xshift=10pt] {#2};
+\draw[->] (#3) -- (#1);
+}
+\newcommand{\TransActionLink}[3]{
+\node[Trans,align=center,below of=#3] (#1) {};
+\node[Line,align=center,anchor=west,at =(#1.east),xshift=10pt] {#2};
+\draw[->] (#3) -- (#1);
 }
 
-\begin{tikzpicture}\shorthandoff{:}
+
 
 
 	\tikzset{Etape/.style={draw,black,minimum size=0.7cm,inner sep=0pt,circle,font=\tiny}}
 	\tikzset{Trans/.style={draw,black,minimum width=0.7cm,minimum height=0.0cm,inner sep=0pt,outer sep=0pt,rectangle,font=\tiny}}
 	
-	\tikzset{Line/.style={path picture={\draw[black] (path picture bounding box.north west) -- (path picture bounding box.north east);}}}
+	%\tikzset{Line/.style={path picture={\draw[black] (path picture bounding box.north west) -- (path picture bounding box.north east);}}}
+	\tikzset{Line/.style={path picture={\draw[black] (path picture bounding box.west) -- (path picture bounding box.east);}}}
 
+\begin{tikzpicture}\shorthandoff{:}
 
-\node[Etape,label=right:Attente] (I) {};
-\node[Trans,align=center,below of=I] (T) {};
-\node[Line,align=center,anchor=north west,at =(T.east),xshift=10pt, label=above:Recep] {Envoie event};
-
-
-\draw[->] (I) -- (T);
-
-\draw[->] (T) edge [bend left] (I.west);
-
+\Etape{I}{}
+\TransLink{T1}{S\_query}{I}
+\EtapeLink{S}{Sampling}{T1}
+\TransActionLink{T2}{Fin Sampling\\Sample:=Data, S\_available}{S}
+\draw[->] (T2) edge [bend left=160,distance=2.5cm] (I);
 
 
 \end{tikzpicture}
+
+\begin{tikzpicture}
+
+\node[Etape,label=left:Génétation PWM] (I) {};
+
+\node[Trans,node distance = 2cm,align=center,right of=I] (T) {};
+\node[Line,align=center,anchor=west,at =(T.east),xshift=10pt] {Volonté de Rafraichir\\PWM:=Out};
+
+\draw[->] (I) edge [bend left=90] (T);
+\draw[->] (T) edge [bend left=90] (I);
+
+\end{tikzpicture}
+
+
+\begin{tikzpicture}%[every node/.style={font=\tiny}]
+\Etape{I}{Bit de Stop}
+\TransLink{T1}{$\overline{Rx}=0$}{I}
+\EtapeLink{S}{Bit de Start}{T1}
+\TransLink{T2}{$\overline{Rx}=0$}{S}
+\EtapeLink{D}{Bit de donnée}{T2}
+%\tikzstyle{every label}={draw,red,font=\tiny}
+
+\node[Trans,node distance = 1.5cm,left of=D] (T) {};
+\node[Line,align=center,anchor=east,at =(T.west),xshift=-10pt] (V) {$i>0$\\[1em]$\overline{Rx}:=Data[i]$, $i$-\,- };
+\draw[->] (D) edge [out=225,in=-90] (T);
+\draw[->] (T) edge [out=90,in=135] (D);
+
+\TransLink{T3}{$i=0$}{D}
+\EtapeLink{S}{Bit de Stop}{T3}
+\TransActionLink{T4}{$Rx=1$\\ /Fin}{S}
+
+\draw[-] (T4) edge [out=-90,in=-90] ($(V.west)-(10pt,0)$);
+\draw[->] ($(V.west)-(10pt,0)$) edge [out=90] (I);
+
+\end{tikzpicture}
+
 
