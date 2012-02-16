@@ -48,7 +48,13 @@ L'étude demandée présente de nombreuses facettes : il faudra étudier et mod�
 
 \section{Description du système physique}
 \paragraph{}
-Le système physique est existant et imposé. Il consiste en une potence munie d'une bobine
+\section{Description du système physique}
+\paragraph{}
+Le système physique est existant et imposé. Il consiste en une potence munie d'une bobine qui servira à exercer le champs magnétique retenant le mobile. La bobine est également munie de capteurs à effet Hall qui permettent, par une mesure différentielle, de mesurer la distance du mobile par rapport à la bobine. On a ainsi la boucle de retour de notre système. 
+
+On a donc finalement une consigne en position que l'on va convertir en un courant qui servira à générer le champs magnétique qui attirera ou repoussera le mobile et le retour en position par le biais des capteurs à effet Hall. 
+
+Le problème principal du système est qu'il n'est pas stable en boucle ouverte. On va donc procéder à une étude basée sur des mesures fournies afin de mettre un place un correcteur qui rendra la système stable. Pour cela, nous poserons les équations mathématiques du problème pour ensuite décrire le modèle de correcteur retenu ainsi que les valeurs des diverses constantes associées à ce modèle.
 
 \paragraph{... mais instable}
 
