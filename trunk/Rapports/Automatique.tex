@@ -118,18 +118,56 @@ $ K_x = 141,7 $
 $ K_i = 1,660 $
 
 \section{Correcteur analogique}
+\subsection{Choix du correcteur}
+Dans un premier temps, nous avons choisi un correcteur proportionnel-dérivé. Un correcteur dérivé n'étant pas réalisable physiquement, nous allons donc le remplacer par un correcteur à avance de phase.
+
+Pourquoi l'avance de phase ?
+
+\vspace{0,2in}
 \input{Automatique/SchemaBloc}
 
-%\includegraphics[scale=0.50]{MatBlackFredValues.pdf}
-%\includegraphics[scale=0.50]{RL_Sys_Seul.pdf}
-%\includegraphics[scale=0.50]{RL_Sys_AvPh_K5.pdf}
-%\includegraphics[scale=0.50]{RLN_Sys_Seul.pdf}
-%\includegraphics[scale=0.50]{RLN_Sys_AvPh_K5.pdf}
+
+\subsection{Choix des constantes}
+
+Pour choisir les constantes du correcteur, nous avons procédé en deux phases. Premièrement, nous avons réglé le correcteur à avance de phase. Pour cela, nous nous sommes servis du lieu d'Evans. On peut remarquer que, quelque soit le gain du correcteur, au moins un des poles du systeme restera à droite de l'axe des imaginaires.
+
+\newline
+\begin{center}
+\includegraphics [scale=0.50]{RL_Sys_Seul.pdf}
+\\
+\emph{Lieu d'Evans du Systeme non corrigé}
+\end{center}
+
+L'idée est donc de décaler le point d'intersection des asymptotes qui est normalement dans la partie droite du plan complexe en placant le zéros du correcteur à avance de phase dans la partie gauche tout en maintenant ce zéro avant le pole issu de la constante de temps mécanique qui se trouve dans la partie gauche. Une fois que la position des asymptotes a été correcte, nous avons réglé le gain du correcteur proportionnel afin que tous les poles du systeme se retrouvent à droite de l'axe des imaginaires. Nous avons trouvé un gain K de 5. 
+
+\newline
+\begin{center}
+\includegraphics[scale=0.50]{RL_Sys_AvPh_K5.pdf}
+\\
+\emph{Lieu d'Evans du systeme corrigé}
+\end{center}
+
+Nous avons ensuite tracé le diagramme de Black-Nichols du système corrigé afin de vérifier les marges de gain et de phase. Cela nous permet d'obtenir une marge de phase d'environ 25° et une marge de gain de plus de 10 dB.
+
+\newline
+\begin{center}
+\includegraphics[scale=0.50]{MatBlack.pdf}
+\\
+\emph{Lieu d'Evans du systeme corrigé}
+\end{center}
+
 
 \section{Correcteur numérique}
+
+Dans la seconde partie du projet, nous commencerons par simplement convertir notre correcteur analogique par le biais d'une approximation comme celle de Tustin ou celle des rectangles avant. Une fois que cette solution fonctionnera, nous tenterons d'implémenter un modèle non linéaire en nous servant des équations du système. 
+
+\includegraphics[scale=0.50]{RLN_Sys_Seul.pdf}
+\includegraphics[scale=0.50]{RLN_Sys_AvPh_K5.pdf}
+
+
 \section{Conclusion}
 
-
+Grâce à cette étude, nous avons pu trouver des valeurs de paramètres de correcteurs qui nous permettent de stabiliser le système. Cependant, nous pouvons nous interroger sur la fiabilité de ces paramètres étant donné qu'ils sont basés sur une approximation linéaire du système. De même, le modèle du champs magnétique pourrait se révéler trop imprécis et ainsi fausser le calcul des constantes. Il faudra donc garder cela à l'esprit pour éventuellement réévaluer nos paramètres par la suite. 
 
 
 
