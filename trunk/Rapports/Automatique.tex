@@ -138,9 +138,10 @@ $ \sum F_{exterieures}  = K \times {\dfrac{I_0^2}{X_0^2}} - m \times g = 0 $
 $ K = mg \times {\dfrac{X_0^2}{I_0^2}} $
 
 \paragraph{}
-\textsc{Constantes mécaniques obtenues }
+\textsc{Constantes mécaniques obtenues}
 
-En prenant les mesures suivantes :
+\noindent
+En prenant les mesures données et en étudiant le mobile avec son leste, on obtient  :
 
 \medskip
 \begin{tabular} {|l|c|r|}
@@ -153,25 +154,45 @@ En prenant les mesures suivantes :
 
 \medskip
 \noindent
-En faisant une moyenne des K, on obtient :
+En faisant une moyenne des K, on trouve :
 
 \medskip
 $ \rightarrow K_{bobine} = 1,459 \times 10^{-4} $
 $ \rightarrow K_x = 141,7 $
 $ \rightarrow K_i = 1,660 $
 
+\paragraph{}
+\textsc{Autres constantes du système}
+
+\medskip
+$  \tau_{elec} = \dfrac L R = 6,643 \times 10^{-3} s.rad^{-1} $
+
+$  \tau_{meca} = \dfrac m {K_x} = 9,980 \times 10^{-1} s.rad^{-1} $
+
+\medskip
+$  K_{elec} = \dfrac 1 R = 4,464 \times 10^{-1} $
+
+$  K_{hall} = 36,5 V.m^{-1} $
+
+\medskip
+La plupart de ces valeurs ont été obtenues par calcul direct alors que le gain $ K_{hall} $ a été déterminée à l'aide d'une opération de régression linéaire sur la courbe de la tension différentielle des capteurs ($ V_{H2} - V_{H1} $) en fonction de la distance du mobile.
+
 \section{Correcteur analogique}
 \subsection{Choix du correcteur}
 Dans un premier temps, nous avons choisi un correcteur proportionnel-dérivé. Un correcteur dérivé n'étant pas réalisable physiquement, nous allons donc le remplacer par un correcteur à avance de phase.
-\medskip
-En traçant le diagramme de Black - Nichols du système non corrigé, on s'aperçoit que celui ci est instable en boucle ouverte car en $\omega = 0$ le sytème est déphasé de 180°. Nous allons donc tenté de réduire le déphase du système afin de pouvoir passer à droite du point 180\char23.
 
 \medskip
+En traçant le diagramme de Black - Nichols du système non corrigé, on s'aperçoit que celui ci est instable en boucle ouverte car en $\omega = 0$ le système est déphasé de 180\char23. Nous allons donc tenté de réduire le déphase du système afin de pouvoir passer à droite du point 180\char23.
+
+\medskip
+\begin{center}
 \input{Automatique/SchemaBloc}
+\emph{Schéma bloc du système complet avec correcteur}
+\end{center}
 
 \subsection{Choix des constantes}
 
-Pour choisir les constantes du correcteur, nous avons procédé en deux phases. Premièrement, nous avons réglé le correcteur à avance de phase. Pour cela, nous nous sommes servis du lieu d'Evans. On peut remarquer que, quelque soit le gain du correcteur, au moins un des pôles du système restera à droite de l'axe des imaginaires.
+Pour choisir les constantes du correcteur, nous avons procédé en deux étapes. Premièrement, nous avons réglé le correcteur à avance de phase. Pour cela, nous nous sommes servis du lieu d'Evans. On peut remarquer que, quelque soit le gain du correcteur, au moins un des pôles du système restera à droite de l'axe des imaginaires.
 
 \begin{center}
 \includegraphics [scale=0.50]{RL_Sys_Seul.pdf}
@@ -179,7 +200,7 @@ Pour choisir les constantes du correcteur, nous avons procédé en deux phases. 
 \emph{Lieu d'Evans du système non corrigé}
 \end{center}
 
-L'idée est donc de décaler le point d'intersection des asymptotes qui est normalement dans la partie droite du plan complexe en placant le zéros du correcteur à avance de phase dans la partie gauche tout en maintenant ce zéro avant le pole issu de la constante de temps mécanique qui se trouve dans la partie gauche. Une fois que la position des asymptotes a été correcte, nous avons réglé le gain du correcteur proportionnel afin que tous les pôles du système se retrouvent à droite de l'axe des imaginaires. Nous avons trouvé un gain K de 5. 
+L'idée est donc de décaler le point d'intersection des asymptotes qui est normalement dans la partie droite du plan complexe en plaçant le zéros du correcteur à avance de phase dans la partie gauche tout en maintenant ce zéro avant le pôle issu de la constante de temps mécanique qui se trouve dans la partie gauche. Une fois que la position des asymptotes a été correcte, nous avons réglé le gain du correcteur proportionnel afin que tous les pôles du système se retrouvent à droite de l'axe des imaginaires. Nous avons trouvé un gain K de 5. 
 
 \begin{center}
 \includegraphics[scale=0.50]{RL_Sys_AvPh_K5.pdf}
@@ -187,7 +208,7 @@ L'idée est donc de décaler le point d'intersection des asymptotes qui est norm
 \emph{Lieu d'Evans du système corrigé}
 \end{center}
 
-Nous avons ensuite tracé le diagramme de Black - Nichols du système corrigé afin de vérifier les marges de gain et de phase. Cela nous permet d'obtenir une marge de phase d'environ 25\char6 et une marge de gain de plus de 10 dB.
+Nous avons ensuite tracé le diagramme de Black - Nichols du système corrigé afin de vérifier les marges de gain et de phase. Cela nous a permis d'obtenir une marge de phase d'environ 25\char23 et une marge de gain de plus de 10 dB.
 
 \begin{center}
 \includegraphics[scale=0.50]{MatBlack.pdf}
