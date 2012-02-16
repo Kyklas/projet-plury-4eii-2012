@@ -32,9 +32,8 @@
 % : Xavier Galzin, Stanislas Bertrand, Romain Desille, Frédéric Meslin
 
 \title{Projet pluridisciplinaire : sustentation magnétique}
-\author{ Xavier GALZIN, Stan BERTRAND, Romain DESILLE, Fred MESLIN}
+\author{Xavier GALZIN, Stanislas BERTRAND, Romain DESILLE, Frédéric MESLIN}
 \date{30/01/2012}
-
 
 \begin{document}
 \maketitle
@@ -50,9 +49,9 @@
 
 \section{Introduction}
 \paragraph{}
-	Dans le cadre du projet pluridisciplinaire de cette année, il nous est demandé de faire léviter un mobile dans l'air à l'aide d'un champ magnétique produit par une bobine. On appelle cet effet la sustentation magnétique. Ce projet est une version édulcorée d'un prototype de lampe décorative imaginée par une étudiante de l'école LISAA (Institut supérieur des arts appliqués) et réalisée en partenariat avec des chercheurs et ingénieurs de l'INSA de Rennes.
+Dans le cadre du projet pluridisciplinaire de cette année, il nous est demandé de faire léviter un mobile dans l'air à l'aide d'un champ magnétique produit par une bobine. On appelle cet effet la sustentation magnétique. Ce projet est une version édulcorée d'un prototype de lampe décorative imaginée par une étudiante de l'école LISAA (Institut supérieur des arts appliqués) et réalisée en partenariat avec des chercheurs et ingénieurs de l'INSA de Rennes.
 
-L'étude demandée présente de nombreuses facettes : il faudra étudier et modéliser le système physique pour ensuite l'asservir à l'aide d'un dispositif d'automatique électronique. Ce dispositif sera réalisé de manière analogique puis de manière numérique. Dans ce rapport, on s'intéressera uniquement à la description du système, sa modélisation et ses constantes prépondérantes ainsi qu'aux correcteurs que nous avons choisi d'implémenter pour maintenir le mobile en lévitation.
+L'étude demandée présente de nombreuses facettes : il faudra d'abord décrire et modéliser le système physique pour ensuite l'asservir à l'aide d'un dispositif automatique électronique. Ce dispositif sera réalisé de manière analogique puis de manière numérique. Dans ce rapport, on s'intéressera uniquement à la partie automatique, on expliquera la modélisation choisie ainsi que les correcteurs et leurs paramètres clefs pour faire léviter le mobile.
 
 \section{Description du système physique}
 \paragraph{}
@@ -65,97 +64,136 @@ Le problème principal du système est qu'il n'est pas stable en boucle ouverte.
 
 \section{Modélisation mathématique}
 
-\paragraph{Mise en équation du système}
+\paragraph{}
+\textsc{Mise en équation du système}
 
-Forces appliquées sur le système :
-\newline
+\noindent
+Bilan des forces appliquées sur le système :
 
+\smallskip
 $ F_{bobine} = K \times \dfrac{i^2}{x^2}  $
 
 $ F_{poids} = -m \times g $
 
-On applique le principe de la dynamique :
-\newline
+$ F_{perturbations} $
+ \medskip
 
+\noindent
+Pour simplifier le calcul, on considèrera en premier lieu que les perturbations sont nulles.
+On applique ensuite le principe fondamental de la dynamique :
+
+ \medskip
 $ \sum F_{exterieures}  = m \times {\dfrac{{d^2}x}{dt^2}} $
+ \medskip
 
+\noindent
+Résoudre cette équation différentielle est complexe car l'expression de la force de la bobine n'est pas linéaire et elle dépend de deux paramètres du système (i et x) indépendants. On choisit donc de la linéariser (ordre 1) autour du point d'équilibre ($I_0, X_0 $) à l'aide de la différentielle de la fonction.
 Linéarisation de la force exercée par la bobine :
-\newline
 
+ \medskip
 $ {\dfrac{dF(t)}{dt}}_{x = X_0, i = I_0} = \dfrac{\partial F(t)}{\partial x} \times dx + \dfrac{\partial F(t)}{\partial i} \times di $
+ \medskip
 
+\noindent
+On introduit deux coefficients $ K_x $ et $ K_i $ qui correspondent respectivement aux dérivées partielles suivant x et i de F.
+
+ \medskip
 $ \dfrac{\partial F(t)}{\partial x} = K_x = \dfrac{-2K \times I_0^2}{X_0^3} $
 
 $ \dfrac{\partial F(t)}{\partial i} = K_i = \dfrac{2K \times I_0}{X_0^2} $
+ \medskip
 
-Equation différentielle résultante :
-\newline
+\noindent
+On obtient avec la linéarisation l'équation différentielle suivante :
 
+ \medskip
 $ m \times {\dfrac{{d^2}x}{dt^2}} = F_{bobine} - m \times g = K \times {\dfrac{I_0^2}{X_0^2}} + K_x \times Dx + K_i \times Di - m \times g $
+ \medskip
 
 $ avec : Dx = x - X_0, Di = i - I_0 $
+ \medskip
 
-On effectue une transformée de Laplace du système :
-\newline
+\noindent
+On transfert ensuite l'équation dans le domaine de Laplace :
 
+ \medskip
 $ m \times x{s^2} = F_0 + K_x \times (x - X_0) + K_i \times (i - I_0) - m \times g $
 
 $ x \times (m{s^2} - K_x) = K_i \times i +(F_0 - K_x \times X_0 - K_i \times I_0 - m \times g) $
+ \medskip
 
-$ H(s) = \dfrac{x(s)}{i(s)} = \dfrac{K_i}{m{s^2}- K_x}  $
+\noindent
+On remarque que $K_x \times X_0 $ et $K_i \times  I_0$ se compensent et que $ F_0 $ est égale à $ m \times g $. On obtient donc la fonction de transfert suivante :
 
-Etude du point d'équilibre :
-\newline
+ \medskip
+$ \rightarrow H(s) = \dfrac{x(s)}{i(s)} = \dfrac{K_i}{m{s^2}- K_x}  $
+ \medskip
 
+\noindent
+K étant jusqu'à présent inconnue, on utilise l'équation du système à l'équilibre et les couples de valeurs mesurées autour du point $ X_0  $ et $ I_0 $ :
+
+ \medskip
 $ \sum F_{exterieures}  = K \times {\dfrac{I_0^2}{X_0^2}} - m \times g = 0 $
 
 $ K = mg \times {\dfrac{X_0^2}{I_0^2}} $
 
-\paragraph{Constantes obtenues par le calcul}
+\paragraph{}
+\textsc{Constantes mécaniques obtenues }
 
-$ K_{bobine} = 1,459 \times 10^{-4} $
-$ K_x = 141,7 $
-$ K_i = 1,660 $
+En prenant les mesures suivantes :
+
+\medskip
+\begin{tabular} {|l|c|r|}
+	 \hline
+	\textbf{Distance (mm)} & \textbf{Courant (A)} & \textbf{K (calculé)} \\ \hline
+	14 & 1.21 & $ 1,857 \times 10^{-4} $ \\ \hline
+	15 & 1.48 & $ 1,425  \times 10^{-4} $ \\ \hline
+	16 & 1.8 & $ 1,096  \times 10^{-4} $ \\ \hline
+\end{tabular}
+
+\medskip
+\noindent
+En faisant une moyenne des K, on obtient :
+
+\medskip
+$ \rightarrow K_{bobine} = 1,459 \times 10^{-4} $
+$ \rightarrow K_x = 141,7 $
+$ \rightarrow K_i = 1,660 $
 
 \section{Correcteur analogique}
 \subsection{Choix du correcteur}
 Dans un premier temps, nous avons choisi un correcteur proportionnel-dérivé. Un correcteur dérivé n'étant pas réalisable physiquement, nous allons donc le remplacer par un correcteur à avance de phase.
-
+\medskip
 Pourquoi l'avance de phase ?
 
-\vspace{0,2in}
+\medskip
 \input{Automatique/SchemaBloc}
-
 
 \subsection{Choix des constantes}
 
-Pour choisir les constantes du correcteur, nous avons procédé en deux phases. Premièrement, nous avons réglé le correcteur à avance de phase. Pour cela, nous nous sommes servis du lieu d'Evans. On peut remarquer que, quelque soit le gain du correcteur, au moins un des poles du systeme restera à droite de l'axe des imaginaires.
+Pour choisir les constantes du correcteur, nous avons procédé en deux phases. Premièrement, nous avons réglé le correcteur à avance de phase. Pour cela, nous nous sommes servis du lieu d'Evans. On peut remarquer que, quelque soit le gain du correcteur, au moins un des pôles du système restera à droite de l'axe des imaginaires.
 
-\newline
 \begin{center}
 \includegraphics [scale=0.50]{RL_Sys_Seul.pdf}
 \\
-\emph{Lieu d'Evans du Systeme non corrigé}
+\emph{Lieu d'Evans du système non corrigé}
 \end{center}
 
-L'idée est donc de décaler le point d'intersection des asymptotes qui est normalement dans la partie droite du plan complexe en placant le zéros du correcteur à avance de phase dans la partie gauche tout en maintenant ce zéro avant le pole issu de la constante de temps mécanique qui se trouve dans la partie gauche. Une fois que la position des asymptotes a été correcte, nous avons réglé le gain du correcteur proportionnel afin que tous les poles du systeme se retrouvent à droite de l'axe des imaginaires. Nous avons trouvé un gain K de 5. 
+L'idée est donc de décaler le point d'intersection des asymptotes qui est normalement dans la partie droite du plan complexe en placant le zéros du correcteur à avance de phase dans la partie gauche tout en maintenant ce zéro avant le pole issu de la constante de temps mécanique qui se trouve dans la partie gauche. Une fois que la position des asymptotes a été correcte, nous avons réglé le gain du correcteur proportionnel afin que tous les pôles du système se retrouvent à droite de l'axe des imaginaires. Nous avons trouvé un gain K de 5. 
 
-\newline
 \begin{center}
 \includegraphics[scale=0.50]{RL_Sys_AvPh_K5.pdf}
 \\
-\emph{Lieu d'Evans du systeme corrigé}
+\emph{Lieu d'Evans du système corrigé}
 \end{center}
 
-Nous avons ensuite tracé le diagramme de Black-Nichols du système corrigé afin de vérifier les marges de gain et de phase. Cela nous permet d'obtenir une marge de phase d'environ 25° et une marge de gain de plus de 10 dB.
+Nous avons ensuite tracé le diagramme de Black - Nichols du système corrigé afin de vérifier les marges de gain et de phase. Cela nous permet d'obtenir une marge de phase d'environ 25\char6 et une marge de gain de plus de 10 dB.
 
-\newline
 \begin{center}
 \includegraphics[scale=0.50]{MatBlack.pdf}
 \\
-\emph{Lieu d'Evans du systeme corrigé}
+\emph{Lieu d'Evans du système corrigé}
 \end{center}
-
 
 \section{Correcteur numérique}
 
@@ -164,11 +202,8 @@ Dans la seconde partie du projet, nous commencerons par simplement convertir not
 \includegraphics[scale=0.50]{RLN_Sys_Seul.pdf}
 \includegraphics[scale=0.50]{RLN_Sys_AvPh_K5.pdf}
 
-
 \section{Conclusion}
 
 Grâce à cette étude, nous avons pu trouver des valeurs de paramètres de correcteurs qui nous permettent de stabiliser le système. Cependant, nous pouvons nous interroger sur la fiabilité de ces paramètres étant donné qu'ils sont basés sur une approximation linéaire du système. De même, le modèle du champs magnétique pourrait se révéler trop imprécis et ainsi fausser le calcul des constantes. Il faudra donc garder cela à l'esprit pour éventuellement réévaluer nos paramètres par la suite. 
-
-
 
 \end{document}
