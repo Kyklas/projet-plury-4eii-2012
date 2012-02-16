@@ -22,6 +22,8 @@
 % Package pour schémas MCSE
 \usepackage{tikz}
 \usetikzlibrary{calc,backgrounds}
+\usetikzlibrary{arrows,positioning} 
+\usetikzlibrary{decorations,decorations.pathmorphing} 
 
 
 % Schémas individuels MCSE
@@ -46,31 +48,39 @@
 \part{Spécification fonctionnelle}
 
 \section{Description des entités extérieures}
-\paragraph{} Dans cette partie, nous allons expliciter la décomposition en entités que nous avons retenue :
-
-Convertisseur Analogique-Numérique
-\begin{description}
-\item[Sortie : ]Sample, donnée permanente sur 10 bits
-\item[Sortie : ]S\_available, évènement
-\item[Entrée : ]S\_Query, évènement
-\end{description}
-
-Utilisateur
-\begin{description}
-\item[Sortie : ]Rx, donnée permanente, bit
-\item[Entrée : ]Tx, donnée permanente, bit
-\end{description}
-
-Pilotage Bobine (PWM)
-\begin{description}
-\item[Entrée : ]Out, donnée permanente sur 8 bits
-\end{description}
-
-
 
 \subsection{Listes des entités}
+
+\paragraph{} Dans cette partie, nous allons expliciter la décomposition en entités que nous avons retenue :
+
+\vspace{0.2in}
+\hspace{0.2in}
+Convertisseur Analogique-Numérique
+\begin{description}
+\item[Sortie :] Sample, information, entier
+\item[Sortie :] S\_Available, évènement
+\item[Entrée :] S\_Query, évènement
+\end{description}
+
+\vspace{0.2in}
+\hspace{0.2in}
+Utilisateur
+\begin{description}
+\item[Sortie : ] Rx, donnée permanente, bit
+\item[Entrée : ] Tx, donnée permanente, bit
+\end{description}
+
+\vspace{0.2in}
+\hspace{0.2in}
+Pilotage Bobine (PWM)
+\begin{description}
+\item[Entrée : ] Out, donnée permanente, entier
+\end{description}
+
 \subsection{Graphes des entités}
+
 \section{Délimitations des E/S du système}
+
 \section{Spécification fonctionnelle}
 
 
@@ -79,10 +89,11 @@ Pilotage Bobine (PWM)
 \section{Délimitation des E/S du système}
 \section{Décomposition fonctionnelle}
 
+\input{MCSE/Systeme.tex}
 
 
 
-\input{MCSE/Convertisseur.tex}
+%\input{MCSE/Convertisseur.tex}
 %\input{MCSE/Ordinateur.tex}
 %\input{MCSE/Pilotage.tex}
 
