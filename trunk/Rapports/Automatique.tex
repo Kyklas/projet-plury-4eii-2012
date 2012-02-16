@@ -51,16 +51,16 @@
 \paragraph{}
 Dans le cadre du projet pluridisciplinaire de cette année, il nous est demandé de faire léviter un mobile dans l'air à l'aide d'un champ magnétique produit par une bobine. On appelle cet effet la sustentation magnétique. Ce projet est une version édulcorée d'un prototype de lampe décorative imaginée par une étudiante de l'école LISAA (Institut supérieur des arts appliqués) et réalisée en partenariat avec des chercheurs et ingénieurs de l'INSA de Rennes.
 
-L'étude demandée présente de nombreuses facettes : il faudra d'abord décrire et modéliser le système physique pour ensuite l'asservir à l'aide d'un dispositif automatique électronique. Ce dispositif sera réalisé de manière analogique puis de manière numérique. Dans ce rapport, on s'intéressera uniquement à la partie automatique, on expliquera la modélisation choisie ainsi que les correcteurs et leurs paramètres clefs pour faire léviter le mobile.
+L'étude demandée présente de nombreuses facettes : il faudra d'abord décrire et modéliser le système physique pour ensuite l'asservir à l'aide d'un dispositif automatique électronique. Ce dispositif sera réalisé de manière analogique puis de manière numérique. Dans ce rapport, nous nous intéresserons uniquement à la partie automatique, nous expliquerons la modélisation choisie ainsi que les correcteurs et leurs paramètres clefs pour faire léviter le mobile.
 
 \section{Description du système physique}
 \paragraph{}
 
-Le système physique est existant et imposé. Il consiste en une potence munie d'une bobine qui servira à exercer le champs magnétique retenant le mobile. La bobine est également munie de capteurs à effet Hall qui permettent, par une mesure différentielle, de mesurer la distance du mobile par rapport à la bobine. On a ainsi la boucle de retour de notre système. 
+Le système physique est existant et imposé. Il consiste en une potence munie d'une bobine qui servira à exercer le champs magnétique retenant le mobile. La bobine est également munie de capteurs à effet Hall qui permettent, par une mesure différentielle, de mesurer la distance du mobile par rapport à la bobine. Nous avons ainsi la boucle de retour de notre système. 
 
-On a donc finalement une consigne en position que l'on va convertir en un courant qui servira à générer le champs magnétique qui attirera ou repoussera le mobile et le retour en position par le biais des capteurs à effet Hall. 
+Nous avons donc finalement une consigne en position que nous allons convertir en un courant qui servira à générer le champs magnétique qui attirera ou repoussera le mobile et le retour en position par le biais des capteurs à effet Hall. 
 
-Le problème principal du système est qu'il n'est pas stable en boucle ouverte. On va donc procéder à une étude basée sur des mesures fournies afin de mettre un place un correcteur qui rendra la système stable. Pour cela, nous poserons les équations mathématiques du problème pour ensuite décrire le modèle de correcteur retenu ainsi que les valeurs des diverses constantes associées à ce modèle.
+Le problème principal du système est qu'il n'est pas stable en boucle ouverte. Nous allons donc procéder à une étude basée sur des mesures fournies afin de mettre en place un correcteur qui rendra la système stable. Pour cela, nous poserons les équations mathématiques du problème pour ensuite décrire le modèle de correcteur retenu ainsi que les valeurs des diverses constantes associées à ce modèle.
 
 \section{Modélisation mathématique}
 
@@ -164,7 +164,7 @@ $ \rightarrow K_i = 1,660 $
 \subsection{Choix du correcteur}
 Dans un premier temps, nous avons choisi un correcteur proportionnel-dérivé. Un correcteur dérivé n'étant pas réalisable physiquement, nous allons donc le remplacer par un correcteur à avance de phase.
 \medskip
-Pourquoi l'avance de phase ?
+En traçant le diagramme de Black - Nichols du système non corrigé, on s'aperçoit que celui ci est instable en boucle ouverte car en $\omega = 0$ le sytème est déphasé de 180°. Nous allons donc tenté de réduire le déphase du système afin de pouvoir passer à droite du point 180\char23.
 
 \medskip
 \input{Automatique/SchemaBloc}
@@ -192,7 +192,7 @@ Nous avons ensuite tracé le diagramme de Black - Nichols du système corrigé a
 \begin{center}
 \includegraphics[scale=0.50]{MatBlack.pdf}
 \\
-\emph{Lieu d'Evans du système corrigé}
+\emph{Diagramme de Black-Nichols du système corrigé}
 \end{center}
 
 \section{Correcteur numérique}
