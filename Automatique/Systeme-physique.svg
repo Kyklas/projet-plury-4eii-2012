@@ -26,7 +26,7 @@
      inkscape:pageshadow="2"
      inkscape:zoom="0.98994949"
      inkscape:cx="177.92084"
-     inkscape:cy="521.49356"
+     inkscape:cy="481.08746"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="true"
@@ -65,69 +65,99 @@
      id="layer1"
      transform="translate(0,-308.2677)">
     <rect
-       style="fill:none;stroke:#000000;stroke-width:0.69999999;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       style="fill:#ffffff;stroke:#000000;stroke-width:0.69999999000000002;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;fill-opacity:1"
        id="rect3762"
        width="17.716536"
        height="265.74802"
        x="62.007874"
-       y="467.71652" />
+       y="467.71652"
+       inkscape:export-filename="D:\INSA\Projet pluri\svn\Rapports\Automatique\system_physique.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
     <path
        id="path3770"
        style="fill:#f7df7a;fill-opacity:1;stroke:#000000;stroke-width:0.69999999;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
        d="m 159.44884,503.14957 70.86614,0 m -70.86614,-88.58267 70.86614,0 m -70.86614,53.1496 0,35.43307 -17.71654,17.71654 106.29922,0 -17.71654,-17.71654 0,-35.43307 z m -17.71654,-70.86614 17.71654,17.71654 0,17.71653 70.86614,0 0,-17.71653 17.71654,-17.71654 z"
-       inkscape:connector-curvature="0" />
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="D:\INSA\Projet pluri\svn\Rapports\Automatique\system_physique.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
     <path
        id="path3790"
        style="fill:#ff0000;stroke:#d44208;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="m 159.44884,430.5669 70.86614,8.85826 m -70.86614,-10.85826 70.86614,8.85826 m -70.86614,-10.85826 70.86614,8.85826 m -70.86614,-10.85826 70.86614,8.85826 m -70.86614,-10.85826 70.86614,8.85826 m -70.86614,-10.85826 70.86614,8.85826 m -70.86614,-10.85826 70.86614,8.85826 m -70.86614,-10.85826 70.86614,8.85826 m -70.86614,-10.85826 70.86614,8.85826"
-       inkscape:connector-curvature="0" />
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="D:\INSA\Projet pluri\svn\Rapports\Automatique\system_physique.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
     <rect
        style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.69999999;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
        id="rect3760"
        width="194.8819"
        height="35.433067"
        x="44.291351"
-       y="432.28342" />
+       y="432.28342"
+       inkscape:export-filename="D:\INSA\Projet pluri\svn\Rapports\Automatique\system_physique.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
     <path
        id="path3818"
        style="fill:#ff0000;stroke:#d44208;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="m 159.44884,494.5669 70.86614,8.85826 m -70.86614,-10.85826 70.86614,8.85826 m -70.86614,-10.85826 70.86614,8.85826 m -70.86614,-10.85826 70.86614,8.85826 m -70.86614,-10.85826 70.86614,8.85826 m -70.86614,-10.85826 70.86614,8.85826 m -70.86614,-10.85826 70.86614,8.85826 m -70.86614,-10.85826 70.86614,8.85826 m -70.86614,-10.85826 70.86614,8.85826 m -70.86614,-10.85826 70.86614,8.85826 m -70.86614,-10.85826 70.86614,8.85826 m -70.86614,-10.85826 70.86614,8.85826 m -70.86614,-10.85826 70.86614,8.85826 m -70.86614,-10.85826 70.86614,8.85826"
-       inkscape:connector-curvature="0" />
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="D:\INSA\Projet pluri\svn\Rapports\Automatique\system_physique.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
     <rect
        style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.69999999;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
        id="rect3828"
        width="292.32285"
        height="17.716541"
        x="17.716553"
-       y="733.46454" />
+       y="733.46454"
+       inkscape:export-filename="D:\INSA\Projet pluri\svn\Rapports\Automatique\system_physique.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
     <rect
        style="fill:#6e6e6e;fill-opacity:1;stroke:#000000;stroke-width:0.69999999;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
        id="rect3848"
        width="35.433064"
        height="70.86615"
        x="177.16537"
-       y="547.44092" />
+       y="547.44092"
+       inkscape:export-filename="D:\INSA\Projet pluri\svn\Rapports\Automatique\system_physique.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
     <rect
        style="fill:#c8c8c8;fill-opacity:1;stroke:#000000;stroke-width:0.69999999;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
        id="rect3850"
        width="17.716536"
        height="8.8582678"
        x="186.02365"
-       y="387.9921" />
+       y="387.9921"
+       inkscape:export-filename="D:\INSA\Projet pluri\svn\Rapports\Automatique\system_physique.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
     <rect
        style="fill:#c8c8c8;fill-opacity:1;stroke:#000000;stroke-width:0.69999999;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
        id="rect3852"
        width="17.716536"
        height="8.8582678"
        x="186.02365"
-       y="520.86609" />
+       y="520.86609"
+       inkscape:export-filename="D:\INSA\Projet pluri\svn\Rapports\Automatique\system_physique.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
     <text
        xml:space="preserve"
        style="font-size:24px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
        x="256.88977"
        y="458.85825"
        id="text3854"
-       sodipodi:linespacing="125%"><tspan
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="D:\INSA\Projet pluri\svn\Rapports\Automatique\system_physique.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
          sodipodi:role="line"
          id="tspan3856"
          x="256.88977"
@@ -135,25 +165,31 @@
     <text
        xml:space="preserve"
        style="font-size:12px;font-style:normal;font-weight:bold;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Bold"
-       x="256.88977"
+       x="264.88977"
        y="379.13385"
        id="text3858"
-       sodipodi:linespacing="125%"><tspan
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="D:\INSA\Projet pluri\svn\Rapports\Automatique\system_physique.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
          sodipodi:role="line"
          id="tspan3860"
-         x="256.88977"
+         x="264.88977"
          y="379.13385"
          style="font-size:24px;font-weight:normal;-inkscape-font-specification:Sans">Capteur 1</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:12px;font-style:normal;font-weight:bold;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Bold"
-       x="256.88977"
+       x="264.88977"
        y="556.29919"
        id="text3862"
-       sodipodi:linespacing="125%"><tspan
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="D:\INSA\Projet pluri\svn\Rapports\Automatique\system_physique.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
          sodipodi:role="line"
          id="tspan3864"
-         x="256.88977"
+         x="264.88977"
          y="556.29919"
          style="font-size:24px;font-weight:normal;-inkscape-font-specification:Sans">Capteur 2</tspan></text>
     <text
@@ -162,7 +198,10 @@
        x="159.44882"
        y="653.74011"
        id="text3866"
-       sodipodi:linespacing="125%"><tspan
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="D:\INSA\Projet pluri\svn\Rapports\Automatique\system_physique.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
          sodipodi:role="line"
          id="tspan3868"
          x="159.44882"
@@ -171,29 +210,41 @@
     <text
        xml:space="preserve"
        style="font-size:12px;font-style:normal;font-weight:bold;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Bold"
-       x="88.582703"
+       x="92.582703"
        y="715.74799"
        id="text3870"
-       sodipodi:linespacing="125%"><tspan
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="D:\INSA\Projet pluri\svn\Rapports\Automatique\system_physique.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
          sodipodi:role="line"
          id="tspan3872"
-         x="88.582703"
+         x="92.582703"
          y="715.74799"
          style="font-size:24px;font-weight:normal;-inkscape-font-specification:Sans">Potence</tspan></text>
     <path
        id="path3876"
        style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="m 216.79689,383.04817 -4.19845,4.94392 5.85939,2.30442 m -5.85939,-2.30442 35.43307,-8.85826"
-       inkscape:connector-curvature="0" />
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="D:\INSA\Projet pluri\svn\Rapports\Automatique\system_physique.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
     <path
        style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="m 221.45671,529.72438 c 0,0 0,0 0,0 z"
        id="path3882"
-       inkscape:connector-curvature="0" />
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="D:\INSA\Projet pluri\svn\Rapports\Automatique\system_physique.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
     <path
        d="m 216.79689,534.6683 -4.19845,-4.94392 5.85939,-2.30441 m -5.85939,2.30441 35.43307,8.85826"
        style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        id="path3897"
-       inkscape:connector-curvature="0" />
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="D:\INSA\Projet pluri\svn\Rapports\Automatique\system_physique.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
   </g>
 </svg>
