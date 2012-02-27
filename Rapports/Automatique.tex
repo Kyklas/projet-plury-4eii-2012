@@ -218,7 +218,10 @@ Nous avons ensuite tracé le diagramme de Black - Nichols du système corrigé a
 
 \section{Correcteur numérique}
 
-Dans la seconde partie du projet, nous commencerons par simplement convertir notre correcteur analogique par le biais d'une approximation comme celle de Tustin ou celle des rectangles avant. Une fois que cette solution fonctionnera, nous tenterons d'implémenter un modèle non linéaire en nous servant des équations du système. 
+Dans la seconde partie du projet, nous commencerons par simplement convertir notre correcteur analogique par le biais d'une approximation des rectangles avant. Nous avons choisi cette solution car elle est réalisable physiquement contrairement à celle des rectangles arrière. En outre, elle est assez précise et plus facile à mettre en oeuvre que l'approximation de Tustin. Dans l'absolu, rien ne nous empêchera de changer cette approximation par la suite dans le cas où les résultats seraient insatisfaisants. 
+
+L'équation du système par l'approximation des rectangle avant devient :
+.....
 
 \includegraphics[scale=0.50]{RLN_Sys_Seul.pdf}
 \includegraphics[scale=0.50]{RLN_Sys_AvPh_K5.pdf}
