@@ -33,15 +33,15 @@ Cor_av=tf([Tav 1],[0.1*Tav 1])
 disp('Equation du Système (Elec + Meca + Hall)');
 Sys = Sys_elec * Sys_meca*Kc_Hall
 
-%  nichols(Sys);
-%  hold on;
- 
+%   nichols(Sys);
+%   hold on;
+%  
  disp('Equation du Système Corrigé');
- Sys_Corr = 10*Sys*Cor_av 
+ Sys_Corr = 27*Sys*Cor_av 
  
-% nichols(Sys_Corr);
-% ngrid;
-% hold off;
+%  nichols(Sys_Corr);
+%  ngrid;
+%  hold off;
 % 
 % title('Diagrammes de Black Système et Système Corrigé');
 % axis([-360,0,-100,20]);  
@@ -61,7 +61,7 @@ Sys = Sys_elec * Sys_meca*Kc_Hall
 % axis([-400,100,-200,200]);
 % title('Système Corrigé');
 % 
-% return
+%  return
 
 % Version Numérique
 Felec = 1/(2*pi*Telec);
