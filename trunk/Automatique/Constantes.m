@@ -11,5 +11,5 @@ ki=0.446; %N.A-1
 kx=131.54; %N.m-1
 
 % Modèle capteur effet Hall
-Kc_Hall=92; 
+Kc_Hall=36.5; 
 

@@ -260,10 +260,10 @@ Pour choisir les constantes du correcteur, nous avons procédé en deux étapes.
 \emph{Lieu d'Evans du système non corrigé}
 \end{center}
 
-L'idée est donc de décaler le point d'intersection des asymptotes qui est normalement dans la partie droite du plan complexe en plaçant le zéros du correcteur à avance de phase dans la partie gauche tout en maintenant ce zéro avant le pôle issu de la constante de temps mécanique qui se trouve dans la partie gauche. Une fois que la position des asymptotes a été correcte, nous avons réglé le gain du correcteur proportionnel afin que tous les pôles du système se retrouvent à droite de l'axe des imaginaires. Nous avons trouvé un gain K de 5. 
+L'idée est donc de décaler le point d'intersection des asymptotes qui est normalement dans la partie droite du plan complexe en plaçant le zéros du correcteur à avance de phase dans la partie gauche tout en maintenant ce zéro avant le pôle issu de la constante de temps mécanique qui se trouve dans la partie gauche. Une fois que la position des asymptotes a été correcte, nous avons réglé le gain du correcteur proportionnel afin que tous les pôles du système se retrouvent à droite de l'axe des imaginaires. Nous avons trouvé un gain K de 10. 
 
 \begin{center}
-\includegraphics[scale=0.50]{RL_Sys_AvPh_K10.pdf}
+\includegraphics[scale=0.50]{RL_Sys_AvPh_K27.pdf}
 \\
 \emph{Lieu d'Evans du système corrigé}
 \end{center}
@@ -281,20 +281,23 @@ Nous avons ensuite tracé le diagramme de Black - Nichols du système corrigé a
 Dans la seconde partie du projet, nous commencerons par simplement convertir notre correcteur analogique par le biais d'une approximation des rectangles avant. Nous avons choisi cette solution car elle est réalisable physiquement contrairement à celle des rectangles arrière. En outre, elle est assez précise et plus facile à mettre en oeuvre que l'approximation de Tustin. Dans l'absolu, rien ne nous empêchera de changer cette approximation par la suite dans le cas où les résultats seraient insatisfaisants. 
 
 L'équation du système par l'approximation des rectangle avant devient :
-
-$  H_{système} = \dfrac {4.957\times 10^{-5}z^{2} + 1.86\times 10^{-4}z + 4.349\times 10^{-5}} {z^{3} - 2.772z^{2} + 2.541z - 0.7697} $
+\medskip
+\begin{center}
+$ H_{syst\grave{e}me} = \dfrac{4.957 \times 10^{-5}z^{2} + 1.86 \times 10^{-4}z + 4.349 \times 10^{-5}} {z^{3} - 2.772z^{2} + 2.541z - 0.7697} $
 \medskip
 
 $  H_{correcteur} = \dfrac {8.356z - 8.014} {z - 0.6584} $
 \medskip
- 
+
+\end{center}
+
 \begin{center}
 \input{Automatique/SchemaBlocNum}
 \emph{Schéma bloc du système complet avec correcteur (Réprésentation en Numérique}
 \end{center}
 
 \includegraphics[scale=0.50]{RLN_Sys_Seul.pdf}
-\includegraphics[scale=0.50]{RLN_Sys_AvPh_K10.pdf}
+\includegraphics[scale=0.50]{RLN_Sys_AvPh_K27.pdf}
 
 \section{Conclusion}
 

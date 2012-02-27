@@ -1,0 +1,21 @@
+\begin{tikzpicture}
+\sbEntree{Vxc}
+\sbComp{Comp}{Vxc}
+	\sbRelier[$Vx_C$]{Vxc}{Comp}
+\sbBloc{C}{$K_{p}$}{Comp}
+	\sbRelier[$\epsilon_x$]{Comp}{C}
+\sbBlocL{E}{$\dfrac{K_{Elec}}{\tau_{Elec} \cdot p + 1}$}{C} 
+\sbBlocL{M}{$\dfrac{-\frac{K_i}{K_x}}{-{\tau_{Meca}}^2 \cdot p^2 - 1}$}{E}
+\sbBlocL{H}{$K_{Hall}$}{M} 
+
+\sbSortie{Vxr}{H} 
+	\sbRelier{H}{Vxr}
+	\sbNomLien[0.8]{Vxr}{$Vx_R$} 
+\sbDecaleNoeudy{M}{A}
+\sbBlocr[0]{A}{$\dfrac{1+ \tau_d \cdot p}{1 + a_d \cdot \tau_d \cdot p}$}{A}
+\sbRelieryx{H-Vxr}{A}
+\sbRelierxy{A}{Comp}
+\end{tikzpicture}
+
+%$\tau_d = $
+%\input{../Automatique/Constantes}
