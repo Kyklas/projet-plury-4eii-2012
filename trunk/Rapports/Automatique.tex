@@ -71,111 +71,171 @@ Le problème principal du système est qu'il n'est pas stable en boucle ouverte.
 Bilan des forces appliquées sur le système :
 
 \smallskip
-$ F_{bobine} = K \times \dfrac{i^2}{x^2}  $
+$ F_{bobine/aimant}  $
 
 $ F_{poids} = -m \times g $
 
 $ F_{perturbations} $
- \medskip
+
+...
+
+\medskip
 
 \noindent
-Pour simplifier le calcul, on considèrera en premier lieu que les perturbations sont nulles.
-On applique ensuite le principe fondamental de la dynamique :
+Devant la complexité des expressions numériques des interactions agissant sur l'OL (objet lévitant) associées à l'électromagnétisme, nous avons choisi d'étudier le problème autour du point d'équilibre (distance 15 mm) et de linéariser son fonctionnement.
+Nous nous étions précédemment engagés dans le calcul des constantes du modèle du second ordre via une modélisation mathématique du problème, qui nous a conduit à des résultats sans rapport avec les mesures effectuées, notamment à cause de la trop grande simplicité des expressions choisies pour la force exercée par la bobine sur l'aimant. Pour simplifier notre étude et dans le cadre de la linéarisation, on considèrera que les perturbations extérieures sur le système sont nulles. Notre stratégie est d'utiliser directement les mesures pour déterminer les constantes.
 
- \medskip
-$ \sum F_{exterieures}  = m \times {\dfrac{{d^2}x}{dt^2}} $
- \medskip
-
+\medskip
 \noindent
-Résoudre cette équation différentielle est complexe car l'expression de la force de la bobine n'est pas linéaire et elle dépend de deux paramètres du système (i et x) indépendants. On choisit donc de la linéariser (ordre 1) autour du point d'équilibre ($I_0, X_0 $) à l'aide de la différentielle de la fonction.
-Linéarisation de la force exercée par la bobine :
+On applique le principe fondamental de la statique (OL immobile) :
 
  \medskip
-$ {\dfrac{dF(t)}{dt}}_{x = X_0, i = I_0} = \dfrac{\partial F(t)}{\partial x} \times dx + \dfrac{\partial F(t)}{\partial i} \times di $
+$ \sum F_{exterieures}  = 0 $
+ \medskip
+
+La résolution de cette équation différentielle est complexe, l'expression de la force exercée par la bobine n'est pas linéaire et elle dépend à la fois de i et de x qui sont respectivement l'entrée et la sorties de notre système, la relation n'est pas directe. On choisit donc de linéariser (développement à l'ordre 1) l'expression de l'action de la bobine sur l'aimant autour du point d'équilibre ($I_0, X_0 $). On utilise pour cela la différentielle de la fonction.
+
+\medskip
+\noindent
+Linéarisation de la force exercée par la bobine sur l'aimant :
+
+ \medskip
+$ {dF(t)}_{x = X_0, i = I_0} = \dfrac{\partial F(t)}{\partial x} \times dx + \dfrac{\partial F(t)}{\partial i} \times di $
  \medskip
 
 \noindent
 On introduit deux coefficients $ K_x $ et $ K_i $ qui correspondent respectivement aux dérivées partielles suivant x et i de F.
 
  \medskip
-$ \dfrac{\partial F(t)}{\partial x} = K_x = \dfrac{-2K \times I_0^2}{X_0^3} $
-
-$ \dfrac{\partial F(t)}{\partial i} = K_i = \dfrac{2K \times I_0}{X_0^2} $
+$ K_x = \dfrac{\partial F(t)}{\partial x}, K_i = \dfrac{\partial F(t)}{\partial i} $
  \medskip
 
 \noindent
-On obtient avec la linéarisation l'équation différentielle suivante :
+On obtient après linéarisation l'équation différentielle suivante :
 
  \medskip
-$ m \times {\dfrac{{d^2}x}{dt^2}} = F_{bobine} - m \times g = K \times {\dfrac{I_0^2}{X_0^2}} + K_x \times Dx + K_i \times Di - m \times g $
+$ F_0 - m \times g + K_x \times D_x + K_i \times D_i = 0 $
  \medskip
 
-$ avec : Dx = x - X_0, Di = i - I_0 $
+avec : $ D_x = x - X_0, D_i = i - I_0 $
+
+lorsque : $ (x, i) = (X_0, I_0) \rightarrow D_x = 0, D_i = 0 \rightarrow m \times g = F_0 $
+
+\medskip
+\noindent
+On applique le principe fondamental de la dynamique :
+
+ \medskip
+$ \sum F_{exterieures}  = m \times \dfrac{d^2x}{dt^2} = m \times \dfrac{d^2D_x}{dt^2} $
  \medskip
 
 \noindent
 On transfert ensuite l'équation dans le domaine de Laplace :
 
  \medskip
-$ m \times x{s^2} = F_0 + K_x \times (x - X_0) + K_i \times (i - I_0) - m \times g $
+$ m \times D_x{s^2} = K_x \times D_x + K_i \times D_y $
 
-$ x \times (m{s^2} - K_x) = K_i \times i +(F_0 - K_x \times X_0 - K_i \times I_0 - m \times g) $
+$ D_x \times (m{s^2} - K_x) = K_i \times D_y $
  \medskip
 
 \noindent
-On remarque que $K_x \times X_0 $ et $K_i \times  I_0$ se compensent et que $ F_0 $ est égale à $ m \times g $. On obtient donc la fonction de transfert suivante :
+On obtient donc la fonction de transfert suivante :
 
  \medskip
-$ \rightarrow H(s) = \dfrac{x(s)}{i(s)} = \dfrac{K_i}{m{s^2}- K_x}  $
+$ \rightarrow H(s) = \dfrac{D_x(s)}{D_i(s)} = \dfrac{K_i}{m{s^2}- K_x}  = \dfrac{\dfrac{-K_i}{K_x}}{1 - \dfrac{m{s^2}}{K_x}} $
  \medskip
 
 \noindent
-K étant jusqu'à présent inconnue, on utilise l'équation du système à l'équilibre et les couples de valeurs mesurées autour du point $ X_0  $ et $ I_0 $ :
+On pose ensuite pour des raisons de simplification :
 
  \medskip
-$ \sum F_{exterieures}  = K \times {\dfrac{I_0^2}{X_0^2}} - m \times g = 0 $
-
-$ K = mg \times {\dfrac{X_0^2}{I_0^2}} $
+$ K_{meca} = \dfrac{-K_i}{K_x}, \tau_{meca} = \dfrac{m}{K_x} $
 
 \paragraph{}
 \textsc{Constantes mécaniques obtenues}
 
 \noindent
-En prenant les mesures données et en étudiant le mobile avec son leste, on obtient  :
+D'après l'équation de la statique donnée précédemment :
+
+ \medskip
+$ K_x \times D_x + K_i \times D_i = 0 \rightarrow \dfrac{K_x}{K_i} = \dfrac{D_i}{D_x} $
+ \medskip
+
+\noindent
+On cherche à déterminer le rapport $ \dfrac{K_x}{K_i} $ avec les mesures effectuées :
 
 \medskip
-\begin{tabular} {|l|c|r|}
+\begin{tabular} {|l|c|c|c|}
 	 \hline
-	\textbf{Distance (mm)} & \textbf{Courant (A)} & \textbf{K (calculé)} \\ \hline
-	14 & 1.21 & $ 1,857 \times 10^{-4} $ \\ \hline
-	15 & 1.48 & $ 1,425  \times 10^{-4} $ \\ \hline
-	16 & 1.8 & $ 1,096  \times 10^{-4} $ \\ \hline
+	\textbf{Distance (mm)} & \textbf{Courant (A)} & \textbf{Dx (mm)} & \textbf{Di (A)} \\ \hline
+	14 & 1.21 &  -1 & -0.27 \\ \hline
+	15 & 1.48 & 0 & 0 \\ \hline
+	16 & 1.8 & 1 & 0.32 \\ \hline
 \end{tabular}
 
 \medskip
 \noindent
-En faisant une moyenne des K, on trouve :
+En faisant une régression linéaire sur la courbe, on obtient :
 
 \medskip
-$ \rightarrow K_{bobine} = 1,459 \times 10^{-4} $
-$ \rightarrow K_x = 141,7 $
-$ \rightarrow K_i = 1,660 $
+$ a = \dfrac{K_x}{K_i} = 295 A.m^{-1} $
+
+\medskip
+$ b = - 2.93 A $
+
+\medskip
+$ R^2 = 0.997 $ (coefficient de détermination)
+\medskip
+
+\noindent
+On peut obtenir ensuite directement la valeur de $ K_i $, on a :
+
+\medskip
+\begin{tabular} {|c|c|c|}
+	 \hline
+	\textbf{Dm (g)} & \textbf{Courant (A)} & \textbf{Dc (A)} \\ \hline
+	0 & 1.48 &  0 \\ \hline
+	10 & 1.70 & 0.22 \\ \hline
+\end{tabular}
+
+\medskip
+D'où : $ K_i \approx \dfrac{Dm \times g}{Dc} = 0.0446 N.A^{-1} $
+
+\medskip
+et : $ K_x = K_i \times \dfrac{K_x}{K_i} = 132 N.m ^{-1} $
+
+\medskip
+\noindent
+On obtient de ces constantes les paramètres de notre modèle du deuxième ordre :
+
+\medskip
+$  K_{meca} = \dfrac {K_x}{K_i} =  295 A.m^{-1} $
+
+\medskip
+$  \tau_{meca} = \dfrac m {K_x} = 1.07 \times 10^{-3} s.rad^{-1} $
 
 \paragraph{}
 \textsc{Autres constantes du système}
 
+\noindent
+Par calcul direct, on obtient les constantes associées à la fonction de transfert de la bobine :
+
 \medskip
 $  \tau_{elec} = \dfrac L R = 6,643 \times 10^{-3} s.rad^{-1} $
 
-$  \tau_{meca} = \dfrac m {K_x} = 9,980 \times 10^{-1} s.rad^{-1} $
-
 \medskip
 $  K_{elec} = \dfrac 1 R = 4,464 \times 10^{-1} $
+\medskip
 
+\noindent
+A l'aide d'une régression linéaire effectuée sur la courbe de la tension différentielle des capteurs ($ V_{H2} - V_{H1} $) à effet Hall en fonction de la distance du mobile, on obtient :
+
+\medskip
 $  K_{hall} = 36,5 V.m^{-1} $
 
 \medskip
-La plupart de ces valeurs ont été obtenues par calcul direct alors que le gain $ K_{hall} $ a été déterminée à l'aide d'une opération de régression linéaire sur la courbe de la tension différentielle des capteurs ($ V_{H2} - V_{H1} $) en fonction de la distance du mobile.
+$ R^2 = 0.998 $ (coefficient de détermination)
+\medskip
 
 \section{Correcteur analogique}
 \subsection{Choix du correcteur}
@@ -208,7 +268,7 @@ L'idée est donc de décaler le point d'intersection des asymptotes qui est norm
 \emph{Lieu d'Evans du système corrigé}
 \end{center}
 
-Nous avons ensuite tracé le diagramme de Black - Nichols du système corrigé afin de vérifier les marges de gain et de phase. Cela nous a permis d'obtenir une marge de phase d'environ 25\char23 et une marge de gain de plus de 10 dB.
+Nous avons ensuite tracé le diagramme de Black - Nichols du système corrigé afin de vérifier les marges de gain et de phase. Cela nous a permis d'obtenir une marge de phase d'environ 25\char23 et une marge de gain de plus de 10 dB. Cela nous garantie une certaine immunité par rapport aux perturbations extérieures.
 
 \begin{center}
 \includegraphics[scale=0.50]{MatBlackFredValues.pdf}
