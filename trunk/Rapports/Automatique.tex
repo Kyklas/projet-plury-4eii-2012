@@ -221,7 +221,17 @@ Nous avons ensuite tracé le diagramme de Black - Nichols du système corrigé a
 Dans la seconde partie du projet, nous commencerons par simplement convertir notre correcteur analogique par le biais d'une approximation des rectangles avant. Nous avons choisi cette solution car elle est réalisable physiquement contrairement à celle des rectangles arrière. En outre, elle est assez précise et plus facile à mettre en oeuvre que l'approximation de Tustin. Dans l'absolu, rien ne nous empêchera de changer cette approximation par la suite dans le cas où les résultats seraient insatisfaisants. 
 
 L'équation du système par l'approximation des rectangle avant devient :
-.....
+
+$  H_{système} = \dfrac {4.957\times 10^{-5}z^{2} + 1.86\times 10^{-4}z + 4.349\times 10^{-5}} {z^{3} - 2.772z^{2} + 2.541z - 0.7697} $
+\medskip
+
+$  H_{correcteur} = \dfrac {8.356z - 8.014} {z - 0.6584} $
+\medskip
+ 
+\begin{center}
+\input{Automatique/SchemaBlocNum}
+\emph{Schéma bloc du système complet avec correcteur (Réprésentation en Numérique}
+\end{center}
 
 \includegraphics[scale=0.50]{RLN_Sys_Seul.pdf}
 \includegraphics[scale=0.50]{RLN_Sys_AvPh_K5.pdf}
