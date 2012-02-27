@@ -1,20 +1,26 @@
-\begin{tikzpicture}
+\begin{tikzpicture}\shorthandoff{:}
 \sbEntree{Vxc}
 \sbComp{Comp}{Vxc}
 	\sbRelier[$Vx_C$]{Vxc}{Comp}
 \sbBloc{C}{$K_{p}$}{Comp}
 	\sbRelier[$\epsilon_x$]{Comp}{C}
-\sbBlocL{E}{$H_{système}$}{C}
+\sbBlocL{B}{$BOZ$}{C}	
+\sbBlocL{E}{$Sys_{Elec + M\acute{e}ca}$}{B}
 \sbBlocL{H}{$K_{Hall}$}{E} 
+\sbDecaleNoeudx[3]{H}{Ec}
+\node[font=\tiny,label={[font=\tiny]below:$Te$}] at(Ec)  {};
+\draw (H) -- (Ec);
+\draw (Ec.north west) -- (Ec.east);
 
-\sbSortie{Vxr}{H} 
-	\sbRelier{H}{Vxr}
+\sbSortie[3]{Vxr}{Ec} 
+	\sbRelier{Ec}{Vxr}
 	\sbNomLien[0.8]{Vxr}{$Vx_R$} 
 \sbDecaleNoeudy{E}{A}
 \sbBlocr[0]{A}{$H_{correcteur}$}{A}
-\sbRelieryx{H-Vxr}{A}
+\sbRelieryx{Ec-Vxr}{A}
 \sbRelierxy{A}{Comp}
+
+\node[draw,dotted,inner sep=8pt,fit=(B) (Ec),label={[font=\small]above:$H_{syst\grave{e}me}$}] {};
+
 \end{tikzpicture}
 
-%$\tau_d = $
-%\input{../Automatique/Constantes}

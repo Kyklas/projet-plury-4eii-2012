@@ -23,6 +23,8 @@
 \graphicspath{{../Automatique/}}
 \usepackage{schemabloc}
 \usepackage{amsmath}
+\usepackage{tikz}
+\usetikzlibrary{fit}
 
 %%% HEADERS & FOOTERS
 %\usepackage{fancyhdr} % This should be set AFTER setting up the page geometry
@@ -249,7 +251,11 @@ En traçant le diagramme de Black - Nichols du système non corrigé, on s'aper�
 \input{Automatique/SchemaBloc}
 \emph{Schéma bloc du système complet avec correcteur}
 \end{center}
+\begin{quote}
 
+\input{../Automatique/Constantes}
+
+\end{quote}
 \subsection{Choix des constantes}
 
 Pour choisir les constantes du correcteur, nous avons procédé en deux étapes. Premièrement, nous avons réglé le correcteur à avance de phase. Pour cela, nous nous sommes servis du lieu d'Evans. On peut remarquer que, quelque soit le gain du correcteur, au moins un des pôles du système restera à droite de l'axe des imaginaires.
@@ -271,8 +277,8 @@ L'idée est donc de décaler le point d'intersection des asymptotes qui est norm
 Nous avons ensuite tracé le diagramme de Black - Nichols du système corrigé afin de vérifier les marges de gain et de phase. Cela nous a permis d'obtenir une marge de phase d'environ 25\char23 et une marge de gain de plus de 10 dB. Cela nous garantie une certaine immunité par rapport aux perturbations extérieures.
 
 \begin{center}
-\includegraphics[scale=0.50]{MatBlackFredValues.pdf}
-\\
+\includegraphics[scale=0.80]{MatBlackFredValues.pdf}
+
 \emph{Diagramme de Black-Nichols du système corrigé}
 \end{center}
 
@@ -282,18 +288,19 @@ Dans la seconde partie du projet, nous commencerons par simplement convertir not
 
 L'équation du système par l'approximation des rectangle avant devient :
 \medskip
+
+
+\begin{footnotesize}
 \begin{center}
 $ H_{syst\grave{e}me} = \dfrac{6.379 \times 10^{-6}z^{2} + 2.393 \times 10^{-5}z + 5.596 \times 10^{-6}} {z^{3} - 2.772z^{2} + 2.542z - 0.7697} $
-\medskip
-
+\hspace{2cm}
 $  H_{correcteur} = \dfrac {8.272z - 7.915} {z - 0.6424} $
-\medskip
-
 \end{center}
+\end{footnotesize}
 
 \begin{center}
 \input{Automatique/SchemaBlocNum}
-\emph{Schéma bloc du système complet avec correcteur (Réprésentation en Numérique}
+\emph{Schéma bloc du système complet avec correcteur (Réprésentation en Numérique)}
 \end{center}
 
 \includegraphics[scale=0.50]{RLN_Sys_Seul.pdf}
