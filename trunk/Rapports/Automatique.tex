@@ -58,9 +58,9 @@ L'étude demandée présente de nombreuses facettes : il faudra d'abord décrire
 \section{Description du système physique}
 \paragraph{}
 
-Le système physique est existant et imposé. Il consiste en une potence munie d'une bobine qui servira à exercer le champs magnétique retenant le mobile. La bobine est également munie de capteurs à effet Hall qui permettent, par une mesure différentielle, de mesurer la distance du mobile par rapport à la bobine. Nous avons ainsi la boucle de retour de notre système. 
+Le système physique est existant et imposé. Il consiste en une potence munie d'une bobine qui servira à exercer le champ magnétique retenant le mobile. La bobine est également munie de capteurs à effet Hall qui permettent, par une mesure différentielle, de mesurer la distance du mobile par rapport à la bobine. Nous avons ainsi la boucle de retour de notre système. 
 
-Nous avons donc finalement une consigne en position que nous allons convertir en un courant qui servira à générer le champs magnétique qui attirera ou repoussera le mobile et le retour en position par le biais des capteurs à effet Hall. 
+Nous avons donc finalement une consigne en position que nous allons convertir en un courant qui servira à générer le champ magnétique qui attirera ou repoussera le mobile et le retour en position par le biais des capteurs à effet Hall. 
 
 Le problème principal du système est qu'il n'est pas stable en boucle ouverte. Nous allons donc procéder à une étude basée sur des mesures fournies afin de mettre en place un correcteur qui rendra la système stable. Pour cela, nous poserons les équations mathématiques du problème pour ensuite décrire le modèle de correcteur retenu ainsi que les valeurs des diverses constantes associées à ce modèle.
 
@@ -132,7 +132,7 @@ $ \sum F_{exterieures}  = m \times \dfrac{d^2x}{dt^2} = m \times \dfrac{d^2D_x}{
  \medskip
 
 \noindent
-On transfert ensuite l'équation dans le domaine de Laplace :
+On transfère ensuite l'équation dans le domaine de Laplace :
 
  \medskip
 $ m \times D_x{s^2} = K_x \times D_x + K_i \times D_y $
@@ -244,7 +244,7 @@ $ R^2 = 0.998 $ (coefficient de détermination)
 Dans un premier temps, nous avons choisi un correcteur proportionnel-dérivé. Un correcteur dérivé n'étant pas réalisable physiquement, nous allons donc le remplacer par un correcteur à avance de phase.
 
 \medskip
-En traçant le diagramme de Black - Nichols du système non corrigé, on s'aperçoit que celui ci est instable en boucle ouverte car en $\omega = 0$ le système est déphasé de 180\char23. Nous allons donc tenté de réduire le déphase du système afin de pouvoir passer à droite du point 180\char23.
+En traçant le diagramme de Black - Nichols du système non corrigé, on s'aperçoit que celui-ci est instable en boucle ouverte car en $\omega = 0$ le système est déphasé de 180\char23. Nous allons donc tenter de réduire le déphase du système afin de pouvoir passer à droite du point 0 dB, 180\char23.
 
 \medskip
 \begin{center}
@@ -266,7 +266,7 @@ Pour choisir les constantes du correcteur, nous avons procédé en deux étapes.
 \emph{Lieu d'Evans du système non corrigé}
 \end{center}
 
-L'idée est donc de décaler le point d'intersection des asymptotes qui est normalement dans la partie droite du plan complexe en plaçant le zéros du correcteur à avance de phase dans la partie gauche tout en maintenant ce zéro entre les deux poles issu de la constante de temps mécanique qui se trouve dans la partie gauche. On prendra le zéro du correcteur à avance de phase en $1.2*T_{m\acute{e}ca}$ afin entre les poles mécaniques et une partie réel négative. Une fois le zéro du correcteur à avance de phase correctement placé, nous avons réglé le gain du correcteur proportionnel afin que tous les pôles du système aient une partie réel négative. Nous avons trouvé un gain $Kp$ de 27. 
+L'idée est donc de décaler le point d'intersection des asymptotes qui est normalement dans la partie droite du plan complexe en plaçant le zéros du correcteur à avance de phase dans la partie gauche tout en maintenant ce zéro entre les deux pôles issu de la constante de temps mécanique qui se trouve dans la partie gauche. On prendra le zéro du correcteur à avance de phase en $1.2*T_{m\acute{e}ca}$ afin entre les pôles mécaniques et une partie réel négative. Une fois le zéro du correcteur à avance de phase correctement placé, nous avons réglé le gain du correcteur proportionnel afin que tous les pôles du système aient une partie réelle négative. Nous avons trouvé un gain $Kp$ de 27. 
 
 \begin{center}
 \includegraphics[scale=0.50]{RL_Sys_AvPh_K27.pdf}\\
@@ -288,7 +288,7 @@ Dans la seconde partie du projet, nous commencerons par simplement convertir not
 
 
 
-L'équation du système par l'approximation des rectangle avant devient :
+L'équation du système par l'approximation des rectangles avant devient :
 \medskip
 
 
@@ -302,10 +302,10 @@ $  H_{correcteur} = \dfrac {8.272z - 7.915} {z - 0.6424} $
 
 \begin{center}
 \input{Automatique/SchemaBlocNum}
-\emph{Schéma bloc du système complet avec correcteur (Réprésentation en Numérique)}
+\emph{Schéma bloc du système complet avec correcteur (Représentation en Numérique)}
 \end{center}
 
-Au niveau du choix de la période d'échantillonage, on se rend compte que les pôles importants sont la constantes électriques et le pôle du correcteur à avance de phase. Le pôle le plus rapide étant le pôle à avance de phase, c'est celui qu'on retiendra pour déterminer la période d'échantillonage. On a donc $T_e=\frac{2 \pi 0.1 T_{AV}}{6} > \frac{2 \pi T_{Elec}}{6}$ ce qui donne environ 4,0ms pour la période d'échantillonage la moins exigente. Si l'on prend le critère le plus dur, on a $T_e=\frac{2 \pi 0.1 T_{AV}}{24}$ ce qui donne une période de 1ms. 
+Au niveau du choix de la période d'échantillonnage, on se rend compte que les pôles importants sont la constante électrique et le pôle du correcteur à avance de phase. Le pôle le plus rapide étant le pôle à avance de phase, c'est celui qu'on retiendra pour déterminer la période d'échantillonnage. On a donc $T_e=\frac{2 \pi 0.1 T_{AV}}{6} > \frac{2 \pi T_{Elec}}{6}$ ce qui donne environ 4,0ms pour la période d'échantillonage la moins exigeante. Si l'on prend le critère le plus dur, on a $T_e=\frac{2 \pi 0.1 T_{AV}}{24}$ ce qui donne une période de 1ms. 
 
 Le comportement dans le lieu d'Evans valide la solution utilisé.
 
@@ -314,6 +314,6 @@ Le comportement dans le lieu d'Evans valide la solution utilisé.
 
 \section{Conclusion}
 
-Grâce à cette étude, nous avons pu trouver des valeurs de paramètres de correcteurs qui nous permettent de stabiliser le système. Cependant, nous pouvons nous interroger sur la fiabilité de ces paramètres étant donné qu'ils sont basés sur une approximation linéaire du système. De même, le modèle du champs magnétique pourrait se révéler trop imprécis et ainsi fausser le calcul des constantes. Il faudra donc garder cela à l'esprit pour éventuellement réévaluer nos paramètres par la suite. 
+Grâce à cette étude, nous avons pu trouver des valeurs de paramètres de correcteurs qui nous permettent de stabiliser le système. Cependant, nous pouvons nous interroger sur la fiabilité de ces paramètres étant donné qu'ils sont basés sur une approximation linéaire du système. De même, le modèle du champ magnétique pourrait se révéler trop imprécis et ainsi fausser le calcul des constantes. Il faudra donc garder cela à l'esprit pour éventuellement réévaluer nos paramètres par la suite. 
 
 \end{document}
