@@ -66,8 +66,8 @@ Sys = Sys_elec * Sys_meca*Kc_Hall
 % Version Numérique
 Felec = 1/(2*pi*Telec);
 Fav = 1/(2*pi*0.1*Tav);
-Te = 1/(Felec*12);
-Tav = 1/(Fav*12);
+Te = 1/(Felec*6);
+Tav = 1/(Fav*6);
 
 Sys_d = C2d(Sys,Te,'ZOH')
 
