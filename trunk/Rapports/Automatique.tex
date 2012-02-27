@@ -201,7 +201,7 @@ On peut obtenir ensuite directement la valeur de $ K_i $, on a :
 \end{tabular}
 
 \medskip
-D'où : $ K_i \approx \dfrac{Dm \times g}{Dc} = 0.0446 N.A^{-1} $
+D'où : $ K_i \approx \dfrac{Dm \times g}{Dc} = 0.446 N.A^{-1} $
 
 \medskip
 et : $ K_x = K_i \times \dfrac{K_x}{K_i} = 132 N.m ^{-1} $
@@ -253,7 +253,7 @@ En traçant le diagramme de Black - Nichols du système non corrigé, on s'aper�
 \end{center}
 \begin{quote}
 
-\input{../Automatique/Constantes}
+%\input{../Automatique/Constantes}
 
 \end{quote}
 \subsection{Choix des constantes}
@@ -261,23 +261,23 @@ En traçant le diagramme de Black - Nichols du système non corrigé, on s'aper�
 Pour choisir les constantes du correcteur, nous avons procédé en deux étapes. Premièrement, nous avons réglé le correcteur à avance de phase. Pour cela, nous nous sommes servis du lieu d'Evans. On peut remarquer que, quelque soit le gain du correcteur, au moins un des pôles du système restera à droite de l'axe des imaginaires.
 
 \begin{center}
-\includegraphics [scale=0.50]{RL_Sys_Seul.pdf}
-\\
+\includegraphics [scale=0.50]{RL_Sys_Seul.pdf}\\
+\vspace{-10pt}
 \emph{Lieu d'Evans du système non corrigé}
 \end{center}
 
-L'idée est donc de décaler le point d'intersection des asymptotes qui est normalement dans la partie droite du plan complexe en plaçant le zéros du correcteur à avance de phase dans la partie gauche tout en maintenant ce zéro avant le pôle issu de la constante de temps mécanique qui se trouve dans la partie gauche. Une fois que la position des asymptotes a été correcte, nous avons réglé le gain du correcteur proportionnel afin que tous les pôles du système se retrouvent à droite de l'axe des imaginaires. Nous avons trouvé un gain K de 10. 
+L'idée est donc de décaler le point d'intersection des asymptotes qui est normalement dans la partie droite du plan complexe en plaçant le zéros du correcteur à avance de phase dans la partie gauche tout en maintenant ce zéro avant le pôle issu de la constante de temps mécanique qui se trouve dans la partie gauche. Une fois le zéro du correcteur à avance de phase correctement placé, nous avons réglé le gain du correcteur proportionnel afin que tous les pôles du système aient une partie réel négative. Nous avons trouvé un gain $Kp$ de 27. 
 
 \begin{center}
-\includegraphics[scale=0.50]{RL_Sys_AvPh_K27.pdf}
-\\
+\includegraphics[scale=0.50]{RL_Sys_AvPh_K27.pdf}\\
+\vspace{-15pt}
 \emph{Lieu d'Evans du système corrigé}
 \end{center}
 
-Nous avons ensuite tracé le diagramme de Black - Nichols du système corrigé afin de vérifier les marges de gain et de phase. Cela nous a permis d'obtenir une marge de phase d'environ 25\char23 et une marge de gain de plus de 10 dB. Cela nous garantie une certaine immunité par rapport aux perturbations extérieures.
+Nous avons ensuite tracé le diagramme de Black - Nichols du système corrigé afin de vérifier les marges de gain et de phase. Cela nous a permis d'obtenir une marge de phase d'environ 30\char23 et une marge de gain de plus de 15 dB. Cela nous garantie une certaine immunité par rapport aux perturbations extérieures.
 
 \begin{center}
-\includegraphics[scale=0.80]{MatBlackFredValues.pdf}
+\includegraphics[scale=1]{MatBlackFredValues.pdf}
 
 \emph{Diagramme de Black-Nichols du système corrigé}
 \end{center}
@@ -302,6 +302,8 @@ $  H_{correcteur} = \dfrac {8.272z - 7.915} {z - 0.6424} $
 \input{Automatique/SchemaBlocNum}
 \emph{Schéma bloc du système complet avec correcteur (Réprésentation en Numérique)}
 \end{center}
+
+Le comportement dans le lieu d'Evans valide la solution utilisé.
 
 \includegraphics[scale=0.50]{RLN_Sys_Seul.pdf}
 \includegraphics[scale=0.50]{RLN_Sys_AvPh_K27.pdf}
