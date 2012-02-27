@@ -266,7 +266,7 @@ Pour choisir les constantes du correcteur, nous avons procédé en deux étapes.
 \emph{Lieu d'Evans du système non corrigé}
 \end{center}
 
-L'idée est donc de décaler le point d'intersection des asymptotes qui est normalement dans la partie droite du plan complexe en plaçant le zéros du correcteur à avance de phase dans la partie gauche tout en maintenant ce zéro avant le pôle issu de la constante de temps mécanique qui se trouve dans la partie gauche. Une fois le zéro du correcteur à avance de phase correctement placé, nous avons réglé le gain du correcteur proportionnel afin que tous les pôles du système aient une partie réel négative. Nous avons trouvé un gain $Kp$ de 27. 
+L'idée est donc de décaler le point d'intersection des asymptotes qui est normalement dans la partie droite du plan complexe en plaçant le zéros du correcteur à avance de phase dans la partie gauche tout en maintenant ce zéro entre les deux poles issu de la constante de temps mécanique qui se trouve dans la partie gauche. On prendra un zéro en 1.2*Tméca afin d'être trop près des poles mécaniques. Une fois le zéro du correcteur à avance de phase correctement placé, nous avons réglé le gain du correcteur proportionnel afin que tous les pôles du système aient une partie réel négative. Nous avons trouvé un gain $Kp$ de 27. 
 
 \begin{center}
 \includegraphics[scale=0.50]{RL_Sys_AvPh_K27.pdf}\\
@@ -285,6 +285,8 @@ Nous avons ensuite tracé le diagramme de Black - Nichols du système corrigé a
 \section{Correcteur numérique}
 
 Dans la seconde partie du projet, nous commencerons par simplement convertir notre correcteur analogique par le biais d'une approximation des rectangles avant. Nous avons choisi cette solution car elle est réalisable physiquement contrairement à celle des rectangles arrière. En outre, elle est assez précise et plus facile à mettre en oeuvre que l'approximation de Tustin. Dans l'absolu, rien ne nous empêchera de changer cette approximation par la suite dans le cas où les résultats seraient insatisfaisants. 
+
+Au niveau du choix de la période d'échantillonage, on se rend compte que les pôles importants sont la constantes électriques et le pôle du correcteur à avance de phase. Le pôle le plus rapide étant le pôle à avance de phase, c'est celui qu'on retiendra pour déterminer la période d'échantillonage. On a donc Te<Tav/24 ce qui donne environ 4,0ms pour la période d'échantillonage la moins exigent. Si l'on prend le critère le plus dur, on  Te<Tav/6 ce qui donne une période de 1ms. 
 
 L'équation du système par l'approximation des rectangle avant devient :
 \medskip
