@@ -1,0 +1,45 @@
+\begin{tikzpicture}[node distance=2.8cm,semithick,auto]
+\tikzset{
+    >=stealth',
+    boite/.style={
+	rectangle,
+           rounded corners,
+	decoration={coil},
+           draw=black, very thick, decorate,
+           text width=6.5em,
+           minimum height=2em,
+           text centered
+	},
+    pil/.style={
+           ->,
+           thick,
+           shorten <=2pt,
+           shorten >=2pt,}
+}
+
+
+\node[boite] (Systeme){Système};
+\node[boite, left=2cm of Systeme] (Convertisseur){Convertisseur Analogique-Numérique}
+	edge[pil,bend left=45] (Systeme.west);
+\node[boite, right=2cm of Systeme] (Pilotage){Pilotage bobine PWM}
+	edge[pil,bend left=45] (Systeme.east);
+\node[boite, below=2cm of Systeme] (Utilisateur){Utilisateur}
+	edge[pil,bend left=45] (Systeme.south);
+
+%\path (A) edge node {A} (C);
+%\path (B) edge node {B} (C);
+
+
+%\node[] (Système){};
+%\node[] (Convertisseur Analogique-Numérique){};
+%\node[] (Pilotage bobine PWM){};
+%\node[] (Utilisateur){};
+
+%  \node[Etape] (I)              {};
+%  \node[Trans]         (S) [below of=I] {};
+
+
+%  \path (I) edge              node {S_query} (S)
+        
+%        (E) edge [bend left]  node {1,0,R} (A);
+\end{tikzpicture}
