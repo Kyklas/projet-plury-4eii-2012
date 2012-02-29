@@ -1,6 +1,6 @@
 \shorthandoff{:}
 \newcommand{\Etape}[2]{
-\node[Etape,label=right:#2] (#1) {};
+\node[Etape,label={right:#2}] (#1) {};
 }
 \newcommand{\EtapeLink}[3]{
 \node[Etape,below of=#3,label=right:#2] (#1) {};
@@ -39,10 +39,10 @@
 
 \begin{tikzpicture}
 
-\node[Etape,label=left:Génétation PWM] (I) {};
+\node[Etape,label=left:GÃ©nÃ©tation PWM] (I) {};
 
 \node[Trans,node distance = 2cm,align=center,right of=I] (T) {};
-\node[Line,align=center,anchor=west,at =(T.east),xshift=10pt] {Volonté de Rafraichir\\PWM:=Out};
+\node[Line,align=center,anchor=west,at =(T.east),xshift=10pt] {VolontÃ© de Rafraichir\\PWM:=Out};
 
 \draw[->] (I) edge [bend left=90] (T);
 \draw[->] (T) edge [bend left=90] (I);
@@ -51,11 +51,11 @@
 
 
 \begin{tikzpicture}%[every node/.style={font=\tiny}]
-\Etape{I}{Bit de Stop}
+\Etape{I}{$T_x:=0$}
 \TransLink{T1}{$\overline{Rx}=0$}{I}
 \EtapeLink{S}{Bit de Start}{T1}
-\TransLink{T2}{$\overline{Rx}=0$}{S}
-\EtapeLink{D}{Bit de donnée}{T2}
+\TransLink{T2}{clk}{S}
+\EtapeLink{D}{Bit de donnÃ©e}{T2}
 %\tikzstyle{every label}={draw,red,font=\tiny}
 
 \node[Trans,node distance = 1.5cm,left of=D] (T) {};
