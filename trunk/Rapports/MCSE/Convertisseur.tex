@@ -37,25 +37,9 @@
 
 \end{tikzpicture}
 
-\begin{tikzpicture}
-
-\node[Etape,label=left:Génétation PWM] (I) {};
-
-\node[Trans,node distance = 2cm,align=center,right of=I] (T) {};
-\node[Line,align=center,anchor=west,at =(T.east),xshift=10pt] {Volonté de Rafraichir\\PWM:=Out};
-
-\draw[->] (I) edge [bend left=90] (T);
-\draw[->] (T) edge [bend left=90] (I);
 
 
-\end{tikzpicture}
 
-\begin{tikzpicture}
-
-
-\node[ellipse,decoration={bumps,mirror},decorate,minimum height=2cm,minimum width=6cm,draw] {Ici};
-
-\end{tikzpicture}
 
 
 
