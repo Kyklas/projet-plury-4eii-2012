@@ -1,6 +1,10 @@
 \begin{tikzpicture}
 
+\node[draw,minimum height=2cm,minimum width=4cm,rounded corners] (Sys){Système};
 
-\node[ellipse,decoration={bumps,mirror},decorate,minimum height=2cm,minimum width=6cm,draw] {Ici};
+\node[above of=Sys,node distance=4cm,ellipse,decoration={bumps,mirror},decorate,outer sep=1cm,draw,align=center] {Convertisseur \\ Analogique-Numérique};
 
+\node[left of=Sys,node distance=6cm,ellipse,decoration={bumps,mirror},decorate,outer sep=1cm,align=center,draw] {Pilotage Bobine \\ Pulse Width Modulation};
+
+\node[right of=Sys,node distance=6cm,ellipse,decoration={bumps,mirror},decorate,outer sep=1cm,draw] {Utilisateur};
 \end{tikzpicture}
