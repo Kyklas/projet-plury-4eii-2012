@@ -55,7 +55,7 @@
 
 \vspace{0.2in}
 \hspace{0.2in}
-Convertisseur Analogique-Numérique
+\underline{Convertisseur Analogique-Numérique}
 \begin{description}
 \item[Sortie :] Sample, information, entier
 \item[Sortie :] S\_Available, évènement
@@ -64,26 +64,34 @@ Convertisseur Analogique-Numérique
 
 \vspace{0.2in}
 \hspace{0.2in}
-Utilisateur
+\underline{Pilotage Bobine (PWM)}
+\begin{description}
+\item[Entrée : ] Out, donnée permanente, entier
+\end{description}
+
+\vspace{0.2in}
+\hspace{0.2in}
+\underline{Utilisateur}   
 \begin{description}
 \item[Sortie : ] Rx, donnée permanente, bit
 \item[Entrée : ] Tx, donnée permanente, bit
 \end{description}
 
-\vspace{0.2in}
-\hspace{0.2in}
-Pilotage Bobine (PWM)
-\begin{description}
-\item[Entrée : ] Out, donnée permanente, entier
-\end{description}
 
 \subsection{Graphes des entités}
+\begin{figure}%
+\centering
+\subfloat[Convertisseur Analogique-Numérique]{\input{MCSE/Convertisseur.tex}}
+\subfloat[Pilotage Bobine (PWM)]{\input{MCSE/Pilotage.tex}}
+\end{figure}
+
+\hspace{0.2in}
+\underline{Utilisateur}   
+%\input{MCSE/Ordinateur.tex}
 
 \section{Délimitations des E/S du système}
 
 \section{Spécification fonctionnelle}
-
-
 
 \part{Conception fonctionnelle}
 \section{Délimitation des E/S du système}
@@ -93,8 +101,8 @@ Pilotage Bobine (PWM)
 
 
 
-\input{MCSE/Convertisseur.tex}
-\input{MCSE/Ordinateur.tex}
-\input{MCSE/Pilotage.tex}
+
+
+
 
 \end{document}
