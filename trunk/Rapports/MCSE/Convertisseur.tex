@@ -17,9 +17,6 @@
 \draw[->] (#3) -- (#1);
 }
 
-
-
-
 	\tikzset{Etape/.style={draw,black,minimum size=0.7cm,inner sep=0pt,circle,font=\tiny}}
 	\tikzset{Trans/.style={draw,black,minimum width=0.7cm,minimum height=0.0cm,inner sep=0pt,outer sep=0pt,rectangle,font=\tiny}}
 	
@@ -33,7 +30,6 @@
 \EtapeLink{S}{Sampling}{T1}
 \TransActionLink{T2}{Fin Sampling\\Sample:=Data, S\_available}{S}
 \draw[->] (T2) edge [bend left=160,distance=2.5cm] (I);
-
 
 \end{tikzpicture}
 
