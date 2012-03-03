@@ -45,7 +45,7 @@
 \maketitle
 \pagebreak
 
-
+\input{MCSE/Styles}
 \part{Spécification fonctionnelle}
 
 \section{Description des entités extérieures}
@@ -80,7 +80,6 @@
 
 
 \subsection{Graphes des entités}
-\input{MCSE/Styles}
 
 \hspace{0.2in}
 \underline{Convertisseur Analogique-Numérique}
@@ -96,9 +95,22 @@
 \newpage
 \hspace{0.2in}
 \underline{Utilisateur} 
-  
-\input{MCSE/Ordinateur.tex}
-%\input{MCSE/Reception.tex}
+
+\hspace{0.3in}
+Schéma de communication
+
+%\input{MCSE/Ordinateur.tex}
+
+Les fonctions de Transmition/Reception, sont respectivement representé avec T\_x et R\_x, or les deux péripheriques sont reliés avec un cable croisé. Le T\_x est donc en realité le R\_x du systeme et inversement.
+
+\hspace{0.3in}
+Fonction Reception
+
+\input{MCSE/Reception.tex}
+
+\hspace{0.3in}
+Fonction Transmition
+
 %\input{MCSE/Transmition.tex}
 
 \part{Conception fonctionnelle}
