@@ -1,10 +1,32 @@
-\begin{tikzpicture}
+\begin{tikzpicture}\shorthandoff{:}
 
-\node[draw,minimum height=2cm,minimum width=4cm,rounded corners] (Sys){Système};
+\node[inner sep=1cm,rounded corners,fill=gray!50]
+(SYS)
+{Système};
 
-\node[above of=Sys,node distance=4cm,ellipse,decoration={bumps,mirror},decorate,outer sep=1cm,draw,align=center] {Convertisseur \\ Analogique-Numérique};
+\node[above of=SYS,node distance=4cm,ellipse,decoration={bumps,mirror},decorate,draw,align=center] 
+(CONV)
+{Convertisseur \\ Analogique-Numérique};
 
-\node[left of=Sys,node distance=6cm,ellipse,decoration={bumps,mirror},decorate,outer sep=1cm,align=center,draw] {Pilotage Bobine \\ Pulse Width Modulation};
+\node[left of=SYS,node distance=6cm,ellipse,decoration={bumps,mirror},decorate,align=center,draw] 
+(BOB)
+{Pilotage Bobine \\ Pulse Width Modulation};
 
-\node[right of=Sys,node distance=6cm,ellipse,decoration={bumps,mirror},decorate,outer sep=1cm,draw] {Utilisateur};
+\node[right of=SYS,node distance=6cm,ellipse,decoration={bumps,mirror},inner sep=0.3cm,decorate,draw]
+(USER)
+{Utilisateur};
+
+\draw [->>,very thick] (SYS) -- node[above,pos=0.5]{Out} (BOB) ;
+
+\draw [<-, thick] (CONV) edge[dashed,bend right=35] node[left,pos=0.5]{S\_Qerry} (SYS) ;
+\draw [->>,very thick] (CONV) edge[bend right=15] node[right,pos=0.5]{Sample} (SYS) ;
+\draw [->, thick] (CONV) edge[dashed,bend left=35] node[right,pos=0.5]{S\_available} (SYS) ;
+
+
+
+
+\draw [->>,very thick] (SYS) edge[bend left=10] node[above,pos=0.5]{Tx} (USER) ;
+\draw [<<-,very thick] (SYS) edge[bend left=-10] node[below,pos=0.5]{Rx} (USER) ;
+
+
 \end{tikzpicture}

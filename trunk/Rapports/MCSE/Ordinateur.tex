@@ -1,24 +1,12 @@
-\begin{tikzpicture}
-% Schema de communication
-
+\vspace{-1.5cm}
+\hspace{-4cm}
 \begin{tikzpicture}%[every node/.style={font=\tiny}]
 
-\node (T) {};
 
-\TransLink{T1}{Volonté Lecture}{T}
 
-\EtapeLink{E1}{$T_{Data}:=Commande$, /Volonté d'envoyer}{T1}
+\Etape{T}{}
 
-\TransLink{T2}{Fin Transmition}{E1}
-
-\EtapeLink{E2}{Lecture}{T2}
-
-\TransActionLink{T3}{Fin Réception \\ $R_{Data}$}{E2}
-
-\EtapeLink{E3}{}{T3}
-
-	\draw[-] (E3) edge [out=160, in=90] (T.south);
-
+\draw (T) -- ($(T)+(-4,0)$) node[inner sep=0,outer sep=0] (E3) {};
 
 \TransLink{T1}{Volonté Ecriture}{E3}
 
@@ -30,6 +18,25 @@
 
 \TransLink{T3}{Fin Transmition}{E2}
 
-	\draw[->] (T3) edge [out=-90, in=210,out distance=4cm] (E3);
+\draw[->] (T3) edge [out=-90, in=160,out distance=4cm,in distance=9cm] node[inner sep=0,outer sep=0,minimum width=1cm,left,pos=0.3] (RET){} (T);
+
+
+\draw (T) -- ($(T)+(4,0)$) node[inner sep=0,outer sep=0] (E1) {};
+
+\TransLink{T1}{Volonté Lecture}{E1}
+
+\EtapeLink{E1}{$T_{Data}:=Commande$, /Volonté d'envoyer}{T1}
+
+\TransLink{T2}{Fin Transmition}{E1}
+
+\EtapeLink{E2}{Lecture}{T2}
+
+\TransActionLink{T3}{Fin Réception \\ $R_{Data}$}{E2}
+
+
+\draw[-] (T3) edge [out=-90,in=-55,out distance=1cm] (RET.center);
+\draw[->] (RET.center) edge [out=180-55,in=140,out distance=4cm,in distance=4cm] (T);
+
 
 \end{tikzpicture}
+\vspace{-2cm}
