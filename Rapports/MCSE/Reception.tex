@@ -1,19 +1,19 @@
-% reception des données
+% reception des donnÃ©es
 
 \begin{tikzpicture}%[every node/.style={font=\tiny}]
 \Etape{I}{Attente}
 \TransActionLink{T1}{$\uparrow$ I$_{clk}$ $\cdot$ $R_x=Bit_{Start}$ \\ $i:=8$ }{I}
-\EtapeLink{D}{\emph{Bit de donnée}}{T1}
+\EtapeLink{D}{\emph{Bit de donnÃ©e}}{T1}
 %\tikzstyle{every label}={draw,red,font=\tiny}
 
-\node[Trans,node distance = 1.5cm,left of=D] (T) {};
+\node[Trans,node distance = 1cm,left of=D] (T) {};
 \node[Line,align=center,anchor=east,at =(T.west),xshift=-10pt] (V) {$\uparrow$ I$_{clk}$ $\cdot$ $i>0$\\[1em]$R_{Data}[i]:=R_x$, $i$-\,- };
 \draw[->] (D) edge [out=225,in=-90] (T);
 \draw[->] (T) edge [out=90,in=135] (D);
 
 \TransLink{T3}{$\uparrow$ I$_{clk}$ $\cdot$ $i=0$}{D}
 \EtapeLink{S}{Attente}{T3}
-\TransActionLink{T4}{$R_x=Bit_{Stop}$\\ /Fin Réception}{S}
+\TransActionLink{T4}{$R_x=Bit_{Stop}$\\ /Fin RÃ©ception}{S}
 
 \draw[-] (T4) edge [out=-90,in=-90] ($(V.west)-(10pt,0)$);
 \draw[->] ($(V.west)-(10pt,0)$) edge [out=90] (I);
