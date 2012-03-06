@@ -52,9 +52,10 @@
 
 \subsection{Listes des entités}
 
-\paragraph{} Dans cette partie, nous allons expliciter la décomposition en entités que nous avons retenue :
-
+\paragraph{} Dans cette partie, nous allons expliciter la décomposition en entités que nous avons retenue.
 \vspace{0.2in}
+
+\begin{minipage}[t]{10cm}
 \hspace{0.2in}
 \underline{Convertisseur Analogique-Numérique}
 \begin{description}
@@ -63,14 +64,21 @@
 \item[Entrée :] S\_Query, évènement
 \end{description}
 
-\vspace{0.2in}
+\input{MCSE/Convertisseur.tex}
+\end{minipage}
+~
+\begin{minipage}[t]{10cm}
 \hspace{0.2in}
 \underline{Pilotage Bobine (PWM)}
 \begin{description}
 \item[Entrée : ] Out, donnée permanente, entier
 \end{description}
 
-\vspace{0.2in}
+\input{MCSE/Pilotage.tex}
+\end{minipage}
+
+\begin{minipage}[h]{20cm}
+\hspace{0.2in}
 \hspace{0.2in}
 \underline{Utilisateur}   
 \begin{description}
@@ -78,48 +86,40 @@
 \item[Entrée : ] Tx, donnée permanente, bit
 \end{description}
 
-
-\subsection{Graphes des entités}
-\vspace{0.2in}
-
-\begin{minipage}[t]{8cm}
-\underline{Convertisseur Analogique-Numérique}
-\vspace{-0.5in}
-\input{MCSE/Convertisseur.tex}
-\end{minipage}
-\hspace{0.2in}
-\begin{minipage}[t]{8cm}
-\underline{Pilotage Bobine (PWM)}
-
-\input{MCSE/Pilotage.tex}
+\input{MCSE/Ordinateur.tex}
 \end{minipage}
 
 \newpage
+
+Les fonctions de Transmition/Reception, sont respectivement representé avec $T_x$ et $R_x$, or les deux péripheriques sont reliés avec un cable croisé. Le $T_x$ est donc en realité le $R_x$ du systeme et inversement.
+
+
+\begin{minipage}[t, h]{5cm}
 \hspace{0.2in}
-\underline{Utilisateur} 
-
-\hspace{0.3in}
-Schéma de communication
-
-\input{MCSE/Ordinateur.tex}
-
-Les fonctions de Transmition/Reception, sont respectivement representé avec T\_x et R\_x, or les deux péripheriques sont reliés avec un cable croisé. Le T\_x est donc en realité le R\_x du systeme et inversement.
-
-\hspace{0.3in}
-Fonction Reception
-
-%\input{MCSE/Reception.tex}
-
-\hspace{0.3in}
-Fonction Transmition
-
+\underline{Fonction Transmition}
+\end{minipage}
+~
+\begin{minipage}[t, h]{9cm}
 \input{MCSE/Transmition.tex}
+\end{minipage}
+
+\begin{minipage}[t, h]{5cm}
+\hspace{0.2in}
+\underline{Fonction Reception}
+\end{minipage}
+~
+\begin{minipage}[t, h]{9cm}
+\input{MCSE/Reception.tex}
+\end{minipage}
 
 \part{Conception fonctionnelle}
 \section{Délimitation des E/S du système}
+
+\input{MCSE/Systeme.tex}
+
 \section{Décomposition fonctionnelle}
 
-%\input{MCSE/Systeme.tex}
+
 
 
 
