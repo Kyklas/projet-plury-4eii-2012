@@ -1,12 +1,16 @@
+\vspace{-0.4cm}
 \begin{tikzpicture}
 
-\node[Etape,label=left:Génétation PWM] (I) {};
+\node[Etape,label=right:Génétation PWM] (I) {};
+\TransActionLink{T}{Volonté de Rafraichir\\PWM:=Out}{I}
 
-\node[Trans,node distance = 2cm,align=center,right of=I] (T) {};
-\node[Line,align=center,anchor=west,at =(T.east),xshift=10pt] {Volonté de Rafraichir\\PWM:=Out};
+%\node[Trans,node distance = 2cm,align=center,right of=I] (T) {};
+%\node[Line,align=center,anchor=west,at =(T.east),xshift=10pt] {Volonté de Rafraichir\\PWM:=Out};
 
-\draw[->] (I) edge [bend left=90] (T);
-\draw[->] (T) edge [bend left=90] (I);
 
+\draw[->] (T) edge [bend left=160,distance=2.5cm] (I);
+
+%\draw[->] (I) edge [bend left=90] (T);
+%\draw[->] (T) edge [bend left=90] (I);
 
 \end{tikzpicture}

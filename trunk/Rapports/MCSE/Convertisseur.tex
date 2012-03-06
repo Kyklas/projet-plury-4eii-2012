@@ -1,6 +1,6 @@
-
+\vspace{-1.5cm}
 \begin{tikzpicture}\shorthandoff{:}
-\Etape{I}{}
+\node[Etape,label=right:Attente] (I) {};
 \TransLink{T1}{S\_query}{I}
 \EtapeLink{S}{Sampling}{T1}
 \TransActionLink{T2}{Fin Sampling\\Sample:=Data, S\_available}{S}

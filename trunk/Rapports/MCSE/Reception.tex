@@ -1,6 +1,6 @@
 % reception des données
 
-\begin{tikzpicture}%[every node/.style={font=\tiny}]
+\begin{tikzpicture}[every node/.style={font=\footnotesize, node distance =  0.7cm}]
 \Etape{I}{Attente}
 \TransActionLink{T1}{$\uparrow$ I$_{clk}$ $\cdot$ $R_x=Bit_{Start}$ \\ $i:=8$ }{I}
 \EtapeLink{D}{\emph{Bit de donnée}}{T1}
