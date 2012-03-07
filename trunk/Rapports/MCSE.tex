@@ -49,14 +49,12 @@
 \input{MCSE/Styles}
 \part{Spécification fonctionnelle}
 
-\section{Description des entités extérieures}
-
-\subsection{Listes des entités}
+\section{Analyse de l'environnement}
 
 \paragraph{} Dans cette partie, nous allons expliciter la décomposition en entités que nous avons retenue.
 \vspace{0.2in}
 
-\begin{minipage}[t]{10cm}
+\begin{minipage}[t]{9cm}
 \hspace{0.2in}
 \underline{Convertisseur Analogique-Numérique}
 \begin{description}
@@ -68,7 +66,7 @@
 \input{MCSE/Convertisseur.tex}
 \end{minipage}
 ~
-\begin{minipage}[t]{10cm}
+\begin{minipage}[t]{8cm}
 \hspace{0.2in}
 \underline{Pilotage Bobine (PWM)}
 \begin{description}
@@ -92,8 +90,7 @@
 
 \newpage
 
-Les fonctions de Transmition/Reception, sont respectivement representé avec $T_x$ et $R_x$, or les deux péripheriques sont reliés avec un cable croisé. Le $T_x$ est donc en realité le $R_x$ du systeme et inversement.
-
+Les fonctions de Transmition/Reception, sont respectivement representée avec $T_x$ et $R_x$, or les deux péripheriques de communication série sont reliés via un cable croisé. Le $T_x$ de l'utilisateur est donc en realité le $R_x$ du systeme et inversement.
 
 \begin{minipage}[t, h]{5cm}
 \hspace{0.2in}
@@ -113,10 +110,51 @@ Les fonctions de Transmition/Reception, sont respectivement representé avec $T_
 \input{MCSE/Reception.tex}
 \end{minipage}
 
-\part{Conception fonctionnelle}
 \section{Délimitation des E/S du système}
 
 \input{MCSE/Systeme.tex}
+
+\section{Spécification fonctionelle du système}
+
+Le système sera découpé en trois bloc :
+\vspace{0.1in}
+\begin{description}
+\item[Correction - Asservissement : ] Aquisition des données, Correction et Pilotage du PWM.
+\item[Horlogue : ] Gestion de différent Temps et envoie des événement appropriés.
+\item[Gestion Communication : ] Gestion de la communication avec l'utilisateur.
+\end{description}
+
+\vspace{0.2in}
+\underline{Correction - Asservissement}
+
+\begin{center}
+\input{MCSE/CorrectionAsservissement.tex}
+\end{center}
+
+\vspace{0.2in}
+\underline{Horlogue}
+
+\begin{minipage}[t, h]{8cm}
+\input{MCSE/HorlogueIclk.tex}
+\end{minipage}
+~
+\begin{minipage}[t, h]{8cm}
+\input{MCSE/HorlogueTe.tex}
+\end{minipage}
+
+\pagebreak
+\begin{landscape}
+\begin{center}
+\vspace{0.2in}
+\underline{Gestion Communication}
+
+\input{MCSE/Communication.tex}
+\end{center}
+\end{landscape}
+
+
+\part{Conception fonctionnelle}
+
 
 \section{Décomposition fonctionnelle}
 

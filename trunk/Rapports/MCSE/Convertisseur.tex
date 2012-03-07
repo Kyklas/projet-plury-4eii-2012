@@ -3,7 +3,7 @@
 \node[Etape,label=right:Attente] (I) {};
 \TransLink{T1}{S\_query}{I}
 \EtapeLink{S}{Sampling}{T1}
-\TransActionLink{T2}{Fin Sampling\\Sample:=Data, S\_available}{S}
+\TransActionLink{T2}{Fin Sampling\\$\triangleright$ Sample:=Data, S\_available}{S}
 \draw[->] (T2) edge [bend left=160,distance=2.5cm] (I);
 
 \end{tikzpicture}

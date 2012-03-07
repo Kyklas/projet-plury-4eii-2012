@@ -1,0 +1,23 @@
+\vspace{-1.5cm}
+\begin{tikzpicture}[every node/.style={font=\footnotesize, node distance =  0.7cm}]
+\shorthandoff{:}
+\node[Etape,label=right:Attente] (I) {};
+\TransActionLink{T1}{$Te_{clk}$\\S\_query}{I}
+\EtapeLink{S}{Attente Sampling}{T1}
+\TransActionLink{T2}{S\_available\\S[0]=S[0]+Sample, $i:=i+1$}{S}
+\node[Trans,node distance = 1cm, align=center,left of=S,label=left:$i<Nb_{Acq}$] (T4) {};
+\EtapeLink{F}{Acquition de $Nb_{Acq}$}{T2}
+\draw[->] (F) edge [bend left=160,distance=3.5cm] (I);
+\TransActionLink{T3}{$i=Nb_{Acq}$\\$i:=0$, S[0]=S[0]$\div Nb_{Acq}$}{F}
+\EtapeLink{C}{Correction}{T3}
+\TransActionLink{T5}{$true$\\$Out := f(Out_1, S[0], S[1], Consigne, Td, Te, Kp)$}{C}
+\EtapeLink{C1}{Vieillissement des variables}{T5}
+\TransActionLink{T6}{$true$\\$Out_1 := Out$, S[1]=S[0]}{C1}
+\draw[-] (T6) edge [out=-90,in=-90] ($(T4.west)-(70pt,0)$);
+\draw[->] ($(T4.west)-(70pt,0)$) edge [out=90] (I);
+
+
+
+
+
+\end{tikzpicture}

@@ -1,0 +1,11 @@
+
+\begin{tikzpicture}\shorthandoff{:}
+
+\node[Etape,label=right:Attente Commande] (I) {};
+\TransActionLink{T}{Fin reception\\$Cmd := R_{Data}$}{I}
+\EtapeLink{E1}{Lecture/Ecriture}{T1}
+\draw (E1) -- ($(E1)+(-4,0)$) node[inner sep=0,outer sep=0] (E2) {};
+
+
+
+\end{tikzpicture}
