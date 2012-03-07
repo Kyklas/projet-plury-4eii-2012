@@ -1,0 +1,8 @@
+\vspace{-1.5cm}
+\begin{tikzpicture}\shorthandoff{:}
+
+\node[Etape,label=right:Attente Periode UART] (I) {};
+\TransActionLink{T}{Nouvelle Periode UART\\$I_{clk}$}{I}
+\draw[->] (T) edge [bend left=160,distance=2.5cm] (I);
+
+\end{tikzpicture}
