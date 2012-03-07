@@ -14,9 +14,9 @@ path picture={\draw[-,black] (path picture bounding box.north) -- (path picture 
 
 \node[draw,align=center,inner sep=10pt] (CORR) {Correction\\Asservissement};
 
-\foreach \id in {-2,...,1}
+\foreach \id in {1,...,4}
 {
-\coordinate (CORR-E\id) at ($(CORR.east)+(0,\id*0.3cm)$);
+\coordinate (CORR-E\id) at ($(CORR.north east)+(0,-\id*0.3cm)$);
 }
 
 
@@ -25,9 +25,9 @@ path picture={\draw[-,black] (path picture bounding box.north) -- (path picture 
 {
 \coordinate (COMM-S\id) at ($(COMM.south)+(\id*0.3cm,0)$);
 }
-\foreach \id in {-2,...,2}
+\foreach \id in {1,...,4}
 {
-\coordinate (COMM-N\id) at ($(COMM.north)+(\id*0.3cm,0)$);
+\coordinate (COMM-N\id) at ($(COMM.north east)+(-\id*0.7cm,0)$);
 }
 \node at ($(CORR)+(0,-4)$) [draw,align=center,inner sep=10pt] (CLK) {Clock};
 
@@ -63,9 +63,22 @@ path picture={\draw[-,black] (path picture bounding box.north) -- (path picture 
 
 
 
-\path (COMM) |- node[VPV,label={[label distance = 0.1cm,pos=0.6]above left:Out},pos=0.6] (mid) {} (CORR);
-\draw[->] (COMM) |- (mid.center);
-\draw[->] (mid.center) -- (CORR);
+\path (COMM-N1) |- node[VPV,label={[label distance = 0.1cm,pos=0.6]above left:Consigne},pos=0.6] (mid) {} (CORR-E1);
+\draw[->] (COMM-N1) |- (mid.center);
+\draw[->] (mid.center) -- (CORR-E1);
+
+\path (COMM-N2) |- node[VPH,label={[label distance = 0.05cm,pos=0.1]above left:Kp},pos=0.1] (mid) {} (CORR-E2);
+\draw[->] (COMM-N2) -- (mid.center);
+\draw[->] (mid.center) |- (CORR-E2);
+\path (COMM-N3) |- node[VPH,label={[label distance = 0.05cm,pos=0.1]above left:Td},pos=0.1] (mid) {} (CORR-E3);
+\draw[->] (COMM-N3) -- (mid.center);
+\draw[->] (mid.center) |- (CORR-E3);
+\path (COMM-N4) |- node[VPH,label={[label distance = 0.1cm,pos=0.1]above left:Nb acquisition},pos=0.1] (mid) {} (CORR-E4);
+\draw[->] (COMM-N4) -- (mid.center);
+\draw[->] (mid.center) |- (CORR-E4);
+
+
+
 
 \path (COMM-S-1) |- node[VPH,label={[label distance = 0.1cm,pos=0.3] left:Te},pos=0.3] (mid) {} (CLK-E1);
 \draw[->] (COMM-S-1) -- (mid.center);
