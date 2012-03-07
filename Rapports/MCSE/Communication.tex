@@ -1,17 +1,17 @@
 \vspace{0.2in}
-\begin{tikzpicture}[every node/.style={font=\footnotesize, node distance =  0.7cm}]
+\begin{tikzpicture}
 \shorthandoff{:}
 
 \node[Etape,label=right:Attente Commande] (I) {};
 \TransActionLink{T}{Fin reception\\$Cmd := R_{Data}$}{I}
-\EtapeLink{E1}{}{T1}
+\EtapeLink{E1}{}{T}
 
-\draw (E1) -- ($(E1)+(-5,0)$) node[inner sep=0,outer sep=0] (E10) {};
-\TransLink{T10}{$RW = Lecture$}{E10}
+\draw (E1) -- ($(E1.west)+(-5,0)$) node[inner sep=0,outer sep=0] (E10) {};
+\TransLink{T10}{$Cmd.RW = Lecture$}{E10}
 \EtapeLink{E11}{Mode Lecture}{T10}
 
-\draw (E1) -- ($(E1)+(5,0)$) node[inner sep=0,outer sep=0] (E20) {};
-\TransLink{T20}{$RW = Ecriture$}{E20}
+\draw (E1) -- ($(E1.east)+(5,0)$) node[inner sep=0,outer sep=0] (E20) {};
+\TransLink{T20}{$Cmd.RW = Ecriture$}{E20}
 \EtapeLink{E21}{Mode Ecriture}{T20}
 
 \end{tikzpicture}

@@ -1,0 +1,44 @@
+\vspace{-1cm}
+\begin{tikzpicture}[every node/.style={font=\footnotesize, node distance =  0.9cm}]
+\shorthandoff{:}
+
+\node[Etape,label=right:Mode Lecture] (I) {};
+\TransLink{T}{}{I}
+
+\EtapeLink{I2}{}{T}
+
+\draw (I2) -- ($(I2)+(-11,0)$) node[inner sep=0,outer sep=0] (E10) {};
+\TransLink{T10}{$Cmd.P_{[3..0]} = 0 (Aucun) + $\\$Cmd.P_{[3..0]} > 5$}{E10}
+\EtapeLink{E11}{Attente\\Commande}{T10}
+
+\draw (I2) -- ($(I2)+(-6,0)$) node[inner sep=0,outer sep=0] (E20) {};
+\TransLink{T20}{$Cmd.P_{[3..0]} = 1 $\\$(K_p)$}{E20}
+\EtapeLink{E21}{$T_{Data}:= K_p$ \\ /Volonté d’envoyer}{T20}
+\TransLink{T21}{Fin Transmition}{E21}
+\EtapeLink{E22}{Attente\\Commande}{T21}
+
+\draw (I2) -- ($(I2)+(-1.7,0)$) node[inner sep=0,outer sep=0] (E30) {};
+\TransLink{T30}{$Cmd.P_{[3..0]} = 2 $\\$(T_d$)}{E30}
+\EtapeLink{E31}{$T_{Data}:= T_d$ \\ /Volonté d’envoyer}{T30}
+\TransLink{T31}{Fin Transmition}{E31}
+\EtapeLink{E32}{Attente\\Commande}{T31}
+
+\draw (I2) -- ($(I2)+(+2.6,0)$) node[inner sep=0,outer sep=0] (E40) {};
+\TransLink{T40}{$Cmd.P_{[3..0]} = 3 $\\$(T_e)$}{E40}
+\EtapeLink{E41}{$T_{Data}:= T_e$ \\ /Volonté d’envoyer}{T40}
+\TransLink{T41}{Fin Transmition}{E41}
+\EtapeLink{E42}{Attente\\Commande}{T41}
+
+\draw (I2) -- ($(I2)+(+6.9,0)$) node[inner sep=0,outer sep=0] (E50) {};
+\TransLink{T50}{$Cmd.P_{[3..0]} = 4 $\\$(Consigne)$}{E50}
+\EtapeLink{E51}{$T_{Data}:= Consigne$ \\ /Volonté d’envoyer}{T50}
+\TransLink{T51}{Fin Transmition}{E51}
+\EtapeLink{E52}{Attente\\Commande}{T51}
+
+\draw (I2) -- ($(I2)+(+12,0)$) node[inner sep=0,outer sep=0] (E60) {};
+\TransLink{T60}{$Cmd.P_{[3..0]} = 5 $\\$(Nb_{Acq})$}{E60}
+\EtapeLink{E61}{$T_{Data}:= Nb_{Acq}$ \\ /Volonté d’envoyer}{T60}
+\TransLink{T61}{Fin Transmition}{E61}
+\EtapeLink{E62}{Attente\\Commande}{T61}
+
+\end{tikzpicture}
