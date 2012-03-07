@@ -1,0 +1,79 @@
+\tikzset{
+VPH/.style={inner sep=0,minimum width=0.4cm,minimum height=0.2cm,
+path picture={\draw[-,black] (path picture bounding box.west) -- (path picture bounding box.east);
+\draw[-,black] (path picture bounding box.north west) -- (path picture bounding box.south west);
+\draw[-,black] (path picture bounding box.north east) -- (path picture bounding box.south east);}},
+VPV/.style={inner sep=0,minimum height=0.4cm,minimum width=0.2cm,
+path picture={\draw[-,black] (path picture bounding box.north) -- (path picture bounding box.south);
+\draw[-,black] (path picture bounding box.north west) -- (path picture bounding box.north east);
+\draw[-,black] (path picture bounding box.south west) -- (path picture bounding box.south east);}}}
+
+\shorthandoff{:}
+\begin{tikzpicture}[font=\small]
+
+
+\node[draw,align=center,inner sep=10pt] (CORR) {Correction\\Asservissement};
+
+\foreach \id in {-2,...,1}
+{
+\coordinate (CORR-E\id) at ($(CORR.east)+(0,\id*0.3cm)$);
+}
+
+
+\node at ($(CORR)+(5,-2.4)$) [draw,align=center,inner sep=10pt] (COMM) {Gestion\\Communication};
+\foreach \id in {-1,1}
+{
+\coordinate (COMM-S\id) at ($(COMM.south)+(\id*0.3cm,0)$);
+}
+\foreach \id in {-2,...,2}
+{
+\coordinate (COMM-N\id) at ($(COMM.north)+(\id*0.3cm,0)$);
+}
+\node at ($(CORR)+(0,-4)$) [draw,align=center,inner sep=10pt] (CLK) {Clock};
+
+\foreach \id in {-1,1}
+{
+\coordinate (CLK-E\id) at ($(CLK.east)+(0,\id*0.2cm)$);
+}
+
+
+\node[draw,inner sep=20pt,fit=(CORR) (COMM) (CLK)](SYS) {};
+
+
+
+\node at ($(CORR.north)+(0,2.5)$) [ellipse,decoration={bumps,mirror},decorate,draw,align=center] 
+(CONV)
+{Convertisseur \\ Analogique-Numérique};
+
+\node at ($(CORR.west)+(-5,0)$) [ellipse,decoration={bumps,mirror},decorate,align=center,draw] 
+(BOB)
+{Pilotage Bobine \\ Pulse Width Modulation};
+
+\node at ($(COMM)+(5,0)$) [ellipse,decoration={bumps,mirror},inner sep=0.3cm,decorate,draw]
+(USER)
+{Utilisateur};
+
+%\draw[dashed] (CORR) -- node[solid,	isosceles triangle,draw,pos=0.5,rotate=180,fill=white,minimum size=3mm,inner sep=0] {} (BOB);
+
+
+
+\path (CORR) -- node[VPV,label={[label distance = 0.2cm]above left:Out}] (mid) {} (BOB);
+\draw[->] (CORR) -- (mid.center);
+\draw[->] (mid.center) -- (BOB);
+
+
+
+\path (COMM) |- node[VPV,label={[label distance = 0.1cm,pos=0.6]above left:Out},pos=0.6] (mid) {} (CORR);
+\draw[->] (COMM) |- (mid.center);
+\draw[->] (mid.center) -- (CORR);
+
+\path (COMM-S-1) |- node[VPH,label={[label distance = 0.1cm,pos=0.3] left:Te},pos=0.3] (mid) {} (CLK-E1);
+\draw[->] (COMM-S-1) -- (mid.center);
+\draw[->] (mid.center) |- (CLK-E1);
+
+
+\draw[dashed] (CLK) -- node[solid,isosceles triangle,draw,pos=0.5,rotate=90,fill=white,minimum size=3mm,inner sep=0,label={[label distance = 0.2cm,pos=0.5]below:$Te_{clk}$}] {} (CORR);
+
+\draw[dashed] (CLK-E-1) -| node[solid,isosceles triangle,draw,pos=0.3,fill=white,minimum size=3mm,inner sep=0,label={[label distance = 0.2cm,pos=0.3]below:$Te_{clk}$}] {} (COMM-S1);
+
+\end{tikzpicture}
