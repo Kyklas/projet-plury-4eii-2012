@@ -142,31 +142,56 @@ Le système sera découpé en trois bloc :
 \input{MCSE/HorlogueTe.tex}
 \end{minipage}
 
+
+\underline{Gestion Communication}
+\vspace{0.2in}
+
+La partie Gestion communication avec l'utilisateur est séparer en 4 fonction. Tout d'abord, la fonction "Principale" qui lance les fonctions d'écriture ou de lecture suivant la valeur de RW. Et pour finir, la fonction "modification" qui est lancée après chaque écriture afin d'appliquer ou non les modifications.
+
+\vspace{0.2in}
+\hspace{0.2in}
+\underline{Modification}
+
+\begin{center}
+\input{MCSE/Modif.tex}
+\end{center}
+
+\vspace{0.2in}
+\hspace{0.2in}
+\underline{Gestion Communication (Principale)}
+
+\begin{center}
+\input{MCSE/Communication.tex}
+\end{center}
+
 \pagebreak
 \begin{landscape}
-\begin{center}
-\vspace{0.2in}
-\underline{Gestion Communication}
 
-\input{MCSE/Communication.tex}
+\hspace{0.2in}
+\underline{Mode Lecture}
+
+\begin{center}
+\input{MCSE/CommunicationRead.tex}
+\end{center}
+
+\hspace{0.2in}
+\vspace{0.2in}
+\underline{Mode Ecriture}
+
+\begin{center}
+\input{MCSE/CommunicationWrite.tex}
 \end{center}
 \end{landscape}
 
-
-\part{Conception fonctionnelle}
-
-
-\section{Décomposition fonctionnelle}
-
 \pagebreak
 \begin{landscape}
+
+\part{Conception fonctionnelle}
+\section{Décomposition fonctionnelle}
+
 \begin{center}
 \input{MCSE/ConceptFonct.tex}
 \end{center}
 \end{landscape}
-
-
-
-
 
 \end{document}
