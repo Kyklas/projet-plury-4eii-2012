@@ -18,7 +18,7 @@
 
 \TransLink{T3}{Fin Transmition}{E2}
 
-\draw[->] (T3) edge [out=-90, in=160,out distance=4cm,in distance=9cm] node[inner sep=0,outer sep=0,minimum width=1cm,left,pos=0.3] (RET){} (T);
+\draw[->] (T3) edge [out=-90, in=160,out distance=4cm,in distance=9cm] node[inner sep=0,outer sep=0,minimum width=0cm,pos=0.2] (RET){} (T);
 
 
 \draw (T) -- ($(T)+(4,0)$) node[inner sep=0,outer sep=0] (E1) {};
@@ -34,8 +34,7 @@
 \TransActionLink{T3}{Fin Réception \\ $R_{Data}$}{E2}
 
 
-\draw[-] (T3) edge [out=-90,in=-55,out distance=1cm] (RET.center);
-\draw[->] (RET.center) edge [out=180-55,in=140,out distance=4cm,in distance=4cm] (T);
+\draw[->] (T3) edge [out=-90,in=-40,out distance=1cm] (RET.center);
 
 
 \end{tikzpicture}
