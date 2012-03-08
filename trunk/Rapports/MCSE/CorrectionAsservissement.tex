@@ -1,13 +1,16 @@
-\vspace{-1.5cm}
+\vspace{1cm}
 \begin{tikzpicture}[every node/.style={font=\footnotesize, node distance =  0.7cm}]
 \shorthandoff{:}
 \node[Etape,label=right:Attente] (I) {};
-\TransActionLink{T1}{$Te_{clk}$\\S\_query}{I}
+\TransActionLink{T1}{$Te_{clk}$\\/S\_query}{I}
 \EtapeLink{S}{Attente Sampling}{T1}
 \TransActionLink{T2}{S\_available\\S[0]=S[0]+Sample, $i:=i+1$}{S}
 \node[Trans,node distance = 1cm, align=center,left of=S,label=left:$i<Nb_{Acq}$] (T4) {};
 \EtapeLink{F}{Acquition de $Nb_{Acq}$}{T2}
-\draw[->] (F) edge [bend left=160,distance=3.5cm] (I);
+
+\draw[->] (F) edge [bend left] (T4);
+\draw[->] (T4) edge [bend left] (I);
+
 \TransActionLink{T3}{$i=Nb_{Acq}$\\$i:=0$, S[0]=S[0]$\div Nb_{Acq}$}{F}
 \EtapeLink{C}{Correction}{T3}
 \TransActionLink{T5}{$true$\\$Out := f(Out_1, S[0], S[1], Consigne, Td, Te, Kp)$}{C}

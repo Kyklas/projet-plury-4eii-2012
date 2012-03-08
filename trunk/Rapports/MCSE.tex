@@ -19,6 +19,7 @@
 \usepackage{subfig} % make it possible to include more than one captioned figure/table in a single float
 \usepackage[frenchb]{babel}
 \usepackage{pdflscape}
+\usepackage{rotating}
 
 % Package pour schémas MCSE
 \usepackage{tikz}
@@ -187,10 +188,9 @@ La partie Gestion communication avec l'utilisateur est séparer en 4 fonction. T
 \section{Décomposition fonctionnelle}
 
 \begin{center}
-\rotatebox{90}
-{
+\begin{turn}{90}
 \input{MCSE/ConceptFonct.tex}
-}
+\end{turn}
 \end{center}
 
 
