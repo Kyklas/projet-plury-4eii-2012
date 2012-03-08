@@ -6,6 +6,12 @@
 \node[Etape,below of=#3,label={[align=left]right:#2}] (#1) {};
 \draw[->] (#3) -- (#1);
 }
+
+\newcommand{\EtapeMacroLink}[3]{
+\node[Etape,double,below of=#3,label={[align=left]right:#2}] (#1) {};
+\draw[->] (#3) -- (#1);
+}
+
 \newcommand{\TransLink}[3]{
 \node[Trans,align=center,below of=#3] (#1) {};
 \node[align=center,anchor=west,at =(#1.east),xshift=10pt] {#2};

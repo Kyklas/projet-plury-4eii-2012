@@ -1,21 +1,22 @@
-\vspace{-1.5cm}
+
 \begin{tikzpicture}\shorthandoff{:}
 
-\node[Etape,label=right:Attente] (I) {};
-\TransLink{T}{Modif}{I}
-\EtapeLink{E1}{Application des modifications}{T}
-\TransLink{T1}{$Cmd.AP = 1$}{E1}
-\EtapeLink{E2}{}{T1}
-\node[Trans,align=left,below of=E2] (T2) {};
-\node[align=left,anchor=west,at =(T2.east),xshift=10pt] {/$K_p := SK_p$\\/$T_dT_d$\\/$T_e := ST_e$\\/$Consigne := SConsigne$\\/$Nb_{Acq} := SNb_{Acq}$};
-\draw[->] (E2) -- (T2);
-\EtapeLink{E3}{}{T2}
-\draw[->] (E1) edge [bend right=50,distance=1.5cm] (E3);
+\node[Etape,double,label={[align=left]right:Modif}] (I) {};
 
-\node[Trans,node distance = 1.1cm, align=center,left of=E2,label=left:{$Cmd.AP = 0$}] (T4) {};
-\draw[-] (E3) edge [out=-90,in=-90] ($(T4.west)-(90pt,0)$);
-\draw[->] ($(T4.west)-(90pt,0)$) edge [out=90] (I);
 
-\draw[-] ($(E3.east)+(10pt,0)$) edge ($(E2.east)+(10pt,0)$);
+\TransActionLink{T1}{$Cmd.AP = 1$\\ }{I}
+
+\node[align=left,anchor=north west,at =(T1.south east),xshift=10pt] {$K_p := SK_p$\\$T_dT_d$\\$T_e := ST_e$\\$Consigne := SConsigne$\\$Nb_{Acq} := SNb_{Acq}$};
+
+
+\node[Trans,node distance = 1.1cm, align=center,left of=T1,label=left:{$Cmd.AP = 0$}] (T2) {};
+
+\node[Etape,double,below of=I,node distance=4.5cm,label={[align=left]right:Modif End}] (E) {};
+
+\draw[->] (I) edge [in=90,out=200] (T2);
+\draw[->] (T2) edge[out=-90] (E);
+
+\draw[->] (T1) edge (E);
+
 
 \end{tikzpicture}

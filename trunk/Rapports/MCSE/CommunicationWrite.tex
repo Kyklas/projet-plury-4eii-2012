@@ -2,53 +2,65 @@
 \begin{tikzpicture}[every node/.style={font=\footnotesize, node distance =  0.9cm}]
 \shorthandoff{:}
 
-\node[Etape,label=right:Mode Ecriture] (I) {};
-\TransLink{T}{}{I}
+%\node[Etape,label=right:Mode Ecriture] (I) {};
+\Etape{I}{Mode Ecriture}
+\TransLink{T}{Fin Réception}{I}
 \EtapeLink{I2}{}{T}
 
+\node[Etape,double,below of=I2,node distance=2.5cm,label={[align=left]above right:Modif}] (MODIF) {};
+\TransLink{T21}{1}{MODIF}
+\EtapeLink{E22}{Attente\\Commande}{T21}
+
 \draw (I2) -- ($(I2)+(-11,0)$) node[inner sep=0,outer sep=0] (E10) {};
-\TransLink{T10}{$Cmd.P_{[3..0]} = 0 (Aucun) + $\\$P_{[3..0]} > 5 (Aucun)$}{E10}
-\EtapeLink{E11}{Attente\\Commande}{T10}
-\TransLink{T11}{/Modif}{E11}
-\EtapeLink{E12}{Attente\\Commande}{T11}
+\TransLink{T10}{$Cmd.P_{[3..0]} = 0 (Aucun)$\\$ + $\\$P_{[3..0]} > 5 (Aucun)$}{E10}
+
+\draw[->] (T10) |- (MODIF);
+
+%\EtapeMacroLink{E11}{Modif}{T10}
+%\TransLink{T11}{1}{E11}
+%\EtapeLink{E12}{Attente\\Commande}{T11}
 
 \draw (I2) -- ($(I2)+(-6,0)$) node[inner sep=0,outer sep=0] (E20) {};
-\TransLink{T20}{$Cmd.P_{[3..0]} = 1 $\\$(K_p)$}{E20}
-\EtapeLink{E21}{}{T20}
-\TransActionLink{T21}{Fin Réception\\$SK_p$ := $R_{Data}$}{E21}
-\EtapeLink{E22}{}{T21}
-\TransLink{T22}{/Modif}{E22}
-\EtapeLink{E23}{Attente\\Commande}{T22}
+\TransActionLink{T20}{$Cmd.P_{[3..0]} = 1 $ $(K_p)$ \\ $SK_p$ := $R_{Data}$ }{E20}
+\draw[->] (T20) |- (MODIF);
+%\EtapeMacroLink{E21}{Modif}{T20}
+%\TransLink{T21}{1}{E21}
+%\EtapeLink{E22}{Attente\\Commande}{T21}
+
 
 \draw (I2) -- ($(I2)+(-1.7,0)$) node[inner sep=0,outer sep=0] (E30) {};
-\TransLink{T30}{$Cmd.P_{[3..0]} = 2 $\\$(T_d$)}{E30}
-\EtapeLink{E31}{}{T30}
-\TransActionLink{T31}{Fin Réception\\$ST_d$ := $R_{Data}$}{E31}
-\EtapeLink{E32}{Attente\\Commande}{T31}
-\TransLink{T32}{/Modif}{E32}
-\EtapeLink{E33}{Attente\\Commande}{T32}
+\TransActionLink{T30}{$Cmd.P_{[3..0]} = 2 $ $(T_d$) \\ $ST_d$ := $R_{Data}$}{E30}
+\draw[->] (T30) |- (MODIF);
+%\EtapeLink{E31}{}{T30}
+%\TransActionLink{T31}{Fin Réception\\$ST_d$ := $R_{Data}$}{E31}
+%\EtapeLink{E32}{Attente\\Commande}{T31}
+%\TransLink{T32}{/Modif}{E32}
+%\EtapeLink{E33}{Attente\\Commande}{T32}
 
 \draw (I2) -- ($(I2)+(+2.6,0)$) node[inner sep=0,outer sep=0] (E40) {};
-\TransLink{T40}{$Cmd.P_{[3..0]} = 3 $\\$(T_e)$}{E40}
-\EtapeLink{E41}{}{T40}
-\TransActionLink{T41}{Fin Réception\\$ST_e$ := $R_{Data}$}{E41}
-\EtapeLink{E42}{Attente\\Commande}{T41}
-\TransLink{T42}{/Modif}{E42}
-\EtapeLink{E43}{Attente\\Commande}{T42}
+\TransActionLink{T40}{$Cmd.P_{[3..0]} = 3 $ $(T_e)$ \\$ST_e$ := $R_{Data}$}{E40}
+\draw[->] (T40) |- (MODIF);
+%\EtapeLink{E41}{}{T40}
+%\TransActionLink{T41}{Fin Réception\\$ST_e$ := $R_{Data}$}{E41}
+%\EtapeLink{E42}{Attente\\Commande}{T41}
+%\TransLink{T42}{/Modif}{E42}
+%\EtapeLink{E43}{Attente\\Commande}{T42}
 
 \draw (I2) -- ($(I2)+(+6.9,0)$) node[inner sep=0,outer sep=0] (E50) {};
-\TransLink{T50}{$Cmd.P_{[3..0]} = 4 $\\$(Consigne)$}{E50}
-\EtapeLink{E51}{}{T50}
-\TransActionLink{T51}{Fin Réception\\$SConsigne$ := $R_{Data}$}{E51}
-\EtapeLink{E52}{Attente\\Commande}{T51}
-\TransLink{T52}{/Modif}{E52}
-\EtapeLink{E53}{Attente\\Commande}{T52}
+\TransActionLink{T50}{$Cmd.P_{[3..0]} = 4 $ $(Consigne)$\\$SConsigne$ := $R_{Data}$}{E50}
+\draw[->] (T50) |- (MODIF);
+%\EtapeLink{E51}{}{T50}
+%\TransActionLink{T51}{Fin Réception\\$SConsigne$ := $R_{Data}$}{E51}
+%\EtapeLink{E52}{Attente\\Commande}{T51}
+%\TransLink{T52}{/Modif}{E52}
+%\EtapeLink{E53}{Attente\\Commande}{T52}
 
 \draw (I2) -- ($(I2)+(+12,0)$) node[inner sep=0,outer sep=0] (E60) {};
-\TransLink{T60}{$Cmd.P_{[3..0]} = 5 $\\$(Nb_{Acq})$}{E60}
-\EtapeLink{E61}{}{T60}
-\TransActionLink{T61}{Fin Réception\\$SNb_{Acq}$ := $R_{Data}$}{E61}
-\EtapeLink{E62}{Attente\\Commande}{T61}
-\TransLink{T62}{/Modif}{E62}
-\EtapeLink{E63}{Attente\\Commande}{T62}
+\TransActionLink{T60}{$Cmd.P_{[3..0]} = 5 $ $(Nb_{Acq})$\\$SNb_{Acq}$ := $R_{Data}$}{E60}
+\draw[->] (T60) |- (MODIF);
+%\EtapeLink{E61}{}{T60}
+%\TransActionLink{T61}{Fin Réception\\$SNb_{Acq}$ := $R_{Data}$}{E61}
+%\EtapeLink{E62}{Attente\\Commande}{T61}
+%\TransLink{T62}{/Modif}{E62}
+%\EtapeLink{E63}{Attente\\Commande}{T62}
 \end{tikzpicture}
