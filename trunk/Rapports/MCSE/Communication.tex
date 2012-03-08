@@ -6,12 +6,43 @@
 \TransActionLink{T}{Fin reception\\$Cmd := R_{Data}$}{I}
 \EtapeLink{E1}{}{T}
 
+
+\node[Etape,below of=E1,node distance=3.5cm] (I2) {};
+
+\TransActionLink{T1}{$Cmd.AP = 1$\\ }{I2}
+
+\node[align=left,anchor=north west,at =(T1.south east),xshift=10pt] {$K_p := SK_p$\\$T_dT_d$\\$T_e := ST_e$\\$Consigne := SConsigne$\\$Nb_{Acq} := SNb_{Acq}$};
+
+
+\node[Trans,node distance = 1.1cm, align=center,left of=T1,label=left:{$Cmd.AP = 0$}] (T2) {};
+
+\node[Etape,below of=I2,node distance=4.5cm] (E) {};
+
+\draw[->] (I2) edge [in=90,out=200] (T2);
+\draw[->] (T2) edge[out=-90] (E);
+
+\draw[->] (T1) edge (E);
+
+
+
 \draw (E1) -- ($(E1.west)+(-5,0)$) node[inner sep=0,outer sep=0] (E10) {};
 \TransLink{T10}{$Cmd.RW = Lecture$}{E10}
-\EtapeLink{E11}{Mode Lecture}{T10}
+\EtapeMacroLink{E11}{Mode Lecture}{T10}
+\TransLink{T11}{1}{E11}
+\draw[->] (T11) |- (I2);
 
 \draw (E1) -- ($(E1.east)+(5,0)$) node[inner sep=0,outer sep=0] (E20) {};
 \TransLink{T20}{$Cmd.RW = Ecriture$}{E20}
-\EtapeLink{E21}{Mode Ecriture}{T20}
+\EtapeMacroLink{E21}{Mode Ecriture}{T20}
+\TransLink{T21}{1}{E21}
+\draw[->] (T21) |- (I2);
+
+
+\node[node distance = 1.1cm, align=center,left of=E11,inner sep=0,outer sep=0] (RET) {};
+
+\draw[->] (E) edge [out=200,in=-90] (RET.center);
+\draw[->] (RET.center) edge [out=90,in=160] (I);
+
+
 
 \end{tikzpicture}

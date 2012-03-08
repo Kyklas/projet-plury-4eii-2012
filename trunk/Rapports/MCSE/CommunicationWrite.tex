@@ -2,14 +2,14 @@
 \begin{tikzpicture}[every node/.style={font=\footnotesize, node distance =  0.9cm}]
 \shorthandoff{:}
 
-%\node[Etape,label=right:Mode Ecriture] (I) {};
-\Etape{I}{Mode Ecriture}
+\node[Etape,double,label=right:Mode Ecriture] (I) {};
+%\Etape{I}{Mode Ecriture}
 \TransLink{T}{Fin Réception}{I}
 \EtapeLink{I2}{}{T}
 
-\node[Etape,double,below of=I2,node distance=2.5cm,label={[align=left]above right:Modif}] (MODIF) {};
-\TransLink{T21}{1}{MODIF}
-\EtapeLink{E22}{Attente\\Commande}{T21}
+\node[Etape,double,below of=I2,node distance=2.5cm,label={[align=left]below right:Mode Ecriture End}] (MODIF) {};
+%\TransLink{T21}{1}{MODIF}
+%\EtapeLink{E22}{Attente\\Commande}{T21}
 
 \draw (I2) -- ($(I2)+(-11,0)$) node[inner sep=0,outer sep=0] (E10) {};
 \TransLink{T10}{$Cmd.P_{[3..0]} = 0 (Aucun)$\\$ + $\\$P_{[3..0]} > 5 (Aucun)$}{E10}
