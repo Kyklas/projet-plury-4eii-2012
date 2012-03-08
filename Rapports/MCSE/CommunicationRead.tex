@@ -2,14 +2,16 @@
 \begin{tikzpicture}[every node/.style={font=\footnotesize, node distance =  0.9cm}]
 \shorthandoff{:}
 
-\node[Etape,label=right:Mode Lecture] (I) {};
-\TransLink{T}{}{I}
+\node[Etape,label=above right:Mode Lecture] (I2) {};
+%\TransLink{T}{}{I}
 
-\EtapeLink{I2}{}{T}
+%\EtapeLink{I2}{}{T}
 
 \draw (I2) -- ($(I2)+(-11,0)$) node[inner sep=0,outer sep=0] (E10) {};
 \TransLink{T10}{$Cmd.P_{[3..0]} = 0 (Aucun) + $\\$Cmd.P_{[3..0]} > 5$}{E10}
-\EtapeLink{E11}{Attente\\Commande}{T10}
+\EtapeLink{E11}{$T_{Data}:= 0$ (Rien) \\ /Volonté d’envoyer}{T10}
+\TransLink{T11}{Fin Transmition}{E11}
+\EtapeLink{E12}{Attente\\Commande}{T11}
 
 \draw (I2) -- ($(I2)+(-6,0)$) node[inner sep=0,outer sep=0] (E20) {};
 \TransLink{T20}{$Cmd.P_{[3..0]} = 1 $\\$(K_p)$}{E20}
