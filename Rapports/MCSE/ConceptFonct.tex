@@ -14,6 +14,11 @@ path picture={\draw[-,black] (path picture bounding box.north) -- (path picture 
 
 \node[draw,align=center,inner sep=10pt] (CORR) {Correction\\Asservissement};
 
+\foreach \id in {1,...,3}
+{
+\coordinate (CORR-N\id) at ($(CORR.north)+(\id*0.7cm-1.4cm,0)$);
+}
+
 \foreach \id in {1,...,4}
 {
 \coordinate (CORR-E\id) at ($(CORR.north east)+(0,-\id*0.3cm)$);
@@ -29,6 +34,12 @@ path picture={\draw[-,black] (path picture bounding box.north) -- (path picture 
 {
 \coordinate (COMM-N\id) at ($(COMM.north east)+(-\id*0.7cm,0)$);
 }
+
+\foreach \id in {1,...,2}
+{
+\coordinate (COMM-E\id) at ($(COMM.east)+(0,-\id*0.6cm+0.9cm)$);
+}
+
 \node at ($(CORR)+(0,-4)$) [draw,align=center,inner sep=10pt] (CLK) {Clock};
 
 \foreach \id in {-1,1}
@@ -45,6 +56,11 @@ path picture={\draw[-,black] (path picture bounding box.north) -- (path picture 
 (CONV)
 {Convertisseur \\ Analogique-Numérique};
 
+\foreach \id in {1,...,3}
+{
+\coordinate (CONV-S\id) at ($(CONV.south)+(\id*0.7cm-1.4cm,0)$);
+}
+
 \node at ($(CORR.west)+(-5,0)$) [ellipse,decoration={bumps,mirror},decorate,align=center,draw] 
 (BOB)
 {Pilotage Bobine \\ Pulse Width Modulation};
@@ -53,8 +69,19 @@ path picture={\draw[-,black] (path picture bounding box.north) -- (path picture 
 (USER)
 {Utilisateur};
 
-%\draw[dashed] (CORR) -- node[solid,	isosceles triangle,draw,pos=0.5,rotate=180,fill=white,minimum size=3mm,inner sep=0] {} (BOB);
+\foreach \id in {1,...,2}
+{
+\coordinate (USER-W\id) at ($(USER.west)+(0,-\id*0.6cm+0.9cm)$);
+}
 
+
+\path (USER-W1) -- node[VPV,label={[label distance = 0.1cm]above right:Rx}] (mid) {} (COMM-E1);
+\draw[->] (USER-W1) -- (mid.center);
+\draw[->] (mid.center) -- (COMM-E1);
+
+\path (USER-W2) -- node[VPV,label={[label distance = 0.1cm]above right:Tx}] (mid) {} (COMM-E2);
+\draw[<-] (USER-W2) -- (mid.center);
+\draw[<-] (mid.center) -- (COMM-E2);
 
 
 \path (CORR) -- node[VPV,label={[label distance = 0.2cm]above left:Out}] (mid) {} (BOB);
@@ -88,5 +115,20 @@ path picture={\draw[-,black] (path picture bounding box.north) -- (path picture 
 \draw[dashed] (CLK) -- node[solid,isosceles triangle,draw,pos=0.5,rotate=90,fill=white,minimum size=3mm,inner sep=0,label={[label distance = 0.2cm,pos=0.5]below:$Te_{clk}$}] {} (CORR);
 
 \draw[dashed] (CLK-E-1) -| node[solid,isosceles triangle,draw,pos=0.3,fill=white,minimum size=3mm,inner sep=0,label={[label distance = 0.2cm,pos=0.3]below:$Te_{clk}$}] {} (COMM-S1);
+
+
+
+\draw[dashed] (CONV-S1) -- node[solid,isosceles triangle,draw,pos=0.5,rotate=90,fill=white,minimum size=3mm,inner sep=0,
+		label={[label distance = 0.1cm,pos=0.5]above right:S\_Querry}] {} (CORR-N1);
+
+\path (CONV-S2) -- node[VPH,label={[label distance = 0.1cm,pos=0.5,xshift=0.2cm] above:Te},pos=0.5] (mid) {} (CORR-N2);
+\draw[->] (CONV-S2) -- (mid.center);
+\draw[->] (mid.center) -- (CORR-N2);
+
+\draw[dashed] (CONV-S3) -- node[solid,isosceles triangle,draw,pos=0.5,rotate=-90,fill=white,minimum size=3mm,inner sep=0,
+		label={[label distance = 0.1cm,pos=0.5]above left:S\_available}] {} (CORR-N3);
+
+
+
 
 \end{tikzpicture}
