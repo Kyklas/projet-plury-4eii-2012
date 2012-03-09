@@ -3,7 +3,7 @@
 \shorthandoff{:}
 
 \node[Etape,label=right:Attente Commande] (I) {};
-\TransActionLink{T}{Fin reception\\$Cmd := R_{Data}$}{I}
+\TransActionLink{T}{Fin Réception\\$Cmd := R_{Data}$}{I}
 \EtapeLink{E1}{}{T}
 
 
@@ -11,7 +11,7 @@
 
 \TransActionLink{T1}{$Cmd.AP = 1$\\ }{I2}
 
-\node[align=left,anchor=north west,at =(T1.south east),xshift=10pt] {$K_p := SK_p$\\$T_dT_d$\\$T_e := ST_e$\\$Consigne := SConsigne$\\$Nb_{Acq} := SNb_{Acq}$};
+\node[align=left,anchor=north west,at =(T1.south east),xshift=10pt] {$K_p := SK_p$\\$T_d := ST_d$\\$T_e := ST_e$\\$Consigne := SConsigne$\\$Nb_{Acq} := SNb_{Acq}$};
 
 
 \node[Trans,node distance = 1.1cm, align=center,left of=T1,label=left:{$Cmd.AP = 0$}] (T2) {};
