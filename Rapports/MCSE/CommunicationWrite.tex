@@ -4,7 +4,10 @@
 
 \node[Etape,double,label=right:Mode Ecriture] (I) {};
 %\Etape{I}{Mode Ecriture}
-\TransLink{T}{Fin Réception}{I}
+\TransActionLink{T}{Fin Réception \\ $Donnee_{[15,8]} = R_{Data} $ }{I}
+\EtapeLink{I2}{Réception deuxieme octet}{T}
+
+\TransActionLink{T}{Fin Réception \\ $Donnee_{[7,0]} = R_{Data} $ }{I2}
 \EtapeLink{I2}{}{T}
 
 \node[Etape,double,below of=I2,node distance=2.5cm,label={[align=left]below right:Mode Ecriture End}] (MODIF) {};
@@ -21,7 +24,7 @@
 %\EtapeLink{E12}{Attente\\Commande}{T11}
 
 \draw (I2) -- ($(I2)+(-6,0)$) node[inner sep=0,outer sep=0] (E20) {};
-\TransActionLink{T20}{$Cmd.P_{[3..0]} = 1 $ $(K_p)$ \\ $SK_p$ := $R_{Data}$ }{E20}
+\TransActionLink{T20}{$Cmd.P_{[3..0]} = 1 $ $(K_p)$ \\ $SK_p$ := $Donnee$ }{E20}
 \draw[->] (T20) |- (MODIF);
 %\EtapeMacroLink{E21}{Modif}{T20}
 %\TransLink{T21}{1}{E21}
@@ -29,7 +32,7 @@
 
 
 \draw (I2) -- ($(I2)+(-1.7,0)$) node[inner sep=0,outer sep=0] (E30) {};
-\TransActionLink{T30}{$Cmd.P_{[3..0]} = 2 $ $(T_d$) \\ $ST_d$ := $R_{Data}$}{E30}
+\TransActionLink{T30}{$Cmd.P_{[3..0]} = 2 $ $(T_d$) \\ $ST_d$ := $Donnee$}{E30}
 \draw[->] (T30) |- (MODIF);
 %\EtapeLink{E31}{}{T30}
 %\TransActionLink{T31}{Fin Réception\\$ST_d$ := $R_{Data}$}{E31}
@@ -38,7 +41,7 @@
 %\EtapeLink{E33}{Attente\\Commande}{T32}
 
 \draw (I2) -- ($(I2)+(+2.6,0)$) node[inner sep=0,outer sep=0] (E40) {};
-\TransActionLink{T40}{$Cmd.P_{[3..0]} = 3 $ $(T_e)$ \\$ST_e$ := $R_{Data}$}{E40}
+\TransActionLink{T40}{$Cmd.P_{[3..0]} = 3 $ $(T_e)$ \\$ST_e$ := $Donnee$}{E40}
 \draw[->] (T40) |- (MODIF);
 %\EtapeLink{E41}{}{T40}
 %\TransActionLink{T41}{Fin Réception\\$ST_e$ := $R_{Data}$}{E41}
@@ -47,7 +50,7 @@
 %\EtapeLink{E43}{Attente\\Commande}{T42}
 
 \draw (I2) -- ($(I2)+(+6.9,0)$) node[inner sep=0,outer sep=0] (E50) {};
-\TransActionLink{T50}{$Cmd.P_{[3..0]} = 4 $ $(Consigne)$\\$SConsigne$ := $R_{Data}$}{E50}
+\TransActionLink{T50}{$Cmd.P_{[3..0]} = 4 $ $(Consigne)$\\$SConsigne$ := $Donnee_{[9,0]}$}{E50}
 \draw[->] (T50) |- (MODIF);
 %\EtapeLink{E51}{}{T50}
 %\TransActionLink{T51}{Fin Réception\\$SConsigne$ := $R_{Data}$}{E51}
@@ -56,7 +59,7 @@
 %\EtapeLink{E53}{Attente\\Commande}{T52}
 
 \draw (I2) -- ($(I2)+(+12,0)$) node[inner sep=0,outer sep=0] (E60) {};
-\TransActionLink{T60}{$Cmd.P_{[3..0]} = 5 $ $(Nb_{Acq})$\\$SNb_{Acq}$ := $R_{Data}$}{E60}
+\TransActionLink{T60}{$Cmd.P_{[3..0]} = 5 $ $(Nb_{Acq})$\\$SNb_{Acq}$ := $Donnee_{[7,0]}$}{E60}
 \draw[->] (T60) |- (MODIF);
 %\EtapeLink{E61}{}{T60}
 %\TransActionLink{T61}{Fin Réception\\$SNb_{Acq}$ := $R_{Data}$}{E61}
