@@ -47,12 +47,36 @@
 \maketitle
 \pagebreak
 
+\section*{Introduction}
+
+Dans le cadre du projet pluridisciplinaire, le système étudié est assez complexe et comprend un certain nombre de fonctions parmi lesquelles on peut compter : 
+
+\vspace{0.1cm}
+
+\begin{itemize}
+\item{la communication série}
+\item{la gestion de la PWM}
+\item{la gestion de la conversion analogique-numérique}
+\end{itemize}
+
+\vspace{0.3cm}
+
+Afin d'éviter l'écueil fréquent qui consiste à concevoir la solution au même moment que la programmation et à aboutir à des solutions non fonctionnelles qui font finalement perdre du temps, nous allons mener une démarche de conception type Méthodologie et Conception de Systèmes Electroniques. 
+
+\vspace{0.3cm}
+
+Cette démarche s'articulera en deux parties principales. En premier lieu, nous définirons la spécification fonctionnelle qui comprend l'analyse de l'environnement, la délimitation des entrées-sorties du système ainsi que la spécifications fonctionnelle du système. Enfin, nous n'étudierons que la décomposition fonctionnelle de la partie de conception fonctionnelle. 
+
+\pagebreak
+
 \input{MCSE/Styles}
 \part{Spécification fonctionnelle}
 
+\setcounter{section}{0}
+
 \section{Analyse de l'environnement}
 
-\paragraph{} Dans cette partie, nous allons expliciter la décomposition en entités que nous avons retenue.
+\paragraph{} Dans cette partie, nous allons expliciter la décomposition en entités que nous avons retenu.
 \vspace{0.2in}
 
 \begin{minipage}[t]{9cm}
@@ -78,7 +102,7 @@
 \end{minipage}
 
 \begin{minipage}[h]{20cm}
-\hspace{0.2in}
+\vspace{-1cm}
 \hspace{0.2in}
 \underline{Utilisateur}   
 \begin{description}
@@ -86,16 +110,20 @@
 \item[Entrée : ] Tx, donnée permanente, bit
 \end{description}
 
+ Pour des raisons de simplicité et d'uniformisation de l'envoi-réception de données, nous avons choisi d'envoyer et de recevoir trois octets à chaque transfert quelque soit la donnée transmise : un octet de commande et deux octets de donnée. Les bits non utilisées seront simplement mis à 0. 
+
+
 \input{MCSE/Ordinateur.tex}
+\vspace{-2cm}
 \end{minipage}
 
 \newpage
 
-Les fonctions de Transmition/Reception, sont respectivement representée avec $T_x$ et $R_x$, or les deux péripheriques de communication série sont reliés via un cable croisé. Le $T_x$ de l'utilisateur est donc en realité le $R_x$ du systeme et inversement.
+Les fonctions de Transmission/Réception, sont respectivement representées avec $T_x$ et $R_x$, or les deux péripheriques de communication série sont reliés via un cable croisé. Le $T_x$ de l'utilisateur est donc en realité le $R_x$ du système et inversement.
 
 \begin{minipage}[t, h]{5cm}
 \hspace{0.2in}
-\underline{Fonction Transmition}
+\underline{Fonction Transmission}
 \end{minipage}
 ~
 \begin{minipage}[t, h]{9cm}
@@ -104,7 +132,7 @@ Les fonctions de Transmition/Reception, sont respectivement representée avec $T
 
 \begin{minipage}[t, h]{5cm}
 \hspace{0.2in}
-\underline{Fonction Reception}
+\underline{Fonction Réception}
 \end{minipage}
 ~
 \begin{minipage}[t, h]{9cm}
@@ -115,13 +143,13 @@ Les fonctions de Transmition/Reception, sont respectivement representée avec $T
 
 \input{MCSE/Systeme.tex}
 
-\section{Spécification fonctionelle du système}
+\section{Spécification fonctionnelle du système}
 
-Le système sera découpé en trois bloc :
+Le système sera décomposé en trois blocs :
 \vspace{0.1in}
 \begin{description}
-\item[Correction - Asservissement : ] Aquisition des données, Correction et Pilotage du PWM.
-\item[Horloge : ] Gestion de différent Temps et envoie des événement appropriés.
+\item[Correction - Asservissement : ] Acquisition des données, Correction et Pilotage du PWM.
+\item[Horloge : ] Gestion des différents temps et envoi des événements appropriés.
 \item[Gestion Communication : ] Gestion de la communication avec l'utilisateur.
 \end{description}
 
@@ -147,7 +175,7 @@ Le système sera découpé en trois bloc :
 \underline{Gestion Communication}
 \vspace{0.2in}
 
-La partie Gestion communication avec l'utilisateur est séparer en 3 fonction. La fonction "Principale" qui lance les fonctions d'écriture ou de lecture suivant la valeur de RW.
+La partie Gestion Communication avec l'utilisateur est séparée en trois fonctions. La fonction de \textbf{gestion} lance les fonctions d'\textbf{écriture} ou de \textbf{lecture} suivant la valeur de RW.
 
 %\vspace{0.2in}
 %\hspace{0.2in}
@@ -185,6 +213,9 @@ La partie Gestion communication avec l'utilisateur est séparer en 3 fonction. L
 \end{landscape}
 
 \part{Conception fonctionnelle}
+
+\setcounter{section}{0}
+
 \section{Décomposition fonctionnelle}
 
 \begin{center}
@@ -193,5 +224,15 @@ La partie Gestion communication avec l'utilisateur est séparer en 3 fonction. L
 \end{turn}
 \end{center}
 
+\pagebreak
 
+\setcounter{section}{0}
+
+\section*{Conclusion}
+
+Grâce à l'étude type MCSE que nous avons mené, nous avons pu décomposer notre système en fonctions élémentaires. Cela facilitera la programmation en la rendant plus modulaire et donc plus facilement débuggable.  
+
+\vspace{0.2cm}
+
+En outre, en ce qui concerne la communication, nous avons pu envisager les problèmes possibles à l'avance et donc concevoir un protocole robuste permettant de les gérer. Cela sera très certainement bénéfique pour la phase de développement afin d'éviter une majorité des difficultés et de pouvoir résoudre rapidement celles qui subsisteraient.  
 \end{document}
