@@ -1,4 +1,4 @@
-\vspace{-1.5cm}
+\vspace{-2cm}
 \hspace{-4cm}
 \begin{tikzpicture}%[every node/.style={font=\tiny}]
 
@@ -14,7 +14,11 @@
 
 \TransLink{T2}{Fin Transmition}{E1}
 
-\EtapeLink{E2}{$T_{Data}:=Donnee$, /Volonté d'envoyer}{T2}
+\EtapeLink{E2}{$T_{Data}:=Donnee_{[15,8]}$, /Volonté d'envoyer}{T2}
+
+\TransLink{T3}{Fin Transmition}{E2}
+
+\EtapeLink{E2}{$T_{Data}:=Donnee_{[7,0]}$, /Volonté d'envoyer}{T3}
 
 \TransLink{T3}{Fin Transmition}{E2}
 
@@ -31,10 +35,14 @@
 
 \EtapeLink{E2}{Lecture}{T2}
 
-\TransActionLink{T3}{Fin Réception \\ $R_{Data}$}{E2}
+\TransActionLink{T3}{Fin Réception \\ $Donnee_{[15,8]}=R_{Data}$}{E2}
+
+\EtapeLink{E2}{Lecture}{T3}
+
+\TransActionLink{T3}{Fin Réception \\ $Donnee_{[7,0]}=R_{Data}$}{E2}
 
 
-\draw[->] (T3) edge [out=-90,in=-40,out distance=1cm] (RET.center);
+\draw[->] (T3) edge [out=-90,in=-48,out distance=1cm] (RET.center);
 
 
 \end{tikzpicture}

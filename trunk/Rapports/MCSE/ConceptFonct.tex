@@ -121,7 +121,7 @@ path picture={\draw[-,black] (path picture bounding box.north) -- (path picture 
 \draw[dashed] (CONV-S1) -- node[solid,isosceles triangle,draw,pos=0.5,rotate=90,fill=white,minimum size=3mm,inner sep=0,
 		label={[label distance = 0.1cm,pos=0.5]above right:S\_Querry}] {} (CORR-N1);
 
-\path (CONV-S2) -- node[VPH,label={[label distance = 0.1cm,pos=0.5,xshift=0.2cm] above:Te},pos=0.5] (mid) {} (CORR-N2);
+\path (CONV-S2) -- node[VPH,label={[label distance = 0.1cm,pos=0.5,rotate=-90] above:Sample},pos=0.5] (mid) {} (CORR-N2);
 \draw[->] (CONV-S2) -- (mid.center);
 \draw[->] (mid.center) -- (CORR-N2);
 
