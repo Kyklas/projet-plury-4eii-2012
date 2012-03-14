@@ -7,12 +7,25 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <p24F32KA301.h>
+
+// Bits de configuration
+_FBS(BWRP_OFF & BSS_OFF);
+_FGS(GWRP_OFF & GSS0_OFF);
+_FOSCSEL(FNOSC_PRI & SOSCSRC_ANA & LPRCSEL_LP & IESO_OFF);
+_FOSC(POSCMOD_HS & OSCIOFNC_OFF & POSCFREQ_HS & SOSCSEL_SOSCLP & FCKSM_CSDCMD);
+_FWDT(FWDTEN_OFF);
+_FPOR(BOREN_BOR3 & LVRCFG_OFF & PWRTEN_OFF & I2C1SEL_PRI & BORV_V30 & MCLRE_ON);
+_FICD(ICS_PGx2); // DEBUG_ON
+
 
 /*
- * 
+ * main
  */
-int main(int argc, char** argv) {
-
+int main(void) {
+    TRISBbits.TRISB7 = 0;
+    LATBbits.LATB7 = 1;
+    while(1);
     return (EXIT_SUCCESS);
 }
 
