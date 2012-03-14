@@ -150,7 +150,7 @@ $ \rightarrow H(s) = \dfrac{D_x(s)}{D_i(s)} = \dfrac{K_i}{m{s^2}- K_x}  = \dfrac
 On pose ensuite pour des raisons de simplification :
 
  \medskip
-$ K_{meca} = \dfrac{-K_i}{K_x}, \tau_{meca} = \dfrac{m}{K_x} $
+$ K_{meca} = \dfrac{-K_i}{K_x}, \tau_{meca} = \sqrt{\dfrac{m}{K_x}} $
 
 \paragraph{}
 \textsc{Constantes mécaniques obtenues}
@@ -213,7 +213,7 @@ On obtient de ces constantes les paramètres de notre modèle du deuxième ordre
 $  K_{meca} = \dfrac {K_x}{K_i} =  295 A.m^{-1} $
 
 \medskip
-$  \tau_{meca} = \dfrac m {K_x} = 1.07 \times 10^{-3} s.rad^{-1} $
+$  \tau_{meca} = \sqrt{\dfrac m {K_x}} = 3.2 \times 10^{-2} s $
 
 \paragraph{}
 \textsc{Autres constantes du système}
@@ -265,7 +265,7 @@ Pour choisir les constantes du correcteur, nous avons procédé en deux étapes.
 \emph{Lieu d'Evans du système non corrigé}
 \end{center}
 
-L'idée est donc de décaler le point d'intersection des asymptotes qui est normalement dans la partie droite du plan complexe en plaçant le zéros du correcteur à avance de phase dans la partie gauche tout en maintenant ce zéro entre les deux pôles issu de la constante de temps mécanique qui se trouve dans la partie gauche. On prendra le zéro du correcteur à avance de phase en $1.2*T_{m\acute{e}ca}$ afin entre les pôles mécaniques et une partie réel négative. Une fois le zéro du correcteur à avance de phase correctement placé, nous avons réglé le gain du correcteur proportionnel afin que tous les pôles du système aient une partie réelle négative. Nous avons trouvé un gain $Kp$ de 27. 
+L'idée est donc de décaler le point d'intersection des asymptotes qui est normalement dans la partie droite du plan complexe en plaçant le zéros du correcteur à avance de phase dans la partie gauche tout en maintenant ce zéro entre les deux pôles issu de la constante de temps mécanique qui se trouve dans la partie gauche. On prendra le zéro du correcteur à avance de phase en $1.2*T_{m\acute{e}ca}$ afin de se placer entre les pôles mécaniques et d'avoir une partie réelle négative. On prendra $a_d$ à 0.1. Une fois le zéro du correcteur à avance de phase correctement placé, nous avons réglé le gain du correcteur proportionnel afin que tous les pôles du système aient une partie réelle négative. Nous avons trouvé un gain $Kp$ de 27. 
 
 \begin{center}
 \includegraphics[scale=0.50]{RL_Sys_AvPh_K27.pdf}\\
