@@ -7,7 +7,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <p24F32KA301.h>
+#include <p24FV32KA301.h>
 
 // Bits de configuration
 _FBS(BWRP_OFF & BSS_OFF);
@@ -22,10 +22,19 @@ _FICD(ICS_PGx2); // DEBUG_ON
 /*
  * main
  */
-int main(void) {
+int main(void)
+{
+    int i,j,k;
     TRISBbits.TRISB7 = 0;
     LATBbits.LATB7 = 1;
-    while(1);
+    while(1)
+    {
+       for(i=0;i<32000;i++)
+       {
+       }
+       LATBbits.LATB7=!LATBbits.LATB7;
+
+    }
     return (EXIT_SUCCESS);
 }
 
