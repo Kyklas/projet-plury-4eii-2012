@@ -64,8 +64,8 @@ FIXDEPS=fixDeps
 .build-conf:  ${BUILD_SUBPROJECTS}
 	${MAKE}  -f nbproject/Makefile-default.mk dist/${CND_CONF}/${IMAGE_TYPE}/ProjetAnalogique.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
 
-MP_PROCESSOR_OPTION=24F32KA301
-MP_LINKER_FILE_OPTION=,-Tp24F32KA301.gld
+MP_PROCESSOR_OPTION=24FV32KA301
+MP_LINKER_FILE_OPTION=,-Tp24FV32KA301.gld
 # ------------------------------------------------------------------------------------
 # Rules for buildStep: assemble
 ifeq ($(TYPE_IMAGE), DEBUG_RUN)
