@@ -1,0 +1,50 @@
+
+**** 03/14/12 09:56:15 ********* PSpice 9.2 (Mar 2000) ******** ID# 1 ********
+
+ ** Profile: "Amp Diff-Time"  [ D:\PROJETPLURY\CARTE\Simulation\pp-Amp Diff-Time.sim ] 
+
+
+ ****     CIRCUIT DESCRIPTION
+
+
+******************************************************************************
+
+
+
+
+** Creating circuit file "pp-Amp Diff-Time.sim.cir" 
+** WARNING: THIS AUTOMATICALLY GENERATED FILE MAY BE OVERWRITTEN BY SUBSEQUENT SIMULATIONS
+
+*Libraries: 
+* Local Libraries :
+* From [PSPICE NETLIST] section of C:\Program Files\Orcad\PSpice\PSpice.ini file:
+.lib "nom.lib" 
+
+*Analysis directives: 
+.PROBE V(*) I(*) W(*) D(*) NOISE(*) 
+.INC ".\pp-Amp Diff.net" 
+
+
+
+**** INCLUDING "pp-Amp Diff.net" ****
+* source PP
+R_R3         N00647 N00956  10K  
+X_U1A         N01771 N00434 V50 0 N00607 LM324
+R_R4         N00607 N00919  10K  
+X_U2A         N01796 N00401 V50 0 N00647 LM324
+R_R5         N00956 N01033  10K  
+X_U3A         N00919 N00956 V50 0 N01033 LM324
+R_R1         N00434 N00607  10K  
+R_R2         N00401 N00647  10K  
+V_V1         V50 0 5Vdc
+R_R7         N00434 N00401  {Gain}  
+V_VH2         N01796 0 {H2}
+V_VH1         N01771 0 {H1}
+C_C1         N01719 V50  100n  
+.PARAM  H1=2.305 H2=2.325 Gain=1k
+
+**** RESUMING "pp-Amp Diff-Time.sim.cir" ****
+.END
+
+ERROR -- Less than 2 connections at node N01719
+ERROR -- Node N01719 is floating

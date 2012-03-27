@@ -1,0 +1,18 @@
+** Profile: "Avances de phase-Time"  [ D:\ProjetPlury\Carte\Simulations\pp-Avances de phase-Time.sim ] 
+
+** Creating circuit file "pp-Avances de phase-Time.sim.cir" 
+** WARNING: THIS AUTOMATICALLY GENERATED FILE MAY BE OVERWRITTEN BY SUBSEQUENT SIMULATIONS
+
+*Libraries: 
+* Local Libraries :
+.LIB ".\pp.lib" 
+* From [PSPICE NETLIST] section of C:\Program Files\Orcad\PSpice\PSpice.ini file:
+.lib "nom.lib" 
+
+*Analysis directives: 
+.AC DEC 1000 1 1000K
+.PROBE V(*) I(*) W(*) D(*) NOISE(*) 
+.INC ".\pp-Avances de phase.net" 
+
+
+.END
