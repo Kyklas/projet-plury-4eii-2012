@@ -1,0 +1,12 @@
+* source PP
+C_C3         0 V25  2.2uf  
+V_V6         V50 0 5Vdc
+R_R9         N06131 N06536  8.2k  
+V_V5         N06509 0 DC 2.5Vdc AC 1Vac 
+X_U3A         V25 N06131 V50 0 N06536 LM324
+R_R6         V25 V50  470  
+R_R8         0 V25  470  
+C_C4         N06509 N06131  3.9u  
+C_C5         N06131 N06536  0.39u  
+R_R7         N06509 N06131  8.2k  
+C_C2         V25 V50  2.2uf  

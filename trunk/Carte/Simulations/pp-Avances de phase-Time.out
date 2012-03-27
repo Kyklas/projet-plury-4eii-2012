@@ -1,0 +1,168 @@
+
+**** 03/19/12 16:24:10 ********* PSpice 9.2 (Mar 2000) ******** ID# 1 ********
+
+ ** Profile: "Avances de phase-Time"  [ D:\ProjetPlury\Carte\Simulations\pp-Avances de phase-Time.sim ] 
+
+
+ ****     CIRCUIT DESCRIPTION
+
+
+******************************************************************************
+
+
+
+
+** Creating circuit file "pp-Avances de phase-Time.sim.cir" 
+** WARNING: THIS AUTOMATICALLY GENERATED FILE MAY BE OVERWRITTEN BY SUBSEQUENT SIMULATIONS
+
+*Libraries: 
+* Local Libraries :
+.LIB ".\pp.lib" 
+* From [PSPICE NETLIST] section of C:\Program Files\Orcad\PSpice\PSpice.ini file:
+.lib "nom.lib" 
+
+*Analysis directives: 
+.AC DEC 1000 1 1000K
+.PROBE V(*) I(*) W(*) D(*) NOISE(*) 
+.INC ".\pp-Avances de phase.net" 
+
+
+
+**** INCLUDING "pp-Avances de phase.net" ****
+* source PP
+C_C3         0 V25  2.2uf  
+V_V6         V50 0 5Vdc
+R_R9         N06131 N06536  8.2k  
+V_V5         N06509 0 DC 2.5Vdc AC 1Vac 
+X_U3A         V25 N06131 V50 0 N06536 LM324
+R_R6         V25 V50  470  
+R_R8         0 V25  470  
+C_C4         N06509 N06131  3.9u  
+C_C5         N06131 N06536  0.39u  
+R_R7         N06509 N06131  8.2k  
+C_C2         V25 V50  2.2uf  
+
+**** RESUMING "pp-Avances de phase-Time.sim.cir" ****
+.END
+
+**** 03/19/12 16:24:10 ********* PSpice 9.2 (Mar 2000) ******** ID# 1 ********
+
+ ** Profile: "Avances de phase-Time"  [ D:\ProjetPlury\Carte\Simulations\pp-Avances de phase-Time.sim ] 
+
+
+ ****     Diode MODEL PARAMETERS
+
+
+******************************************************************************
+
+
+
+
+               X_U3A.dx        X_U3A.dy        
+          IS  800.000000E-18  800.000000E-18 
+          RS    1               1.000000E-03 
+         CJO                   10.000000E-12 
+
+
+**** 03/19/12 16:24:10 ********* PSpice 9.2 (Mar 2000) ******** ID# 1 ********
+
+ ** Profile: "Avances de phase-Time"  [ D:\ProjetPlury\Carte\Simulations\pp-Avances de phase-Time.sim ] 
+
+
+ ****     BJT MODEL PARAMETERS
+
+
+******************************************************************************
+
+
+
+
+               X_U3A.qx        
+               PNP             
+          IS  800.000000E-18 
+          BF  166.7          
+          NF    1            
+          BR    1            
+          NR    1            
+          CN    2.2          
+           D     .52         
+
+
+**** 03/19/12 16:24:10 ********* PSpice 9.2 (Mar 2000) ******** ID# 1 ********
+
+ ** Profile: "Avances de phase-Time"  [ D:\ProjetPlury\Carte\Simulations\pp-Avances de phase-Time.sim ] 
+
+
+ ****     Current Controlled Switch MODEL PARAMETERS
+
+
+******************************************************************************
+
+
+
+
+               X_U3A.sw2       X_U3A.sw1       X_U3A.sw3       X_U3A.sw4       
+         RON    1               1               1               1            
+        ROFF   10.000000E+06   10.000000E+06   10.000000E+06   10.000000E+06 
+         ION    0              -1.000000E-06   -1.000000E-06    0            
+        IOFF   -1.000000E-06    0               0              -1.000000E-06 
+
+
+**** 03/19/12 16:24:10 ********* PSpice 9.2 (Mar 2000) ******** ID# 1 ********
+
+ ** Profile: "Avances de phase-Time"  [ D:\ProjetPlury\Carte\Simulations\pp-Avances de phase-Time.sim ] 
+
+
+ ****     SMALL SIGNAL BIAS SOLUTION       TEMPERATURE =   27.000 DEG C
+
+
+******************************************************************************
+
+
+
+ NODE   VOLTAGE     NODE   VOLTAGE     NODE   VOLTAGE     NODE   VOLTAGE
+
+
+(  V25)    2.5000  (  V50)    5.0000  (N06131)    2.4998 (N06509)    2.5000     
+
+(N06536)    2.4993 (X_U3A.6) 138.8E-09                   (X_U3A.7)    2.4993    
+
+(X_U3A.8)    2.4993                   (X_U3A.9)    0.0000                       
+
+(X_U3A.a)    5.0000                   (X_U3A.b) 124.1E-09                       
+
+(X_U3A.10)    3.1076                  (X_U3A.11)     .0398                      
+
+(X_U3A.12)     .0396                  (X_U3A.13)    3.0937                      
+
+(X_U3A.14)    3.0937                  (X_U3A.53)    3.5000                      
+
+(X_U3A.54)     .8220                  (X_U3A.90)-67.15E-06                      
+
+(X_U3A.91)   40.0000                  (X_U3A.92)  -40.0000                      
+
+(X_U3A.99)    2.5000                  
+
+
+
+
+    VOLTAGE SOURCE CURRENTS
+    NAME         CURRENT
+
+    V_V6        -5.885E-03
+    V_V5        -2.219E-08
+    X_U3A.vb     1.388E-12
+    X_U3A.vc     1.002E-12
+    X_U3A.ve     1.705E-12
+    X_U3A.vlim  -6.715E-08
+    X_U3A.vlp   -4.000E-11
+    X_U3A.vln   -4.000E-11
+
+    TOTAL POWER DISSIPATION   2.94E-02  WATTS
+
+
+
+          JOB CONCLUDED
+
+          TOTAL JOB TIME             .83
+
