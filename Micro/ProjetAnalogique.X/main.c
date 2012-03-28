@@ -18,23 +18,16 @@ _FWDT(FWDTEN_OFF);
 _FPOR(BOREN_BOR3 & LVRCFG_OFF & PWRTEN_OFF & I2C1SEL_PRI & BORV_V30 & MCLRE_ON);
 _FICD(ICS_PGx2); // DEBUG_ON
 
+#include "IO.h"
+
 
 /*
  * main
  */
 int main(void)
 {
-    int i,j,k;
-    TRISBbits.TRISB7 = 0;
-    LATBbits.LATB7 = 1;
-    while(1)
-    {
-       for(i=0;i<32000;i++)
-       {
-       }
-       LATBbits.LATB7=!LATBbits.LATB7;
+    IO_Init();
 
-    }
     return (EXIT_SUCCESS);
 }
 
