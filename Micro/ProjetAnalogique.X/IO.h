@@ -9,10 +9,13 @@
 #ifndef _PORTIO_H_
 #define _PORTIO_H_
 
-#include <stdio.h>
-#include <stdlib.h>
 #include <p24FV32KA301.h>
 
+/**
+ * \fn void IO_Init ()
+ * \brief Initialisation du E/S
+ */
+void IO_Init ();
 void PORTIO_Init();
 
 #endif

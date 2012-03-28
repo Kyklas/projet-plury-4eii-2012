@@ -20,14 +20,20 @@ _FPOR(BOREN_BOR3 & LVRCFG_OFF & PWRTEN_OFF & I2C1SEL_PRI & BORV_V30 & MCLRE_ON);
 _FICD(ICS_PGx2); // DEBUG_ON
 
 #include "IO.h"
-
+#include "PLL.h"
+#include "PWM.h"
 
 /*
  * main
  */
 int main(void)
 {
+    PLL_Init();
+    IO_Init();
     PORTIO_Init();
+    PWM_Init();
+    PWM_SetDutyCycle(69);
+    while(1);
 
     return (EXIT_SUCCESS);
 }
