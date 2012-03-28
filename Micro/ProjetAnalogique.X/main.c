@@ -9,6 +9,7 @@
 #include <stdlib.h>
 #include <p24FV32KA301.h>
 
+
 // Bits de configuration
 _FBS(BWRP_OFF & BSS_OFF);
 _FGS(GWRP_OFF & GSS0_OFF);
@@ -26,7 +27,7 @@ _FICD(ICS_PGx2); // DEBUG_ON
  */
 int main(void)
 {
-    IO_Init();
+    PORTIO_Init();
 
     return (EXIT_SUCCESS);
 }
