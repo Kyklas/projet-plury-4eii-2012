@@ -41,11 +41,11 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/main.o ${OBJECTDIR}/IO.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/main.o.d ${OBJECTDIR}/IO.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/main.o ${OBJECTDIR}/IO.o ${OBJECTDIR}/PWM.o ${OBJECTDIR}/PLL.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/main.o.d ${OBJECTDIR}/IO.o.d ${OBJECTDIR}/PWM.o.d ${OBJECTDIR}/PLL.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/main.o ${OBJECTDIR}/IO.o
+OBJECTFILES=${OBJECTDIR}/main.o ${OBJECTDIR}/IO.o ${OBJECTDIR}/PWM.o ${OBJECTDIR}/PLL.o
 
 
 CFLAGS=
@@ -93,6 +93,18 @@ ${OBJECTDIR}/IO.o: IO.c  nbproject/Makefile-${CND_CONF}.mk
 	@${RM} ${OBJECTDIR}/IO.o.ok ${OBJECTDIR}/IO.o.err 
 	@${FIXDEPS} "${OBJECTDIR}/IO.o.d" $(SILENT) -c ${MP_CC} $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1 -omf=elf -x c -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/IO.o.d" -o ${OBJECTDIR}/IO.o IO.c  
 	
+${OBJECTDIR}/PWM.o: PWM.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} ${OBJECTDIR} 
+	@${RM} ${OBJECTDIR}/PWM.o.d 
+	@${RM} ${OBJECTDIR}/PWM.o.ok ${OBJECTDIR}/PWM.o.err 
+	@${FIXDEPS} "${OBJECTDIR}/PWM.o.d" $(SILENT) -c ${MP_CC} $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1 -omf=elf -x c -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/PWM.o.d" -o ${OBJECTDIR}/PWM.o PWM.c  
+	
+${OBJECTDIR}/PLL.o: PLL.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} ${OBJECTDIR} 
+	@${RM} ${OBJECTDIR}/PLL.o.d 
+	@${RM} ${OBJECTDIR}/PLL.o.ok ${OBJECTDIR}/PLL.o.err 
+	@${FIXDEPS} "${OBJECTDIR}/PLL.o.d" $(SILENT) -c ${MP_CC} $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1 -omf=elf -x c -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/PLL.o.d" -o ${OBJECTDIR}/PLL.o PLL.c  
+	
 else
 ${OBJECTDIR}/main.o: main.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} ${OBJECTDIR} 
@@ -105,6 +117,18 @@ ${OBJECTDIR}/IO.o: IO.c  nbproject/Makefile-${CND_CONF}.mk
 	@${RM} ${OBJECTDIR}/IO.o.d 
 	@${RM} ${OBJECTDIR}/IO.o.ok ${OBJECTDIR}/IO.o.err 
 	@${FIXDEPS} "${OBJECTDIR}/IO.o.d" $(SILENT) -c ${MP_CC} $(MP_EXTRA_CC_PRE)  -g -omf=elf -x c -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/IO.o.d" -o ${OBJECTDIR}/IO.o IO.c  
+	
+${OBJECTDIR}/PWM.o: PWM.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} ${OBJECTDIR} 
+	@${RM} ${OBJECTDIR}/PWM.o.d 
+	@${RM} ${OBJECTDIR}/PWM.o.ok ${OBJECTDIR}/PWM.o.err 
+	@${FIXDEPS} "${OBJECTDIR}/PWM.o.d" $(SILENT) -c ${MP_CC} $(MP_EXTRA_CC_PRE)  -g -omf=elf -x c -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/PWM.o.d" -o ${OBJECTDIR}/PWM.o PWM.c  
+	
+${OBJECTDIR}/PLL.o: PLL.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} ${OBJECTDIR} 
+	@${RM} ${OBJECTDIR}/PLL.o.d 
+	@${RM} ${OBJECTDIR}/PLL.o.ok ${OBJECTDIR}/PLL.o.err 
+	@${FIXDEPS} "${OBJECTDIR}/PLL.o.d" $(SILENT) -c ${MP_CC} $(MP_EXTRA_CC_PRE)  -g -omf=elf -x c -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/PLL.o.d" -o ${OBJECTDIR}/PLL.o PLL.c  
 	
 endif
 
