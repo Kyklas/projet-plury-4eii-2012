@@ -16,6 +16,6 @@
  * \brief Initialisation du E/S
  */
 void IO_Init ();
-void PORTIO_Init();
+
 
 #endif
