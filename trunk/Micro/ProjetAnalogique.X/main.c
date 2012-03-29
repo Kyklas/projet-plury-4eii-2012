@@ -30,7 +30,6 @@ int main(void)
 {
     PLL_Init();
     IO_Init();
-    PORTIO_Init();
     PWM_Init();
     PWM_SetDutyCycle(69);
     while(1);
