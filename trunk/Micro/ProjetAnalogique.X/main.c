@@ -22,6 +22,8 @@ _FICD(ICS_PGx2); // DEBUG_ON
 #include "IO.h"
 #include "PLL.h"
 #include "PWM.h"
+#include "ADC.h"
+#include "TIMER1.h"
 
 /*
  * main
@@ -32,7 +34,15 @@ int main(void)
     IO_Init();
     PWM_Init();
     PWM_SetDutyCycle(69);
-    while(1);
+    TIMER1_Init();
+    ADC_Init();
+    while(1)
+    {
+        unsigned int resultat;
+        resultat=ADC_Convert(POT1);
+        if(resultat<127){PORTBbits.RB9=0;}
+        else {PORTBbits.RB9=1;}
+    }
 
     return (EXIT_SUCCESS);
 }
