@@ -17,7 +17,8 @@ void ADC_Init()
    // configuration du sens des e/s faites dans io_init
     AD1CON2bits.PVCFG=0b00; // sélection de la référence de tension : AVDD ???
     AD1CON3bits.ADCS=0b00000000; // sélection de la fréquence de conversion : TCY=TAD
-    AD1CON1bits.SSRC=0b0101; // sélection de la séquence échantillonage/conversion : timer1 event
+    AD1CON1bits.SSRC=0b0000; // relancement manuel
+    //AD1CON1bits.SSRC=0b0101; // sélection de la séquence échantillonage/conversion : timer1 event
     AD1CON3bits.ADRC=0b0; // sélection de la séquence échantillonage/conversion : horloge système
     AD1CON1bits.FORM=0b00;// sélection du format des résultats : décimal sans signe, justifié à droite
     AD1CON2bits.SMPI=0b00000; // sélection de la fréquence des interruptions : interruption à la fin de chaque conversion
@@ -34,6 +35,8 @@ unsigned int ADC_Convert(int voie)
     AD1CHSbits.CH0SB=0b11101; // multiplieur d'entrée : AVD ???
 
     AD1CON1bits.ADON=0b1;//module ADC lancé
+    
+    AD1CON1bits.SAMP=0; // lancement de la conversion
 
     while(!AD1CON1bits.DONE) {}// attente de la fin de conversion
     result=ADC1BUF0; // si on ne laisse qu'une conversion se passer entre chaque vérification, pas besoin d'aller plus loin que le buffer0
