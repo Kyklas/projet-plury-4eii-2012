@@ -15,6 +15,6 @@
  * \fn void PLL_Init ()
  * \brief Initialisation de la PLL
  */
-void PLL_Init ();
+void PLL_Init();
 
 #endif

@@ -7,10 +7,24 @@
       <itemPath>IO.h</itemPath>
       <itemPath>PWM.h</itemPath>
       <itemPath>PLL.h</itemPath>
+      <itemPath>ADC.h</itemPath>
+      <itemPath>TIMER1.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
                    projectFiles="true">
+    </logicalFolder>
+    <logicalFolder name="ProjetAnalogique.X"
+                   displayName="ProjetAnalogique.X"
+                   projectFiles="true">
+      <logicalFolder name="dist" displayName="dist" projectFiles="true">
+        <logicalFolder name="default" displayName="default" projectFiles="true">
+          <logicalFolder name="debug" displayName="debug" projectFiles="true">
+          </logicalFolder>
+          <logicalFolder name="production" displayName="production" projectFiles="true">
+          </logicalFolder>
+        </logicalFolder>
+      </logicalFolder>
     </logicalFolder>
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
@@ -19,6 +33,8 @@
       <itemPath>IO.c</itemPath>
       <itemPath>PWM.c</itemPath>
       <itemPath>PLL.c</itemPath>
+      <itemPath>ADC.c</itemPath>
+      <itemPath>TIMER1.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -26,6 +42,10 @@
       <itemPath>Makefile</itemPath>
     </logicalFolder>
   </logicalFolder>
+  <sourceRootList>
+    <Elem>../../../../../../../Program Files/Microchip/MPLAB C30/support/PIC24F/h</Elem>
+    <Elem>.</Elem>
+  </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
     <conf name="default" type="2">
