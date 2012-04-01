@@ -12,7 +12,7 @@
  * \fn void PLL_Init ()
  * \brief Initialisation de la PLL
  */
-void PLL_Init ()
+void PLL_Init()
 {
     OSCCON = 0;
     OSCCONbits.COSC = 0b010; // Primary Oscillator XT

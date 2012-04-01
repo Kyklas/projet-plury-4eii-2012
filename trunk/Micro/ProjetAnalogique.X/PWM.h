@@ -15,7 +15,7 @@
  * \fn void PWM_Init ()
  * \brief Initialisation du PWM
  */
-void PWM_Init ();
+void PWM_Init();
 
 /**
  * \fn void PWM_Init ()

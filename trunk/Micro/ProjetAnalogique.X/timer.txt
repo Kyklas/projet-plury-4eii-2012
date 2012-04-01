@@ -1,0 +1,6 @@
+fréquence conversion voulue : 1kHz, periode = 1 ms
+fréquence quartz 32 MHZ prescale * 8 ==> 4MHZ  periode = 250 ns
+profondeur timer1 : 16 bits ==> max = 65535
+
+
+1ms/250ns = 4000 cycles à compter
