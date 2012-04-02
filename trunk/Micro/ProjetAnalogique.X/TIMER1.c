@@ -16,8 +16,8 @@ void TIMER1_Init ()
     T1CONbits.TCS=0b0; // utilisation de l'horloge interne (fquartz+pll/2)  (16 MHz )
   
 
-    //PR1=2000; // pour une période de 1KHz
-    PR1=20000; // pour une période de 1Hz
+    PR1=20000; // pour une période de 1KHz
+    //PR1=20000; // pour une période de 1Hz
 
     // réglage interruption pour générer evt pour adc ?
     IPC0bits.T1IP = 0x01; //Setup Timer1 interrupt for desired priority level
