@@ -682,10 +682,8 @@ download a copy.-->
 		</SYMBOL>
 		<POWER pos='92.00000,178.00000' which='4' direction='1'>GND</POWER>
 		<WIRE a='86.00000,150.00000' b='92.00000,150.00000'/>
-		<LABEL pos='38.00000,122.00000' direction='3' font='4' color='208000' style='1'>TX</LABEL>
-		<WIRE a='50.00000,122.00000' b='38.00000,122.00000'/>
-		<LABEL pos='38.00000,138.00000' direction='3' font='4' color='208000' style='2'>RX</LABEL>
-		<WIRE a='50.00000,138.00000' b='38.00000,138.00000'/>
+		<LABEL pos='38.00000,138.00000' direction='3' font='4' color='208000' style='1'>TX</LABEL>
+		<LABEL pos='38.00000,122.00000' direction='3' font='4' color='208000' style='2'>RX</LABEL>
 		<WIRE a='86.00000,134.00000' b='92.00000,134.00000'/>
 		<WIRE a='92.00000,162.00000' b='92.00000,178.00000'/>
 		<WIRE a='86.00000,162.00000' b='92.00000,162.00000'/>
@@ -797,6 +795,8 @@ download a copy.-->
 		<WIRE a='94.00000,54.00000' b='88.00000,54.00000'/>
 		<WIRE a='94.00000,42.00000' b='88.00000,42.00000'/>
 		<WIRE a='94.00000,46.00000' b='88.00000,46.00000'/>
+		<WIRE a='50.00000,122.00000' b='38.00000,122.00000'/>
+		<WIRE a='50.00000,138.00000' b='38.00000,138.00000'/>
 	</TinyCAD>
 	<TinyCAD>
 		<NAME>Puissance</NAME>
@@ -2225,7 +2225,7 @@ download a copy.-->
 			<FIELD type='2' description='$$SPICE_EPILOG_PRIORITY' value='5' show='0' pos='0.00000,0.00000'/>
 			<FIELD type='1' description='Package' value='SIL2' show='0' pos='1.00000,2.80000'/>
 		</SYMBOL>
-		<LABEL pos='162.00000,88.00000' direction='2' font='4' color='208000' style='2'>POT2 / D</LABEL>
+		<LABEL pos='162.00000,88.00000' direction='2' font='4' color='208000' style='2'>POT1 / D</LABEL>
 		<WIRE a='158.00000,88.00000' b='162.00000,88.00000'/>
 		<SYMBOL id='1' pos='106.00000,174.00000' part='0' rotate='0' can_scale='0' show_power='0' scale_x='1.00000' scale_y='1.00000'>
 			<FIELD type='0' description='Ref' value='U3' show='1' pos='-9.00000,-15.60000'/>
@@ -2244,7 +2244,7 @@ download a copy.-->
 		<WIRE a='218.00000,48.00000' b='214.00000,48.00000'/>
 		<TEXT pos='214.00000,32.00000' direction='3' font='5' color='000000'>Réglage du gain différentiel</TEXT>
 		<TEXT pos='56.00000,140.00000' direction='3' font='6' color='000000'>Correcteur dérivateur</TEXT>
-		<LABEL pos='136.00000,162.00000' direction='2' font='3' color='208000' style='2'>POT1 / C</LABEL>
+		<LABEL pos='136.00000,162.00000' direction='2' font='3' color='208000' style='2'>POT2 / C</LABEL>
 		<SYMBOL id='4' pos='132.00000,164.00000' part='0' rotate='0' can_scale='0' show_power='0' scale_x='1.00000' scale_y='1.00000'>
 			<FIELD type='0' description='Ref' value='J7' show='1' pos='-11.00000,-5.60000'/>
 			<FIELD type='0' description='Name' value='Jumper' show='1' pos='-11.00000,4.00000'/>

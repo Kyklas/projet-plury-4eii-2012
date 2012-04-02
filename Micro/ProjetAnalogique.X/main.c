@@ -14,33 +14,40 @@
 #include "ADC.h"
 #include "TIMER1.h"
 
+#ifdef _ISR
+    #undef _ISR
+    #define _ISR __attribute__((interrupt, auto_psv))
+#endif
+
+#ifdef _ISRFAST
+    #undef _ISRFAST
+    #define _ISRFAST __attribute__((interrupt, shadow, auto_psv))
+#endif
+
 //variables globales
 unsigned int resultat=0;
 
 //pgr d'interruptions
 
-void __attribute__((__interrupt__, __shadow__)) _T1Interrupt(void)
+void _ISRFAST _T1Interrupt(void)
 {
 /* Interrupt Service Routine code goes here */
-    
-IFS0bits.T1IF = 0; //Reset Timer1 interrupt flag and Return from ISR
-PORTBbits.RB8=!PORTBbits.RB8;
-resultat=ADC_Convert(POT1);
-if(resultat<127){PORTBbits.RB9=0;}
-else {PORTBbits.RB9=1;}
+    IFS0bits.T1IF = 0; //Reset Timer1 interrupt flag and Return from ISR
+    PORTBbits.RB8 =! PORTBbits.RB8;
+    resultat=ADC_Convert(POT1);
+    if(resultat < 32000){PORTBbits.RB9=0;}
+    else {PORTBbits.RB9=1;}
 }
 
 
 // Bits de configuration
 _FBS(BWRP_OFF & BSS_OFF);
 _FGS(GWRP_OFF & GSS0_OFF);
-_FOSCSEL(FNOSC_PRI & SOSCSRC_ANA & LPRCSEL_LP & IESO_OFF);
+_FOSCSEL(FNOSC_PRIPLL & SOSCSRC_ANA & LPRCSEL_LP & IESO_OFF);
 _FOSC(POSCMOD_HS & OSCIOFNC_OFF & POSCFREQ_HS & SOSCSEL_SOSCLP & FCKSM_CSDCMD);
 _FWDT(FWDTEN_OFF);
 _FPOR(BOREN_BOR3 & LVRCFG_OFF & PWRTEN_OFF & I2C1SEL_PRI & BORV_V30 & MCLRE_ON);
 _FICD(ICS_PGx2); // DEBUG_ON
-
-
 
 /*
  * main
