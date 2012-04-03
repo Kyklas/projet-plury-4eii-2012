@@ -25,19 +25,11 @@
 #endif
 
 //variables globales
-unsigned int resultat=0;
+
 
 //pgr d'interruptions
 
-void _ISRFAST _T1Interrupt(void)
-{
-/* Interrupt Service Routine code goes here */
-    IFS0bits.T1IF = 0; //Reset Timer1 interrupt flag and Return from ISR
-    PORTBbits.RB8 =! PORTBbits.RB8;
-    resultat=ADC_Convert(POT1);
-    if(resultat < 32000){PORTBbits.RB9=0;}
-    else {PORTBbits.RB9=1;}
-}
+
 
 
 // Bits de configuration
@@ -58,8 +50,8 @@ int main(void)
     IO_Init();
     PWM_Init();
     PWM_SetDutyCycle(69);
-    TIMER1_Init();
     ADC_Init();
+    TIMER1_Init();
     while(1)
     { 
        

@@ -6,7 +6,21 @@
  * \date 1 avril 2012
  */
 
-#include <TIMER.h>
+#include "TIMER.h"
+#include "ADC.h"
+
+unsigned int resultat=0;
+
+void _ISRFAST _T1Interrupt(void)
+{
+/* Interrupt Service Routine code goes here */
+    IFS0bits.T1IF = 0; //Reset Timer1 interrupt flag and Return from ISR
+    PORTBbits.RB8 =! PORTBbits.RB8;
+    resultat=ADC_Convert(POT1);
+    if(resultat < 32000){PORTBbits.RB9=0;}
+    else {PORTBbits.RB9=1;}
+}
+
 
 void TIMER1_Init ()
 {
@@ -16,8 +30,9 @@ void TIMER1_Init ()
     T1CONbits.TCS=0b0; // utilisation de l'horloge interne (fquartz+pll/2)  (16 MHz )
   
 
-    PR1=20000; // pour une période de 1KHz
-    //PR1=20000; // pour une période de 1Hz
+    //PR1=2000; // pour une période de 1KHz
+    PR1=20; // pour une période de 1Hz
+
 
     // réglage interruption pour générer evt pour adc ?
     IPC0bits.T1IP = 0x01; //Setup Timer1 interrupt for desired priority level
