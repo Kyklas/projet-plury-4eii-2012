@@ -52,10 +52,9 @@ int main(void)
     PWM_SetDutyCycle(69);
     ADC_Init();
     TIMER1_Init();
-    while(1)
-    { 
-       
-    }
+
+    while(1);
+
 
     return (EXIT_SUCCESS);
 }
