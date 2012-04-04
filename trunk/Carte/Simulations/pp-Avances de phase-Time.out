@@ -1,7 +1,7 @@
 
-**** 03/19/12 16:24:10 ********* PSpice 9.2 (Mar 2000) ******** ID# 1 ********
+**** 03/28/12 09:49:08 ********* PSpice 9.2 (Mar 2000) ******** ID# 1 ********
 
- ** Profile: "Avances de phase-Time"  [ D:\ProjetPlury\Carte\Simulations\pp-Avances de phase-Time.sim ] 
+ ** Profile: "Avances de phase-Time"  [ D:\ProjetPlury\Carte\Simulations\pp-avances de phase-time.sim ] 
 
 
  ****     CIRCUIT DESCRIPTION
@@ -12,7 +12,7 @@
 
 
 
-** Creating circuit file "pp-Avances de phase-Time.sim.cir" 
+** Creating circuit file "pp-avances de phase-time.sim.cir" 
 ** WARNING: THIS AUTOMATICALLY GENERATED FILE MAY BE OVERWRITTEN BY SUBSEQUENT SIMULATIONS
 
 *Libraries: 
@@ -42,12 +42,12 @@ C_C5         N06131 N06536  0.39u
 R_R7         N06509 N06131  8.2k  
 C_C2         V25 V50  2.2uf  
 
-**** RESUMING "pp-Avances de phase-Time.sim.cir" ****
+**** RESUMING "pp-avances de phase-time.sim.cir" ****
 .END
 
-**** 03/19/12 16:24:10 ********* PSpice 9.2 (Mar 2000) ******** ID# 1 ********
+**** 03/28/12 09:49:08 ********* PSpice 9.2 (Mar 2000) ******** ID# 1 ********
 
- ** Profile: "Avances de phase-Time"  [ D:\ProjetPlury\Carte\Simulations\pp-Avances de phase-Time.sim ] 
+ ** Profile: "Avances de phase-Time"  [ D:\ProjetPlury\Carte\Simulations\pp-avances de phase-time.sim ] 
 
 
  ****     Diode MODEL PARAMETERS
@@ -64,9 +64,9 @@ C_C2         V25 V50  2.2uf
          CJO                   10.000000E-12 
 
 
-**** 03/19/12 16:24:10 ********* PSpice 9.2 (Mar 2000) ******** ID# 1 ********
+**** 03/28/12 09:49:08 ********* PSpice 9.2 (Mar 2000) ******** ID# 1 ********
 
- ** Profile: "Avances de phase-Time"  [ D:\ProjetPlury\Carte\Simulations\pp-Avances de phase-Time.sim ] 
+ ** Profile: "Avances de phase-Time"  [ D:\ProjetPlury\Carte\Simulations\pp-avances de phase-time.sim ] 
 
 
  ****     BJT MODEL PARAMETERS
@@ -88,9 +88,9 @@ C_C2         V25 V50  2.2uf
            D     .52         
 
 
-**** 03/19/12 16:24:10 ********* PSpice 9.2 (Mar 2000) ******** ID# 1 ********
+**** 03/28/12 09:49:08 ********* PSpice 9.2 (Mar 2000) ******** ID# 1 ********
 
- ** Profile: "Avances de phase-Time"  [ D:\ProjetPlury\Carte\Simulations\pp-Avances de phase-Time.sim ] 
+ ** Profile: "Avances de phase-Time"  [ D:\ProjetPlury\Carte\Simulations\pp-avances de phase-time.sim ] 
 
 
  ****     Current Controlled Switch MODEL PARAMETERS
@@ -108,9 +108,9 @@ C_C2         V25 V50  2.2uf
         IOFF   -1.000000E-06    0               0              -1.000000E-06 
 
 
-**** 03/19/12 16:24:10 ********* PSpice 9.2 (Mar 2000) ******** ID# 1 ********
+**** 03/28/12 09:49:08 ********* PSpice 9.2 (Mar 2000) ******** ID# 1 ********
 
- ** Profile: "Avances de phase-Time"  [ D:\ProjetPlury\Carte\Simulations\pp-Avances de phase-Time.sim ] 
+ ** Profile: "Avances de phase-Time"  [ D:\ProjetPlury\Carte\Simulations\pp-avances de phase-time.sim ] 
 
 
  ****     SMALL SIGNAL BIAS SOLUTION       TEMPERATURE =   27.000 DEG C
@@ -164,5 +164,5 @@ C_C2         V25 V50  2.2uf
 
           JOB CONCLUDED
 
-          TOTAL JOB TIME             .83
+          TOTAL JOB TIME             .86
 

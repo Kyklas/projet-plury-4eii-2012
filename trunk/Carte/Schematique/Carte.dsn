@@ -2256,7 +2256,7 @@ download a copy.-->
 		<WIRE a='132.00000,162.00000' b='136.00000,162.00000'/>
 		<SYMBOL id='2' pos='102.00000,180.00000' part='0' rotate='3' can_scale='0' show_power='0' scale_x='1.00000' scale_y='1.00000'>
 			<FIELD type='0' description='Ref' value='R24' show='1' pos='-18.00000,-2.00000'/>
-			<FIELD type='0' description='Name' value='RE1' show='1' pos='-4.00000,-2.00000'/>
+			<FIELD type='0' description='Name' value='100k' show='1' pos='-4.00000,-2.00000'/>
 		</SYMBOL>
 		<WIRE a='118.00000,162.00000' b='110.00000,162.00000'/>
 		<WIRE a='110.00000,178.00000' b='101.80000,178.00000'/>
@@ -2265,7 +2265,7 @@ download a copy.-->
 		<WIRE a='76.00000,166.00000' b='82.00000,166.00000'/>
 		<SYMBOL id='3' pos='100.00000,188.00000' part='0' rotate='3' can_scale='0' show_power='0' scale_x='1.00000' scale_y='1.00000'>
 			<FIELD type='0' description='Ref' value='C25' show='1' pos='-14.00000,-2.00000'/>
-			<FIELD type='0' description='Name' value='C3' show='1' pos='-4.00000,-2.00000'/>
+			<FIELD type='0' description='Name' value='33nf' show='1' pos='-4.00000,-2.00000'/>
 		</SYMBOL>
 		<WIRE a='76.00000,178.00000' b='76.00000,186.00000'/>
 		<WIRE a='76.00000,186.00000' b='86.00000,186.00000'/>
@@ -2274,11 +2274,11 @@ download a copy.-->
 		<WIRE a='110.00000,186.00000' b='110.00000,178.00000'/>
 		<SYMBOL id='2' pos='66.00000,164.00000' part='0' rotate='3' can_scale='0' show_power='0' scale_x='1.00000' scale_y='1.00000'>
 			<FIELD type='0' description='Ref' value='R23' show='1' pos='-18.00000,-2.00000'/>
-			<FIELD type='0' description='Name' value='RE1' show='1' pos='-4.00000,-2.00000'/>
+			<FIELD type='0' description='Name' value='100k' show='1' pos='-4.00000,-2.00000'/>
 		</SYMBOL>
 		<SYMBOL id='3' pos='64.00000,172.00000' part='0' rotate='3' can_scale='0' show_power='0' scale_x='1.00000' scale_y='1.00000'>
 			<FIELD type='0' description='Ref' value='C24' show='1' pos='-14.00000,-2.00000'/>
-			<FIELD type='0' description='Name' value='C3' show='1' pos='-4.00000,-2.00000'/>
+			<FIELD type='0' description='Name' value='330nf' show='1' pos='-4.00000,-2.00000'/>
 		</SYMBOL>
 		<WIRE a='42.00000,162.00000' b='42.00000,170.00000'/>
 		<WIRE a='42.00000,170.00000' b='50.00000,170.00000'/>
