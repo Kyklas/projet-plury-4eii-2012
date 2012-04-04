@@ -83,7 +83,7 @@
       (Path "Design Resources" "Library")
       (Path "Outputs")
       (Select "Design Resources" "D:\ProjetPlury\Carte\Simulations\pp.dsn"
-         "Amp Diff" "PAGE1"))
+         "Avances de phase" "PAGE1"))
     (HierarchyView)
     (Doc
       (Type "COrCapturePMDoc")
@@ -93,7 +93,7 @@
     (Doc
       (Type "COrSchematicDoc")
       (Frame
-        (Placement "44 0 1 -1 -1 -1 -1 203 1279 90 521")
+        (Placement "44 2 3 160 608 -8 -30 203 1279 90 521")
         (Scroll "0 0")
         (Zoom "100")
         (Occurrence "/"))
@@ -103,7 +103,7 @@
     (Doc
       (Type "COrSchematicDoc")
       (Frame
-        (Placement "44 0 1 -1 -1 -1 -1 0 1076 0 621")
+        (Placement "44 0 1 0 604 -1 -1 148 1224 -5 616")
         (Scroll "0 150")
         (Zoom "100"))
       (Path "D:\PROJETPLURY\CARTE\SIMULATIONS\PP.DSN")
