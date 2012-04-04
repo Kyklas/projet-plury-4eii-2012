@@ -1,0 +1,15 @@
+Ajout de la consigne dans le montage différentielle
+
+H1 - H2 = Vc
+
+Cela permet d'avoir une tension centré sur note offset quand le mobile est à la position voulue.
+
+Estimation du décalage en fonction de la position du mobile, environ de 100mv par mm mais à confirmer.
+
+Cablage de l'avance de phase, correct par rapport à la simulation : @ 15.74Hz Ph : 65 ( entre -120 et -130) et Gain 10dB
+cablage avec 33nf et 330nf avec R=100k  
+
+TODO tester la qualité des condos @n 15.74Hz
+
+
+Vérification des saturations de l'aop : limit haute à 3.75 donc on redéfini l'offset à 3.7/2 = 1.85 V pour optimiser le plage de mesure.
