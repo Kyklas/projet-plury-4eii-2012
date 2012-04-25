@@ -30,7 +30,7 @@ void ADC_Init()
     AD1CON1 |= 0b10000000000;       // maintain to '1'
 }
 
-unsigned int ADC_Convert(int voie)
+unsigned short ADC_Convert(int voie)
 {
     AD1CHSbits.CH0SA=voie;          // multiplieur d'entrée : AVD ???
     while(!AD1CON1bits.DONE);       // attente de la fin de conversion

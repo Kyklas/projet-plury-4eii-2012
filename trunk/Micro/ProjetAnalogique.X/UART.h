@@ -12,10 +12,11 @@
 #include <p24FV32KA301.h>
 
 /**
- * \fn void UART_Init ()
+ * \fn void UART_Init (int Baudrate)
  * \brief Initialisation de l'UART
  */
-void UART_Init ();
+void UART_Init (int Baudrate);
 
+void fonction_U2RXInterrupt(void);
 
 #endif

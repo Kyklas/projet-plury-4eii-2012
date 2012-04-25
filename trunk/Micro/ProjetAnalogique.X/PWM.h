@@ -23,6 +23,6 @@ void PWM_Init();
  *
  * \param DutyCycle Valeur du rapport cyclique
  */
-void PWM_SetDutyCycle(char DutyCycle);
+void PWM_SetDutyCycle(unsigned char DutyCycle);
 
 #endif

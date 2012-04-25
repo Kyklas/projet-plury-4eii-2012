@@ -29,7 +29,7 @@ void ADC_Init ();
  * \parami[in] voie sur laquelle convertir
  * \return le résultat de la conversion
  *  */
-unsigned int ADC_Convert(int voie);
+unsigned short ADC_Convert(int voie);
 
 #endif
 

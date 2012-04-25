@@ -17,6 +17,6 @@
  */
 void TIMER1_Init ();
 
-void Timer1_Interrupt(void);
+void fonction_T1Interrupt(void);
 
 #endif
