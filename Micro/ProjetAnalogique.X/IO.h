@@ -11,6 +11,9 @@
 
 #include <p24FV32KA301.h>
 
+#define MODE1 LATBbits.LATB4 //RB4
+#define MODE2 LATAbits.LATA4 //RA4
+
 /**
  * \fn void IO_Init ()
  * \brief Initialisation du E/S

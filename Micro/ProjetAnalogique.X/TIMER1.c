@@ -9,6 +9,8 @@
 #include "TIMER.h"
 #include "ADC.h"
 #include "PWM.h"
+#include "IO.h"
+
 unsigned int resultat=0;
 
 void TIMER1_Init ()
@@ -20,6 +22,7 @@ void TIMER1_Init ()
     T1CONbits.TCKPS=0b11; // prescaler par 256 ==> Fcy/256 = 62,5 khz
 
     PR1=62; // pour une période de timer1 : 1ms
+    //PR1=20; // pour une période de timer1 : 0.3ms
 
     // réglage interruption pour générer evt pour adc ?
     IPC0bits.T1IP = 0x01;       //Setup Timer1 interrupt for desired priority level
@@ -30,15 +33,33 @@ void TIMER1_Init ()
     T1CONbits.TON=0b1;      //timer1 lancé
 }
 
-void _ISRFAST _T1Interrupt(void)
+void fonction_T1Interrupt(void)
 {
-    Timer1_Interrupt();
+    unsigned short ADValue, Vref;
+    short DutyCycle;
+    Vref = 1.77 * 4096.0/5.0; // 1,85 V
+    ADValue = 0xFFF - ADC_Convert(POT1);
+
+    DutyCycle = Vref - ADValue;
+    
+    if (DutyCycle < 0)
+    {
+        DutyCycle = -DutyCycle;
+        MODE1 = 0;
+        MODE2 = 1;
+    }
+    else
+    {
+        MODE1 = 1;
+        MODE2 = 0;
+    }
+    DutyCycle = DutyCycle>>3;
+    PWM_SetDutyCycle((unsigned char)(DutyCycle));
 }
 
-void Timer1_Interrupt(void)
+void __attribute__((interrupt,no_auto_psv)) _T1Interrupt(void)
+//void _ISRFAST _T1Interrupt(void)
 {
-    long dc;
+    fonction_T1Interrupt();
     IFS0bits.T1IF = 0; //Reset Timer1 interrupt flag and Return from ISR
-    dc = ((long)(ADC_Convert(POT1))*100)/0xFFE;
-    PWM_SetDutyCycle((int)dc);
 }
