@@ -8,7 +8,7 @@
 %%% PAGE DIMENSIONS
 \usepackage{geometry} % to change the page dimensions
 \geometry{a4paper} % or letterpaper (US) or a5paper or....
-\geometry{margin=1in} % for example, change the margins to 2 inches all round
+\geometry{margin=2cm} % for example, change the margins to 2 inches all round
 
 %%% PACKAGES
 \usepackage{graphicx} % support the \includegraphics command and options
@@ -19,6 +19,10 @@
 \usepackage{subfig} % make it possible to include more than one captioned figure/table in a single float
 \usepackage[frenchb]{babel}
 
+\usepackage{picins,caption}
+\usepackage{wrapfig}
+
+
 
 %%% HEADERS & FOOTERS
 %\usepackage{fancyhdr} % This should be set AFTER setting up the page geometry
@@ -27,7 +31,7 @@
 % Rapport projet pluridisciplinaire : etude thermique du pont en H
 % : Xavier Galzin, Stanislas Bertrand, Romain Desille, Frédéric Meslin
 
-\title{Projet pluridisciplinaire \\ Rapport Solution Analogique}
+\title{\textsc{Projet Pluridisciplinaire} \\ Rapport Solution Analogique}
 \author{Xavier GALZIN, Stanislas BERTRAND, Romain DESILLE, Frédéric MESLIN}
 \date{19/03/2012}
 
@@ -41,28 +45,76 @@ Liste
 \\- Rappel des objectifs
 \\- liens avec l'étude automatique
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Capteur & Conditionnement -> Stan
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
 \section{Capteur \& Conditionnement}
 \subsection{Capteur à Effet Hall}
-Liste
-\\- Principe Générique
-\\- Mise en Place sur la maquette
-\\- Caractéristique principales des modules ( Alimentée, faible z, ... )
-\\- Nécéssité de mesure différentielle
-\subsection{Montage différentielle}
-Liste
-\\- Choix du montage + schema
-\\- justification avantages / inconvengents
-\\- Choix des AOPs ( Prix, Dispo, Package )
-\\- Etude du montage
-\\- Gain reglables
-\\- Ajout d'un Offset 
-\\- - Resultats des tests justifiant les valeurs ( cf section suivante )
+
+
+\subparagraph*{Principe du capteur à Effet Hall}~\\
+\begin{minipage}[t]{10cm}
+\vspace{-0.3cm}
+\parpic{\includegraphics[width=5cm]{SolutionAnalogique/capteur_effet_hall}}
+Un capteur à effet Hall permet de mesurer le champ magnétique $B$ grace à la déformation d'un courant $I_0$ dans un conducteur, ou semi-conducteur, soumis à ce champ. La déformation du flux d'élection génère une différence de potentielle aux bords du conducteur : $V_h =K_h \cdot B \cdot I_0$. Cette relation concidère $B$ comme le champ mangétique normal à la surface du conducteur.
+\end{minipage}
+
+
+\subparagraph*{Imaplantation}~\\
+\begin{minipage}[t]{10cm}
+Pour mesurer les champs magnétique de la bobine et du mobile, deux capteurs à effet Hall, Allegro A1302, sont placés à chaque extrémité de la bobine. L'alignement de la bobine, du mobile et des capteurs est important car c'est le champ magnétique normal au capteur qui est mesuré. Il est ainsi possible de connaitre la position du mobile, les deux capteurs étant placé symétriquement sur la bobine, ils mesurent le même champ résultant. Le champ résultant du mobile n'est pas le même pour les deux capteurs, le champ diminue avec la distance. Le bilan de champs magnétique sur les capteur est le suivant :
+\vspace{-0.3cm} \[B_{H2} = B_{Bob} + B_{Mob~Dist_{Mob-H2}}\]
+\vspace{-0.8cm} \[B_{H1} = B_{Bob} + B_{Mob~Dist_{Mob-H1}}\]
+L'image de la position du mobile est contenue dans  $B_{Mob~Dist_{Mob-H2}}$ et $B_{Mob~Dist_{Mob-H1}}$. L'image est obtenue par différence de $B_{H2}$ et $B_{H1}$, $V_{H2}-V_{H1}$
+\end{minipage}
+~
+\begin{minipage}[t]{8cm}
+\vspace{-7cm}
+\piccaption{Implantation des capteurs}
+\parpic{\includegraphics[width=8cm]{SolutionAnalogique/EffetHall}}
+\end{minipage}
+
+
+\subparagraph*{Caractéristiques électronique}~\\
+Les capteurs Allegro A1302 convennent à notre application car ils sont optimisé pour des systèmes de positionnement linéaire ou radial. Le capteur peut être alimenté par une tension de 5V, tension utilisé pour nos montage analogique. Le signal de sortie ne necessite aucun traitement car la mesure effectuée est filtrée et amplifiée en interne et le niveau de sortie est directement compatible. Le circuit a une faible impédence de sortie, caractéristique importante pour les montages réalisés par la suite.
+
+\subsection{Montage différentiel}
+
+\begin{wrapfigure}{r}{8cm}
+  \includegraphics[width=8cm]{SolutionAnalogique/AmpInst}
+  \caption{Amplificateur d'instrumentation}
+\end{wrapfigure}
+Le montage amplificateur d'instrumentation a été choisi pour son gain différentiel réglable, ses impédences d'entrées importantes et sa faible impédence de sortie, son taux de réjection mode commun important grâce à l'étage d'entré symétrique. Il est réalisé avec des AOP LM324.
+
+\textbf{Fred, les impédences sont du au choix de l'AOP mais je sais pas trop comment validé/vérifierb (Choix des AOPs ( Prix, Dispo, Package ))}
+
+Ce montage n'est pas réalisé de manière intégré ce qui dégrade ces performances notamment à cause des précisions des résistances $R$.
+
+L'étude du schema donne la relation suivante : $V_s=(1+2 \frac{R}{R0})(V_1-V_2) + V_{offset}$. La mesure de la tension maximale de sortie permet de régler la valeur de l'offset, $V_{offset}=\frac{V_{max}}{2}$, $V_{max}=3.7$V. Cela permet de maximiser les variations du signal en le centrant sur la plage de sortie de l'AOP.
+
 \subsection{Consigne Analogique}
+La conception initiale ne prévoyait pas de consigne analogique mais seulement une consigne numérique. Il s'est avéré intéressant d'ajouter une consigne analogique car elle permet de maximiser l'amplitude pour l'aquisition dans le microcontroller conjointement avec l'offset.
+
+L'ajout de la consigne 
+
+\begin{figure}[h!]
+  \includegraphics{SolutionAnalogique/AmpInstCons}
+  \label{}
+  \caption{Différentiel avec consigne}
+\end{figure}
+
 Liste
 \\- Consigne numérique vers consigne analogique
 \\- Retour : implantation analgoqie
 \\- - Gain en précision (centrage sur l'offset)
 \\- - Maximisation de la plage de conversion ( réajustement de l'offset )
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Correcteur Avance de phase
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 \section{Correcteur Avance de phase}
