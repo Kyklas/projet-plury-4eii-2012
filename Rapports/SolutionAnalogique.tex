@@ -95,12 +95,18 @@ Ce montage n'est pas réalisé de manière intégré ce qui dégrade ces perform
 L'étude du schema donne la relation suivante : $V_s=(1+2 \frac{R}{R0})(V_1-V_2) + V_{offset}$. La mesure de la tension maximale de sortie permet de régler la valeur de l'offset, $V_{offset}=\frac{V_{max}}{2}$, $V_{max}=3.7$V. Cela permet de maximiser les variations du signal en le centrant sur la plage de sortie de l'AOP.
 
 \subsection{Consigne Analogique}
-La conception initiale ne prévoyait pas de consigne analogique mais seulement une consigne numérique. Il s'est avéré intéressant d'ajouter une consigne analogique car elle permet de maximiser l'amplitude pour l'aquisition dans le microcontroller conjointement avec l'offset.
+La conception initiale ne prévoyait pas de consigne analogique, seulement une consigne numérique. Il s'est avéré intéressant d'ajouter une consigne analogique pour plusieurs raisons, elle permet de générer l'erreur et de travailler centré sur l'offset en sortie du montage différentiel. Cela permet de maximier la plage du signal pour la numérisation.
 
-L'ajout de la consigne 
+La consigne est ajouté en prenant avantage du montage différentiel, sur l'entrée inverseuse du montage, deux signaux sont sommés, la consigne et le capteur $H1$. Le champ magnétique mesuré par $H1$ est plus faible que celui de $H2$ donc $H2-H1>0$. L'ajout de la consigne permet d'annuler cette tension pour une position du mobile, la tension de sortie est alors celle de l'offset.
+\begin{center}
+$V_s=\frac{1}{2}(1+2 \frac{R}{R0})(H2-H1-Consigne) + V_{offset}$
+\hspace{1cm}$Consigne = (H2-H1)_{15mm}$
+\end{center}
 
+Le sommateur en entré induit une division des tensions. La tension du capteur H2 est également divisé via un pont. Cela est possible grâce à la faible impédence de sortie est capteur. La génération de consigne respecte cette contraite, $R_{eq_{Consigne}} \ll R_{26}$. Pour faciliter le réglage, la course du potentiomètre varie de 0 à 1V qui est suffisant pour annuler $H2-H1$. Ce gain d'entré est compensé avec le gain du montage différentiel. 
 \begin{figure}[h!]
-  \includegraphics{SolutionAnalogique/AmpInstCons}
+  \center
+  \includegraphics[width=\linewidth]{SolutionAnalogique/AmpInstCons}
   \label{}
   \caption{Différentiel avec consigne}
 \end{figure}
