@@ -58,13 +58,13 @@ Liste
 \begin{minipage}[t]{10cm}
 \vspace{-0.3cm}
 \parpic{\includegraphics[width=5cm]{SolutionAnalogique/capteur_effet_hall}}
-Un capteur à effet Hall permet de mesurer le champ magnétique $B$ grace à la déformation d'un courant $I_0$ dans un conducteur, ou semi-conducteur, soumis à ce champ. La déformation du flux d'élection génère une différence de potentielle aux bords du conducteur : $V_h =K_h \cdot B \cdot I_0$. Cette relation concidère $B$ comme le champ mangétique normal à la surface du conducteur.
+Un capteur à effet Hall permet de mesurer le champ magnétique $B$ grâce à la déformation d'un courant $I_0$ dans un conducteur ou semi-conducteur, soumis à ce champ. La déformation du flux d'électron génère une différence de potentiels aux bords du conducteur : $V_h =K_h \cdot B \cdot I_0$. Cette relation considère $B$ comme le champ magnétique normal à la surface du conducteur.
 \end{minipage}
 
 
-\subparagraph*{Imaplantation}~\\
+\subparagraph*{Implantation}~\\
 \begin{minipage}[t]{10cm}
-Pour mesurer les champs magnétique de la bobine et du mobile, deux capteurs à effet Hall, Allegro A1302, sont placés à chaque extrémité de la bobine. L'alignement de la bobine, du mobile et des capteurs est important car c'est le champ magnétique normal au capteur qui est mesuré. Il est ainsi possible de connaitre la position du mobile, les deux capteurs étant placé symétriquement sur la bobine, ils mesurent le même champ résultant. Le champ résultant du mobile n'est pas le même pour les deux capteurs, le champ diminue avec la distance. Le bilan de champs magnétique sur les capteur est le suivant :
+Pour mesurer les champs magnétiques de la bobine et du mobile, deux capteurs à effet Hall (modèles Allegro A1302), sont placés à chaque extrémité de la bobine. L'alignement de la bobine, du mobile et des capteurs est important car c'est le champ magnétique normal au capteur qui est mesuré. Il est ainsi possible de connaitre la position verticale du mobile, les deux capteurs étant placés symétriquement sur la bobine, ils mesurent le même champ résultant. Le champ résultant du mobile n'est pas le même pour les deux capteurs, en effet, le champ diminue avec la distance. Le bilan des champs magnétiques exercés sur les capteurs est le suivant :
 \vspace{-0.3cm} \[B_{H2} = B_{Bob} + B_{Mob~Dist_{Mob-H2}}\]
 \vspace{-0.8cm} \[B_{H1} = B_{Bob} + B_{Mob~Dist_{Mob-H1}}\]
 L'image de la position du mobile est contenue dans  $B_{Mob~Dist_{Mob-H2}}$ et $B_{Mob~Dist_{Mob-H1}}$. L'image est obtenue par différence de $B_{H2}$ et $B_{H1}$, $V_{H2}-V_{H1}$
@@ -78,7 +78,7 @@ L'image de la position du mobile est contenue dans  $B_{Mob~Dist_{Mob-H2}}$ et $
 
 
 \subparagraph*{Caractéristiques électronique}~\\
-Les capteurs Allegro A1302 convennent à notre application car ils sont optimisé pour des systèmes de positionnement linéaire ou radial. Le capteur peut être alimenté par une tension de 5V, tension utilisé pour nos montage analogique. Le signal de sortie ne necessite aucun traitement car la mesure effectuée est filtrée et amplifiée en interne et le niveau de sortie est directement compatible. Le circuit a une faible impédence de sortie, caractéristique importante pour les montages réalisés par la suite.
+Les capteurs Allegro A1302 conviennent à notre application car ils sont optimisés pour des systèmes de positionnement linéaires ou radiaux. Le capteur peut être alimenté par une tension de 5V, tension utilisé par nos montages analogiques. Le signal de sortie ne nécessite aucun conditionnement car la mesure effectuée est filtrée et amplifiée en interne et le niveau de sortie est directement compatible. Le circuit a une faible impédance de sortie, caractéristique importante pour les montages réalisés par la suite.
 
 \subsection{Montage différentiel}
 
@@ -86,24 +86,24 @@ Les capteurs Allegro A1302 convennent à notre application car ils sont optimis�
   \includegraphics[width=8cm]{SolutionAnalogique/AmpInst}
   \caption{Amplificateur d'instrumentation}
 \end{wrapfigure}
-Le montage amplificateur d'instrumentation a été choisi pour son gain différentiel réglable, ses impédences d'entrées importantes et sa faible impédence de sortie, son taux de réjection mode commun important grâce à l'étage d'entré symétrique. Il est réalisé avec des AOP LM324.
+Le montage amplificateur d'instrumentation a été choisi pour son gain différentiel réglable, son taux de réjection en mode commun important grâce à l'étage d'entrée symétrique et ses impédances d'entrées fortes . De plus, ce montage a été spécifiquement développé pour notre type d'applications. D'autres montages soustracteurs plus simples, employant moins d'AOPs, auraient été envisageables mais l'économie de composants réalisée en regard des performances obtenues est discutable pour notre application. 
 
-\textbf{Fred, les impédences sont du au choix de l'AOP mais je sais pas trop comment validé/vérifierb (Choix des AOPs ( Prix, Dispo, Package ))}
+Un ensemble d'amplificateurs de type LM324 a été employé pour réaliser toutes les fonctions analogiques. Ce boitier a été choisi pour son aptitude à fonctionner en mono-tension, sa bande passante suffisamment élevée pour notre application et son caractère standard impliquant sa disponibilité. Un circuit LM324 comportant 4 AOPs identiques, il est tout indiqué pour l'implantation de l'amplificateur d'instrumentation.
 
-Ce montage n'est pas réalisé de manière intégré ce qui dégrade ces performances notamment à cause des précisions des résistances $R$.
+Ce montage n'est pas réalisé de manière complètement intégrée ce qui dégrade ses performances, notamment à cause des imprécisions relatives des résistances $R$. Des composants idoines intégrant toute la structure existent et permettent des mesures de grande précision mais à un prix en rapport direct.
 
-L'étude du schema donne la relation suivante : $V_s=(1+2 \frac{R}{R0})(V_1-V_2) + V_{offset}$. La mesure de la tension maximale de sortie permet de régler la valeur de l'offset, $V_{offset}=\frac{V_{max}}{2}$, $V_{max}=3.7$V. Cela permet de maximiser les variations du signal en le centrant sur la plage de sortie de l'AOP.
+L'étude du schema donne la relation suivante : $V_s=(1+2 \frac{R}{R0})(V_1-V_2) + V_{offset}$. La mesure de la tension maximale de sortie permet de régler la valeur de l'offset, $V_{offset}=\frac{V_{max}}{2}$, $V_{max}=3.7$V. Cela permet de maximiser les variations du signal en le centrant dans la plage de sortie de l'AOP.
 
 \subsection{Consigne Analogique}
-La conception initiale ne prévoyait pas de consigne analogique, seulement une consigne numérique. Il s'est avéré intéressant d'ajouter une consigne analogique pour plusieurs raisons, elle permet de générer l'erreur et de travailler centré sur l'offset en sortie du montage différentiel. Cela permet de maximier la plage du signal pour la numérisation.
+La conception initiale ne prévoyait pas de consigne analogique, seulement une consigne numérique. Il s'est avéré plus intéressant d'ajouter une consigne analogique pour plusieurs raisons : elle permet de générer l'erreur et de travailler centré sur l'offset en sortie du montage différentiel. Cela permet de maximiser la plage du signal pour la numérisation.
 
-La consigne est ajouté en prenant avantage du montage différentiel, sur l'entrée inverseuse du montage, deux signaux sont sommés, la consigne et le capteur $H1$. Le champ magnétique mesuré par $H1$ est plus faible que celui de $H2$ donc $H2-H1>0$. L'ajout de la consigne permet d'annuler cette tension pour une position du mobile, la tension de sortie est alors celle de l'offset.
+La consigne est ajoutée en tirant avantage du montage différentiel. Désormais, sur l'entrée inverseuse du montage, deux signaux sont sommés, la consigne et le capteur $H1$. Le champ magnétique mesuré par $H1$ est plus faible que celui de $H2$ donc $H2-H1>0$. L'ajout de la consigne permet d'annuler cette tension pour une certaine position du mobile (position d'équilibre), la tension de sortie est alors celle de l'offset.
 \begin{center}
 $V_s=\frac{1}{2}(1+2 \frac{R}{R0})(H2-H1-Consigne) + V_{offset}$
 \hspace{1cm}$Consigne = (H2-H1)_{15mm}$
 \end{center}
 
-Le sommateur en entré induit une division des tensions. La tension du capteur H2 est également divisé via un pont. Cela est possible grâce à la faible impédence de sortie est capteur. La génération de consigne respecte cette contraite, $R_{eq_{Consigne}} \ll R_{26}$. Pour faciliter le réglage, la course du potentiomètre varie de 0 à 1V qui est suffisant pour annuler $H2-H1$. Ce gain d'entré est compensé avec le gain du montage différentiel. 
+Le sommateur en entrée induit une division par deux des tensions. C'est pourquoi la tension du capteur H2 est également divisée via un pont. Cela est rendu possible grâce à la faible impédance de sortie des capteurs à effet Hall. La génération de consigne respecte cette contrainte, $R_{eq_{Consigne}} \ll R_{26}$. Pour faciliter le réglage, la course du potentiomètre a été fixée de 0 à 1V, ce qui est suffisant pour annuler $H2-H1$. Ce gain d'entrée est compensé par le gain du montage différentiel. 
 \begin{figure}[h!]
   \center
   \includegraphics[width=\linewidth]{SolutionAnalogique/AmpInstCons}
