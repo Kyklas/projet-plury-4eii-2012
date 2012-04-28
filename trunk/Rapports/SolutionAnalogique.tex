@@ -45,6 +45,7 @@ Liste
 \\- Rappel des objectifs
 \\- liens avec l'étude automatique
 
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Capteur & Conditionnement -> Stan
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -95,27 +96,19 @@ Ce montage n'est pas réalisé de manière complètement intégrée ce qui dégr
 L'étude du schema donne la relation suivante : $V_s=(1+2 \frac{R}{R0})(V_1-V_2) + V_{offset}$. La mesure de la tension maximale de sortie permet de régler la valeur de l'offset, $V_{offset}=\frac{V_{max}}{2}$, $V_{max}=3.7$V. Cela permet de maximiser les variations du signal en le centrant dans la plage de sortie de l'AOP.
 
 \subsection{Consigne Analogique}
+\begin{wrapfigure}{r}{0.5\linewidth}
+  \includegraphics[width=\linewidth]{SolutionAnalogique/AmpInstCons.pdf}
+  \label{DiffConsigne}  
+  \caption{Différentiel avec consigne}
+\end{wrapfigure}
 La conception initiale ne prévoyait pas de consigne analogique, seulement une consigne numérique. Il s'est avéré plus intéressant d'ajouter une consigne analogique pour plusieurs raisons : elle permet de générer l'erreur et de travailler centré sur l'offset en sortie du montage différentiel. Cela permet de maximiser la plage du signal pour la numérisation.
 
 La consigne est ajoutée en tirant avantage du montage différentiel. Désormais, sur l'entrée inverseuse du montage, deux signaux sont sommés, la consigne et le capteur $H1$. Le champ magnétique mesuré par $H1$ est plus faible que celui de $H2$ donc $H2-H1>0$. L'ajout de la consigne permet d'annuler cette tension pour une certaine position du mobile (position d'équilibre), la tension de sortie est alors celle de l'offset.
 \begin{center}
 $V_s=\frac{1}{2}(1+2 \frac{R}{R0})(H2-H1-Consigne) + V_{offset}$
-\hspace{1cm}$Consigne = (H2-H1)_{15mm}$
+$Consigne = (H2-H1)_{15mm}$
 \end{center}
-
 Le sommateur en entrée induit une division par deux des tensions. C'est pourquoi la tension du capteur H2 est également divisée via un pont. Cela est rendu possible grâce à la faible impédance de sortie des capteurs à effet Hall. La génération de consigne respecte cette contrainte, $R_{eq_{Consigne}} \ll R_{26}$. Pour faciliter le réglage, la course du potentiomètre a été fixée de 0 à 1V, ce qui est suffisant pour annuler $H2-H1$. Ce gain d'entrée est compensé par le gain du montage différentiel. 
-\begin{figure}[h!]
-  \center
-  \includegraphics[width=\linewidth]{SolutionAnalogique/AmpInstCons}
-  \label{}
-  \caption{Différentiel avec consigne}
-\end{figure}
-
-Liste
-\\- Consigne numérique vers consigne analogique
-\\- Retour : implantation analgoqie
-\\- - Gain en précision (centrage sur l'offset)
-\\- - Maximisation de la plage de conversion ( réajustement de l'offset )
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
