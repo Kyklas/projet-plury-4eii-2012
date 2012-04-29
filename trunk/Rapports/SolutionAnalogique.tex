@@ -17,12 +17,11 @@
 \usepackage{paralist} % very flexible & customisable lists (eg. enumerate/itemize, etc.)
 \usepackage{verbatim} % adds environment for commenting out blocks of text & for better verbatim
 \usepackage{subfig} % make it possible to include more than one captioned figure/table in a single float
+\usepackage{amsmath}
 \usepackage[frenchb]{babel}
 
 \usepackage{picins,caption}
 \usepackage{wrapfig}
-
-
 
 %%% HEADERS & FOOTERS
 %\usepackage{fancyhdr} % This should be set AFTER setting up the page geometry
@@ -41,15 +40,16 @@
 \pagebreak
 
 \section*{Introduction}
-Liste
-\\- Rappel des objectifs
-\\- liens avec l'étude automatique
 
+Dans le premier rapport, nous avons analysé le problème d'automatique soulevé par l'asservissement en position du mobile dans un équilibre instable. Grâce à des simplifications théoriques, nous avons pu mettre en place un modèle physique nous permettant de proposer un correcteur analogique adapté. 
+Dans le rapport suivant, nous nous sommes intéressés à deux aspects relatifs à la partie numérique : la communication sérielle pour faciliter les réglages et permettre d'effectuer des mesures en temps réel et les mécanismes de conversion analogique / numérique puis numérique / analogique autant nécessaires pour la numérisation de la consigne et le pilotage de la puissance dans le cadre du correcteur analogique que pour la future solution à saveur plus numérique. 
+\medskip
+
+Ce présent rapport détaille la réalisation électronique de notre projet. Partant de la conception aux résultats des tests maquette effectués grâce au circuit imprimé gravé pour l'occasion, tous les modules impliqués dans le fonctionnement du prototype sont étudiés. Sont présentés dans l'ordre de la chaine de traitement de signal : la mise en forme des informations capteurs, l'implantation du correcteur analogique, la conversion de la consigne obtenue dans le domaine du numérique et enfin le pilotage du module de puissance pour répondre à cette problématique de lévitation.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Capteur & Conditionnement -> Stan
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 
 \section{Capteur \& Conditionnement}
 \subsection{Capteur à Effet Hall}
@@ -223,16 +223,71 @@ Liste
 \\- Ajout d'un driver USB/Série
 \\ Programme le cas échéant
 
-\section{Contrôle de puissance}
-Liste
-\\- choix du pont complet ( Justification )
-\\-  - Attraction | Répulsion de la bobine
-\\-  - Asservissement à l'équilibre ?
-\\- Choix du composant
-\\- Réalisation PCB
-\\-  - Problème thermique
-\\-  - Problème de boitier
-\\- Utilisation du four à réfusion
+\section{Controle de la puissance}
+
+	La génération de la puissance dans notre application est une partie critique. Faire léviter un mobile d'un poids d'une centaine de gramme soumis à la gravité nécessite l'emploi d'une bobine de taille importante en comparaison avec les selfs classiquement rencontrées dans les montages électroniques. L'objectif est de produire un champ magnétique puissant pour porter le mobile. Ceci implique la régulation de courants importants, naviguant autour de deux ampères. 
+
+\subsection{Choix d'un pont complet}
+	Pour contrôler le champ magnétique émis, nous avons opté pour le pilotage de la bobine en tension. Etant donné la forte intensité des courants invoqués et pour éviter un trop grand gaspillage énergétique, le cahier des charges imposait une régulation en commutation plutôt qu'en fonctionnement linéaire. La bobine étant d'inductance élevée et de résistance faible, elle forme donc un filtre passe bas :
+
+\medskip
+$ L_{bob} = 14,9 mH $
+$ R_{bob} = 2.24 \Omega $
+
+\medskip
+En considérant l'impédance de sortie du générateur de tension négligeable, on obtient :
+
+$ F_{coupure} = \dfrac{1}{2\pi \times R_{bob} \times L_{bob}} = 4.77 Hz $
+
+\medskip
+Ce circuit constitue un filtre passe bas pour le courant d'une fréquence de coupure très faible. Nous allons donc pouvoir piloter la bobine à l'aide de PWMs ou MLIs (Modulation de largeur d'impulsion) à des fréquences relativement élevées. Le filtre réalisé lissera ensuite les impulsions pour former un courant continu proportionnel au rapport cyclique employé.
+
+\medskip
+\noindent
+Pour générer les impulsions de tension, nous avions le choix entre trois solutions :
+
+\medskip
+\begin{itemize}
+	\item \textbf{Transistor simple :} solution basique permettant d'alimenter ou non la bobine et de faire circuler le courant dans un seul sens.
+	\item \textbf{Demi pont en H :} solution intermédiaire permettant de faire circuler le courant dans les deux sens mais nécessitant une source d'alimentation de puissance négative.
+	\item \textbf{Pont en H complet :} solution ultime permettant de faire circuler le courant dans les deux sens sans disposer d'une source d'alimentation de puissance négative.
+\end{itemize}
+
+\medskip
+Nous avons supposé que la possibilité d'inverser le sens du courant dans la bobine pouvait être intéressante pour notre application et ayant pour contrainte de conception la présence d'une seule source d'alimentation de puissance, nous avons sélectionné la solution du pont complet. Après discussion avec des encadrants du projet, nous avons émis l'hypothèse que la répulsion de la bobine pourrait améliorer la stabilité de l'asservissement et la consommation électrique globale du système. Ce qui semble certain c'est qu'elle facilite le positionnement manuel initial du mobile. Nous pourrons par la suite affirmer ou infirmer ces hypothèses en contraignant ou non le pont à fonctionner dans un seul sens. Nous saurons donc si le choix du pont complet était judicieux. Cette solution à l'inconvénient majeur d'être largement plus onéreuse à mettre en place que la première solution à un seul transistor.
+
+\subsection{Choix du composant intégré}
+
+Contrairement au circuit faisant la mesure différentielle des informations capteurs, nous avons préféré l'emploi d'une technologie intégrée pour réaliser le pont. Les avantages de cette solution sont multiples : les transistors de puissance sont optimisés pour cette application, leur circuit de pilotage est intégré et on dispose de protections à la fois thermiques et par mesure de courant circulant dans la bobine.
+
+\medskip
+\noindent
+Nous avons choisi d'utiliser le circuit Allegro (A4950) possèdant les caractéristiques suivantes :
+\medskip
+\begin{itemize}
+	\item tension maximum de puissance $ V_{max} = 40 V $
+	\item courant maximum de puissance $ I_{max} = 3.5 A $ \newline
+	(tolérance de pics à $ I_{peak} = 6.0 A$
+	\item faible $R_{DS_{on}} = 0.8 \Omega $ maximum @ $ T_j = 25 \char23 C $ \newline
+	et $R_{DS_{on}} = 1.3 \Omega $ typique @ $ T_j = 125 \char23 C $
+	\item niveaux logiques d'entrée compatibles avec logique 0-5V
+	\item boitier miniature CMS SOICN 8 avec pad thermique
+\end {itemize}
+
+\medskip
+Nous l'avons sélectionné car il était disponible, très compact et c'était aussi le moins cher qui puisse satisfaire les exigences de notre application. En choisissant ce composant, nous avons négligé deux aspects qui ont débouché sur des difficultés d'intégration importantes : la taille réduite du boitier et la nécessité d'un très bon dispositif de dissipation thermique pour le refroidir.
+
+\begin{center}
+\includegraphics[width = 15cm]{SolutionAnalogique/A4950.png} 
+\end{center}
+
+\subsection{Réalisation de la platine de puissance}
+
+\subsection{Utilisation du four à refusion}
+
+\subsection{Analyse de la dissipation thermique}
+
+
 
 \subsection{Données}
 
