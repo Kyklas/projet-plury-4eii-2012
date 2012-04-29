@@ -132,7 +132,7 @@ Pour le schéma et les formules (que nous avons quand même vérifié) du correc
 \end{center}
 et
 \begin{center}
-\includegraphics[width = 15cm]{SolutionAnalogique/Avph2.png}
+%\includegraphics[width = 15cm]{SolutionAnalogique/Avph2.png}
 \end{center}
 
 \vspace{0.5cm}
@@ -252,6 +252,10 @@ Pour générer les impulsions de tension, nous avions le choix entre trois solut
 	\item \textbf{Demi pont en H :} solution intermédiaire permettant de faire circuler le courant dans les deux sens mais nécessitant une source d'alimentation de puissance négative.
 	\item \textbf{Pont en H complet :} solution ultime permettant de faire circuler le courant dans les deux sens sans disposer d'une source d'alimentation de puissance négative.
 \end{itemize}
+
+\begin{center}
+\includegraphics[width = 15cm]{SolutionAnalogique/Ponts.png} 
+\end{center}
 
 \medskip
 Nous avons supposé que la possibilité d'inverser le sens du courant dans la bobine pouvait être intéressante pour notre application et ayant pour contrainte de conception la présence d'une seule source d'alimentation de puissance, nous avons sélectionné la solution du pont complet. Après discussion avec des encadrants du projet, nous avons émis l'hypothèse que la répulsion de la bobine pourrait améliorer la stabilité de l'asservissement et la consommation électrique globale du système. Ce qui semble certain c'est qu'elle facilite le positionnement manuel initial du mobile. Nous pourrons par la suite affirmer ou infirmer ces hypothèses en contraignant ou non le pont à fonctionner dans un seul sens. Nous saurons donc si le choix du pont complet était judicieux. Cette solution à l'inconvénient majeur d'être largement plus onéreuse à mettre en place que la première solution à un seul transistor.
