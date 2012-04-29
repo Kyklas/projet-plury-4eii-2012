@@ -118,10 +118,8 @@ Le sommateur en entrée induit une division par deux des tensions. C'est pourquo
 
 \section{Correcteur Avance de phase}
 
-Liste
-\\- Choix du montage
-\\- Choix dex couples R-C ( Cf Meca ) ( Choix des série E6, E12 et du type des condensateurs)
-\\- Etude du gain du montage
+Choix dex couples R-C ( Cf Meca ) ( Choix des série E6, E12 et du type des condensateurs)
+
 
 
 \subsection{Données}
@@ -132,29 +130,42 @@ Pour le schéma et les formules (que nous avons quand même vérifié) du correc
 \begin{center}
 \includegraphics[width = 15cm]{SolutionAnalogique/Avph.png} 
 \end{center}
+et
+\begin{center}
+\includegraphics[width = 15cm]{SolutionAnalogique/Avph2.png}
+\end{center}
 
 \vspace{0.5cm}
 
-Nous avons retenu le premier des deux schémas en raison de sa possibilité de régler plus facilement le rapport entre le zéro et le pôle.  Dans ce schéma, le produit $R_1*C_1$ correspond à la constante $ T_av$ définie dans le rapport d'automatique et le produit $R_2*C_2$ correspond à $0.1*T_av$. 
+Nous avons retenu le premier des deux schémas en raison de sa possibilité de régler plus facilement le rapport entre le zéro et le pôle. Dans ce schéma, le produit $R_1*C_1$ correspond à la constante $ T_av$ définie dans le rapport d'automatique et le produit $R_2*C_2$ correspond à $0.1*T_av$. Nous avons cependant apporté une modification en enlevant le deuxième AOP pour des raisons d'économie. Cela cause juste l'apparition d'un facteur $\frac{-R2+R1}{R1}$. Le schéma final du correcteur à avance de phase est donc le suivant :
+
+\begin{center}
+\includegraphics[width = 15cm]{SolutionAnalogique/AvPhase.pdf}
+\end{center}
 
 
 Nous allons déterminer les valeurs de $R_1$, $R_2$, $C_1$ et $C_2$ dans deux configurations : poids du mobile à $0.0897 kg$ correspondant à un $T_av$ de 0.0313 et poids du mobile à $0.1414 kg$ correspondant à un $T_av$ de 0.0393.
 
+
 Pour des raisons de simplifications, nous prendrons les résistances $R_1$ et $R_2$ égales, le facteur 10 entre les constantes du numérateur et du dénominateur sera donc réalisé par un facteur 10 entre les valeurs des condensateurs. 
+
 
 Pour le poids de $0.0897 kg$, en choisissant des composants avec des valeurs normalisées, on obtient $R=100.0 K\Omega$, $C_1=330 nF$ et $C_2=33 nF$. 
 
+
 On fera plutôt varier les résistances que les condensateurs pour s'adapter au changement de poids. On conserve donc les mêmes valeurs de condensateurs. On trouve alors $R=119.090 K\Omega$. 
 
+
 Il sera donc possible de prendre des potentiomètres pour ajuster les constantes, corrigeant ainsi les écarts possibles des valeurs de condensateurs. 
+
 
 Aussi, par le biais de MATLAB, nous avons pu obtenir la courbe théorique de notre correcteur par avance de phase :
 
 \begin{center}
-\includegraphics[width = 15cm]{SolutionAnalogique/aphmat.png} 
+\includegraphics[scale = 0.8]{SolutionAnalogique/BodeAvPhase.pdf} 
 \end{center}
 
-A noter que la fréquence donnée est en $rad.s^-1$, elle vaut environ 16Hz. 
+A noter que la fréquence donnée est en $rad.s^-1$, elle vaut environ 16 Hz. On observe un gain de 10 dB dont il faudra tenir compte par la suite. 
 \subsection{Détermination de valeurs des composants}
 
 
@@ -172,24 +183,35 @@ On obtient le résultat de simulation suivant :
 \includegraphics[width = 15cm]{SolutionAnalogique/simuAvph.png} 
 \end{center}
 
+% ajout du gain sous orcad + refaire schémas avec les bonnes valeurs
 Comme on peut le voir en comparant par rapport au résultat donné par MATLAB, le schéma répond comme on le souhaitait. 
 
 \vspace{0.5cm}
-\subsection{Conclusion}
+\subsection{Conclusion de l'étude théorique}
 
 \noindent
-Nous avons donc validé notre choix de montage de correcteur et nous avons déterminer des valeurs admissibles de composants analogiques grâce à cette étude. Il faudra cependant être attentif quant au choix des condensateurs vis-à-vis de leur fréquence de fonctionnement.  
+Nous avons donc validé notre choix de montage de correcteur et nous avons déterminé des valeurs admissibles de composants analogiques grâce à cette étude. Il faudra cependant être attentif quant au choix des condensateurs vis-à-vis de leur fréquence de fonctionnement.  
+
+\subsection{Validation du modèle câblé}
 
 
-
-\section{Conversion \& Comunication}
+\section{Conversion \& Communication}
 \subsection{Choix du microcontrolleur}
-Liste
-\\- Tension d'alimentation
-\\- Frequence de travail
-\\- module de conversion
-\\- Disponibilité des outils de dev
-\\- instructions evoluées MUL \& DIV pour le correcteur numérique
+
+Tout d'abord, nous voulions utiliser un microcontrolleur de la famille des PIC puisque nous étions davantage habitués à leur programmation et que nous trouvons que les documentations de Microchip sont plus pratique à lire que celle de TI.  %de l'aversion totale de tous les membre du groupe à l'égard des microcontrolleur TI (surement causée par le cours génialissime de M.Nezan en 3ème année). 
+
+Une fois ce choix fait, nous avons recherché le microcontrolleur qui nous éviterait le maximum de contraintes par la suite. C'est pour cela que nous avons choisi le PIC24FV32KA301. Celui-ci dispose d'un régulateur interne qui génère une tension 5V à partir du 12V de l'alimentation externe. Il nous épargne donc la partie adaptation de tension. 
+
+En outre, nous voulions un microcontrolleur assez rapide pour supporter les calculs complexes que nous aurons surement à faire lors de la partie sur la correction numérique. Ainsi, la fréquence de travail de notre microcontrolleur est de 16 MHz en interne et il dispose de module de multiplication et de semi-division (1 cycle pour une multiplication et 19 pour une division). 
+
+Enfin, notre microcontrolleur dispose d'un CAN 12 bits qui sera utile lors de la programmation et d'un module UART qui nous servira lors de la mise en place de la communication série. Disposant déjà des outils de développement Microchip, nous ne perdrons pas de temps à l'installation de ces derniers. 
+
+
+%- Tension d'alimentation
+%- Frequence de travail
+%- module de conversion
+%- Disponibilité des outils de dev
+%- instructions evoluées MUL \& DIV pour le correcteur numérique
 
 \subsection{Conversion A/D - PWM}
 Liste
@@ -201,7 +223,7 @@ Liste
 \\- Ajout d'un driver USB/Série
 \\ Programme le cas échéant
 
-\section{Control de puissance}
+\section{Contrôle de puissance}
 Liste
 \\- choix du pont complet ( Justification )
 \\-  - Attraction | Répulsion de la bobine
@@ -265,7 +287,7 @@ Finalement, on obtient :
 
 \noindent
 $
-T_{JUNC} = 62 * 5.2 + 25 = 157.06 \char123 C
+T_{JUNC} = 62 * 5.2 + 25 = 157.06 \char123C
 $
 
 \subsection{Conclusion}
@@ -278,15 +300,6 @@ Liste
 \\- Monitoring du fonctionnement
 \\- Résulatat expérience
 \\- Ouverture vers correcteur numérique
-
-\subsection{Protocole de Test / Mise en fonctionnement ?}
-
-Liste
-\\- Règlage du différentiel ( Consigne et Gain )
-\\- Vérification de l'avance de phase ( rq : le montage n'a pas d'inverseur )
-\\- numérisation et génération PWM ( Fonction de transfere )
-\\- vérification du comportement globale ( Fonction de transfere )
-
 
 \end{document}
 

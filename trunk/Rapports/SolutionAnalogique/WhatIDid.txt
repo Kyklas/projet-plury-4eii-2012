@@ -1,4 +1,4 @@
-Ajout de la consigne dans le montage différentielle
+﻿Ajout de la consigne dans le montage différentielle
 
 H1 - H2 = Vc
 
