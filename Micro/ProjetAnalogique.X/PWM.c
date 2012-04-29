@@ -31,8 +31,7 @@ void PWM_Init()
  *
  * \param DutyCycle Valeur du rapport cyclique
  */
-void PWM_SetDutyCycle(unsigned char DutyCycle) // s'utilise en donnant le rapport cyclique en %
+void PWM_SetDutyCycle(unsigned char DutyCycle) 
 {
-    //unsigned int dc = (DutyCycle*255)/100;
     OC1R = DutyCycle;
 }

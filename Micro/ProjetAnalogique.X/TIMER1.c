@@ -24,7 +24,7 @@ void TIMER1_Init ()
     PR1=62; // pour une période de timer1 : 1ms
     //PR1=20; // pour une période de timer1 : 0.3ms
 
-    // réglage interruption pour générer evt pour adc ?
+    // réglage interruption pour générer evt pour adc
     IPC0bits.T1IP = 0x01;       //Setup Timer1 interrupt for desired priority level
     // (This example assigns level 1 priority)
     IFS0bits.T1IF = 0;          //Clear the Timer1 interrupt status flag
