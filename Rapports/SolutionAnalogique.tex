@@ -118,7 +118,7 @@ Le sommateur en entrée induit une division par deux des tensions. C'est pourquo
 
 \section{Correcteur Avance de phase}
 
-Choix dex couples R-C ( Cf Meca ) ( Choix des série E6, E12 et du type des condensateurs)
+Choix des couples R-C ( Cf Meca ) ( Choix des série E6, E12 et du type des condensateurs)
 
 
 
@@ -128,36 +128,32 @@ Choix dex couples R-C ( Cf Meca ) ( Choix des série E6, E12 et du type des cond
 Pour le schéma et les formules (que nous avons quand même vérifié) du correcteur, nous avions le choix entre deux montages différents que nous avons trouvé sur internet :
 
 \begin{center}
-\includegraphics[width = 15cm]{SolutionAnalogique/Avph.png} 
+\includegraphics[scale = 0.8]{SolutionAnalogique/Avph.png} 
+\includegraphics[scale = 0.8]{SolutionAnalogique/Avph2.png}
 \end{center}
-et
-\begin{center}
-%\includegraphics[width = 15cm]{SolutionAnalogique/Avph2.png}
-\end{center}
+
+Nous avons retenu le premier des deux schémas en raison de sa possibilité de régler plus facilement le rapport entre le zéro et le pôle. 
+
+
+\subsection{Détermination de valeurs des composants}
+
+Dans le schéma retenu, le produit $R_1*C_1$ correspond à la constante $ T_av$ définie dans le rapport d'automatique et le produit $R_2*C_2$ correspond à $0.1*T_av$. Nous allons déterminer les valeurs de $R_1$, $R_2$, $C_1$ et $C_2$ dans deux configurations : poids du mobile à $0.0897 kg$ correspondant à un $T_av$ de 0.0313 et poids du mobile à $0.1414 kg$ correspondant à un $T_av$ de 0.0393.
 
 \vspace{0.5cm}
 
-Nous avons retenu le premier des deux schémas en raison de sa possibilité de régler plus facilement le rapport entre le zéro et le pôle. Dans ce schéma, le produit $R_1*C_1$ correspond à la constante $ T_av$ définie dans le rapport d'automatique et le produit $R_2*C_2$ correspond à $0.1*T_av$. Nous avons cependant apporté une modification en enlevant le deuxième AOP pour des raisons d'économie. Cela cause juste l'apparition d'un facteur $\frac{-R2+R1}{R1}$. Le schéma final du correcteur à avance de phase est donc le suivant :
+Pour des raisons de simplifications, nous prendrons les résistances $R_1$ et $R_2$ égales, le facteur 10 entre les constantes du numérateur et du dénominateur sera donc réalisé par un facteur 10 entre les valeurs des condensateurs. Pour le poids de $0.0897 kg$, en choisissant des composants avec des valeurs normalisées, on obtient $R=100.0 K\Omega$, $C_1=330 nF$ et $C_2=33 nF$. 
+
+\vspace{0.5cm}
+
+On fera plutôt varier les résistances que les condensateurs pour s'adapter au changement de poids. On conserve donc les mêmes valeurs de condensateurs. On trouve alors $R=119.090 K\Omega$. Il sera donc possible de prendre des potentiomètres pour ajuster les constantes, corrigeant ainsi les écarts possibles des valeurs de condensateurs. 
+
+\vspace{0.5cm}
+
+Nous avons cependant apporté une modification en enlevant le deuxième AOP pour des raisons d'économie. Cela cause juste l'apparition d'un facteur $\frac{-(R2+R1)}{R1}$. Nous compenserons ce signe moins grâce au microcontrolleur. Le schéma final du correcteur à avance de phase est donc le suivant :
 
 \begin{center}
-\includegraphics[width = 15cm]{SolutionAnalogique/AvPhase.pdf}
+\includegraphics[scale = 0.8]{SolutionAnalogique/AvPhase.pdf}
 \end{center}
-
-
-Nous allons déterminer les valeurs de $R_1$, $R_2$, $C_1$ et $C_2$ dans deux configurations : poids du mobile à $0.0897 kg$ correspondant à un $T_av$ de 0.0313 et poids du mobile à $0.1414 kg$ correspondant à un $T_av$ de 0.0393.
-
-
-Pour des raisons de simplifications, nous prendrons les résistances $R_1$ et $R_2$ égales, le facteur 10 entre les constantes du numérateur et du dénominateur sera donc réalisé par un facteur 10 entre les valeurs des condensateurs. 
-
-
-Pour le poids de $0.0897 kg$, en choisissant des composants avec des valeurs normalisées, on obtient $R=100.0 K\Omega$, $C_1=330 nF$ et $C_2=33 nF$. 
-
-
-On fera plutôt varier les résistances que les condensateurs pour s'adapter au changement de poids. On conserve donc les mêmes valeurs de condensateurs. On trouve alors $R=119.090 K\Omega$. 
-
-
-Il sera donc possible de prendre des potentiomètres pour ajuster les constantes, corrigeant ainsi les écarts possibles des valeurs de condensateurs. 
-
 
 Aussi, par le biais de MATLAB, nous avons pu obtenir la courbe théorique de notre correcteur par avance de phase :
 
@@ -165,8 +161,8 @@ Aussi, par le biais de MATLAB, nous avons pu obtenir la courbe théorique de not
 \includegraphics[scale = 0.8]{SolutionAnalogique/BodeAvPhase.pdf} 
 \end{center}
 
-A noter que la fréquence donnée est en $rad.s^-1$, elle vaut environ 16 Hz. On observe un gain de 10 dB dont il faudra tenir compte par la suite. 
-\subsection{Détermination de valeurs des composants}
+A noter que la fréquence donnée est en $rad.s^-1$, elle vaut environ 16 Hz. On observe un gain de 10 dB à la fréquence de où l'on travaillera et dont il faudra tenir compte par la suite. 
+
 
 
 \subsection{Validation par simulation PSpice}
@@ -174,13 +170,13 @@ A noter que la fréquence donnée est en $rad.s^-1$, elle vaut environ 16 Hz. On
 On simule le correcteur à avance de phase par le schémas suivant : 
 
 \begin{center}
-\includegraphics[width = 15cm]{SolutionAnalogique/schAvph.png} 
+\includegraphics[scale = 0.8]{SolutionAnalogique/schAvph.png} 
 \end{center}
 
 On obtient le résultat de simulation suivant : 
 
 \begin{center}
-\includegraphics[width = 15cm]{SolutionAnalogique/simuAvph.png} 
+\includegraphics[scale = 0.8]{SolutionAnalogique/simuAvph.png} 
 \end{center}
 
 % ajout du gain sous orcad + refaire schémas avec les bonnes valeurs
@@ -200,9 +196,15 @@ Nous avons donc validé notre choix de montage de correcteur et nous avons déte
 
 Tout d'abord, nous voulions utiliser un microcontrolleur de la famille des PIC puisque nous étions davantage habitués à leur programmation et que nous trouvons que les documentations de Microchip sont plus pratique à lire que celle de TI.  %de l'aversion totale de tous les membre du groupe à l'égard des microcontrolleur TI (surement causée par le cours génialissime de M.Nezan en 3ème année). 
 
+\vspace{0.5cm}
+
 Une fois ce choix fait, nous avons recherché le microcontrolleur qui nous éviterait le maximum de contraintes par la suite. C'est pour cela que nous avons choisi le PIC24FV32KA301. Celui-ci dispose d'un régulateur interne qui génère une tension 5V à partir du 12V de l'alimentation externe. Il nous épargne donc la partie adaptation de tension. 
 
+\vspace{0.5cm}
+
 En outre, nous voulions un microcontrolleur assez rapide pour supporter les calculs complexes que nous aurons surement à faire lors de la partie sur la correction numérique. Ainsi, la fréquence de travail de notre microcontrolleur est de 16 MHz en interne et il dispose de module de multiplication et de semi-division (1 cycle pour une multiplication et 19 pour une division). 
+
+\vspace{0.5cm}
 
 Enfin, notre microcontrolleur dispose d'un CAN 12 bits qui sera utile lors de la programmation et d'un module UART qui nous servira lors de la mise en place de la communication série. Disposant déjà des outils de développement Microchip, nous ne perdrons pas de temps à l'installation de ces derniers. 
 
@@ -217,6 +219,31 @@ Enfin, notre microcontrolleur dispose d'un CAN 12 bits qui sera utile lors de la
 Liste
 \\- Utilisation des modules
 \\- Programme + Explications
+
+
+\subsubsection{Conversion A/D}
+Le module ADC offert par notre microcontrolleur comprend deux voies d'acquisition multiplexables avec un cycle d'échantillonnage-conversion relançable automatiquement. Dans notre cas nous utiliserons la voie A et le Timer1 génèrera l'événement qui déclenche le passage d'échantillonnage à conversion périodiquement et automatiquement (fréquence de l'évènement du Timer1 réglée à 1 kHz). L'échantillonnage reprendra dès la conversion terminée et le format des résultats sera en décimal sans signe puisque nous mesurons une tension qui sera entre 0 et 5V. 
+
+\vspace{0.5cm}
+
+Ne reste plus qu'à régler la fréquence à laquelle ces cycles d'échantillonnage-conversion vont se répéter. Dans notre cas, nous avions déterminé dans le rapport sur la partie automatique qu'une fréquence d'1 kHz serait suffisante. 
+
+\vspace{0.5cm}
+
+Après quelques tests, il apparait que l'échantillonnage le plus lent que l'on puisse faire est de période 992$\mu$s. En effet, on a $T_{AD} = (ACDS+1) * T_{CY}$ avec $T_{CY} = \frac{2}{F_{OSC}}$, $F_{OSC}$ étant la fréquence du microcontrolleur avant passage dans le module des PLL donc 8 MHz. On a donc $T_{CY} = 500 ns$ et en prenant le maximum d'ADCS qui vaut 63, on a $T_{AD} = 64 * T_{CY} = 32 \mu s$. Ensuite, on peut déclencher chaque cycle d'échantillonnage tout les $SAMC * T_{AD}$. En prenant le maximum de SAMC (soit 31), on obtient finalement $T_{samp} = 31 * T_{AD} = 992 \mu s$, ce qui est très proche de ce que l'on visait.  
+
+\vspace{0.5cm}
+
+Une fois la phase d'initialisation effectuée, la fonction qui récupère l'échantillon se compose simplement d'une sélection de la voie et d'une attente active sur le flag de fin de conversion. On récupère et on retourne la donnée convertie à l'issue de cette attente. 
+
+\vspace{0.5cm}
+
+L'attente active n'est pas gênante puisque l'on récupère la valeur de l'échantillon à chaque début d'interruption sur le Timer 1 et que la conversion, qui est très rapide à effectuer, à déjà débuté dès lors que l'on a généré le signal d'interruption du Timer 1. On enchaine ensuite avec la suite du programme pendant que l'échantillonnage reprend et on termine normalement largement avant la prochaine interruption.
+
+\vspace{0.5cm}
+
+Les codes C correspondant à la fonction d'initialisation et à la fonction de récupération d'un échantillon pourront être trouvés en annexe. 
+
 
 \subsection{Communication serie/USB}
 Liste
@@ -293,7 +320,7 @@ Nous l'avons sélectionné car il était disponible, très compact et c'était a
 
 
 
-\subsection{Données}
+\subsubsection{Données}
 
 \noindent
 D'après la Datasheet du A4950 :
@@ -311,9 +338,9 @@ $
 
 
 \noindent
-A noter que cette valeur de $R_{TH}$ est donnée dans le cas l'on a aurait des plages de cuivres d'environ 2cm par 2cm de chaque côté du composant. De plus, la valeur de $R_{DSON}$ est une valeur pire cas.
+A noter que cette valeur de $R_{TH}$ est donnée dans le cas l'on aurait des plages de cuivre d'environ 2cm par 2cm de chaque côté du composant. De plus, la valeur de $R_{DSON}$ est une valeur pire cas.
 
-\subsection{Equations}
+\subsubsection{Equations}
 
 \noindent
 L'équation de la température de la jonction est donnée par :
@@ -349,18 +376,16 @@ $
 T_{JUNC} = 62 * 5.2 + 25 = 157.06 \char123C
 $
 
-\subsection{Conclusion}
+\subsubsection{Conclusion de l'étude thermique}
 
 \noindent
-Le résultat trouvé est très proche de la valeur limite du composant. Cependant, nous avons pris des paramètres extrèmes qui ne seront normalent pas atteint. De plus, nous comptons augmenter la surface de cuivre qui assurera la dissipation afin d'obtenir une marge plus grande par rapport à ce résultat.
+Le résultat trouvé est très proche de la valeur limite du composant. Cependant, nous avons pris des paramètres extrèmes qui ne seront normalent pas atteint. De plus, nous avons augmenté la surface de cuivre qui assure la dissipation afin d'obtenir une marge plus grande par rapport à ce résultat. 
 
 \section{Résultats - Evolution}
 Liste
 \\- Monitoring du fonctionnement
 \\- Résulatat expérience
 \\- Ouverture vers correcteur numérique
-
-\end{document}
 
 
 \subsection{Bibliographie}
@@ -370,3 +395,10 @@ Liste
 
 - Cours de systèmes asservis linéaires, Jean Philippe MULLER : 
 \newline \textit{\underline{http://www.ta-formation.com/cours-sal/n-sal.pdf}} diapo 28
+
+\subsection{Annexe}
+
+\end{document}
+
+
+
