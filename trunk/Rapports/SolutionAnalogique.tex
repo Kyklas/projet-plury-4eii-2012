@@ -127,7 +127,7 @@ Liste
 \subsection{Données}
 
 \noindent
-Pour le schémas et les formules (que nous avons quand même vérifié) du correcteur, nous nous sommes servi d'un schémas trouvé sur internet (voir Bibliographie) :
+Pour le schéma et les formules (que nous avons quand même vérifié) du correcteur, nous avions le choix entre deux montages différents que nous avons trouvé sur internet :
 
 \begin{center}
 \includegraphics[width = 15cm]{SolutionAnalogique/Avph.png} 
@@ -135,11 +135,18 @@ Pour le schémas et les formules (que nous avons quand même vérifié) du corre
 
 \vspace{0.5cm}
 
-Dans ce schémas, le produit $R_1*C_1$ correspond à la constante $ T_av$ définie dans le rapport d'automatique et le produit $R_2*C_2$ correspond à $0.1*T_av$.
+Nous avons retenu le premier des deux schémas en raison de sa possibilité de régler plus facilement le rapport entre le zéro et le pôle.  Dans ce schéma, le produit $R_1*C_1$ correspond à la constante $ T_av$ définie dans le rapport d'automatique et le produit $R_2*C_2$ correspond à $0.1*T_av$. 
 
 
 Nous allons déterminer les valeurs de $R_1$, $R_2$, $C_1$ et $C_2$ dans deux configurations : poids du mobile à $0.0897 kg$ correspondant à un $T_av$ de 0.0313 et poids du mobile à $0.1414 kg$ correspondant à un $T_av$ de 0.0393.
 
+Pour des raisons de simplifications, nous prendrons les résistances $R_1$ et $R_2$ égales, le facteur 10 entre les constantes du numérateur et du dénominateur sera donc réalisé par un facteur 10 entre les valeurs des condensateurs. 
+
+Pour le poids de $0.0897 kg$, en choisissant des composants avec des valeurs normalisées, on obtient $R=100.0 K\Omega$, $C_1=330 nF$ et $C_2=33 nF$. 
+
+On fera plutôt varier les résistances que les condensateurs pour s'adapter au changement de poids. On conserve donc les mêmes valeurs de condensateurs. On trouve alors $R=119.090 K\Omega$. 
+
+Il sera donc possible de prendre des potentiomètres pour ajuster les constantes, corrigeant ainsi les écarts possibles des valeurs de condensateurs. 
 
 Aussi, par le biais de MATLAB, nous avons pu obtenir la courbe théorique de notre correcteur par avance de phase :
 
@@ -149,20 +156,6 @@ Aussi, par le biais de MATLAB, nous avons pu obtenir la courbe théorique de not
 
 A noter que la fréquence donnée est en $rad.s^-1$, elle vaut environ 16Hz. 
 \subsection{Détermination de valeurs des composants}
-
-Pour des raisons de simplifications, nous prendrons les résistances $R_1$ et $R_2$ égales, le facteur 10 entre les constantes du numérateur et du dénominateur sera donc réalisé par un facteur 10 entre les valeurs des condensateurs. 
-
-
-
-Pour le poids de $0.0897 kg$, en choisissant des composants avec des valeurs normalisées, on obtient $R=8.2 K\Omega$, $C_1=3.9 \mu F$ et $C_2=390 nF$. 
-
-
-
-On fera plutôt varier les résistances que les condensateurs pour s'adapter au changement de poids. On conserve donc les mêmes valeurs de condensateurs. On trouve alors $R=10.076 K\Omega$. 
-
-
-
-Il sera donc possible de prendre des potentiomètres pour ajuster les constantes, corrigeant ainsi les écards possibles des valeurs de condensateurs. 
 
 
 \subsection{Validation par simulation PSpice}
@@ -187,10 +180,6 @@ Comme on peut le voir en comparant par rapport au résultat donné par MATLAB, l
 \noindent
 Nous avons donc validé notre choix de montage de correcteur et nous avons déterminer des valeurs admissibles de composants analogiques grâce à cette étude. Il faudra cependant être attentif quant au choix des condensateurs vis-à-vis de leur fréquence de fonctionnement.  
 
-\subsection{Bibliographie}
-
-- Cours de GEE, A. Meghebbar :
-\newline \textit{\underline{fsi.univ-tlemcen.dz/cours/Support-Cours-Commande-Analogique-Master-Electrotechnique10.pdf}}
 
 
 \section{Conversion \& Comunication}
@@ -300,3 +289,12 @@ Liste
 
 
 \end{document}
+
+
+\subsection{Bibliographie}
+
+- Cours de GEE, A. Meghebbar :
+\newline \textit{\underline{fsi.univ-tlemcen.dz/cours/Support-Cours-Commande-Analogique-Master-Electrotechnique10.pdf}} 
+
+- Cours de systèmes asservis linéaires, Jean Philippe MULLER : 
+\newline \textit{\underline{http://www.ta-formation.com/cours-sal/n-sal.pdf}} diapo 28
