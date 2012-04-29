@@ -15,17 +15,18 @@
 void ADC_Init()
 {
    // configuration du sens des e/s faites dans io_init
-    AD1CON1bits.SSRC = 0b0111;      // relancement automatique
+    AD1CON1bits.SSRC = 0b0111;      // passage d'échantillonage à conversion sur
+                                    // évènement du timer 1
     AD1CON1bits.FORM = 0b00;        // sélection du format des résultats :
                                     // décimal sans signe, justifié à droite
-    AD1CON1bits.ASAM = 0b1;         // redémarrage auto de la conversion après
-                                    // la fin de la précédente
+    AD1CON1bits.ASAM = 0b1;         // redémarrage auto de la échantillonage
+                                    // après la fin de la conversion précédente
     AD1CON2bits.PVCFG = 0b00;       // sélection de la référence de tension
                                     // AVDD ==> 5v
     AD1CON2bits.SMPI = 0b00000;     // interruption non utilisée
-    AD1CON3bits.SAMC = 0b11111;     // temps entre les conversion maximal
-    AD1CON3bits.ADCS = 0b00111111;  // sélection de la fréquence de conversion
-                                    // : TCY=TAD
+    AD1CON3bits.ADCS = 0b00111111;  // fréquence de l'horloge de conversion
+                                    // : 64TCY=TAD=32µs
+    AD1CON3bits.SAMC = 0b11111;     // période d'échantillonnage : 31TAD :992µs
     AD1CON3bits.ADRC = 0b0;         // sélection de la séquence échantillonage-
                                     // conversion : horloge système
     AD1CHSbits.CH0NB=0b0;           // voie B, non utilisée
