@@ -194,34 +194,57 @@ Nous avons donc validé notre choix de montage de correcteur et nous avons déte
 \section{Conversion \& Communication}
 \subsection{Choix du microcontrolleur}
 
-Tout d'abord, nous voulions utiliser un microcontrolleur de la famille des PIC puisque nous étions davantage habitués à leur programmation et que nous trouvons que les documentations de Microchip sont plus pratique à lire que celle de TI.  %de l'aversion totale de tous les membre du groupe à l'égard des microcontrolleur TI (surement causée par le cours génialissime de M.Nezan en 3ème année). 
+%Tout d'abord, nous voulions utiliser un microcontrolleur de la famille des PIC puisque nous étions davantage habitués à leur programmation et que nous trouvons que les documentations de Microchip sont plus pratique à lire que celle de TI.  %de l'aversion totale de tous les membre du groupe à l'égard des microcontrolleur TI (surement causée par le cours génialissime de M.Nezan en 3ème année). 
+%
+%\vspace{0.5cm}
+%
+%Une fois ce choix fait, nous avons recherché le microcontrolleur qui nous éviterait le maximum de contraintes par la suite. C'est pour cela que nous avons choisi le PIC24FV32KA301. Celui-ci dispose d'un régulateur interne qui génère une tension 5V à partir du 12V de l'alimentation externe. Il nous épargne donc la partie adaptation de tension. 
+%
+%\vspace{0.5cm}
+%
+%En outre, nous voulions un microcontrolleur assez rapide pour supporter les calculs complexes que nous aurons surement à faire lors de la partie sur la correction numérique. Ainsi, la fréquence de travail de notre microcontrolleur est de 16 MHz en interne et il dispose de module de multiplication et de semi-division (1 cycle pour une multiplication et 19 pour une division). 
+%
+%\vspace{0.5cm}
+%
+%Enfin, notre microcontrolleur dispose d'un CAN 12 bits qui sera utile lors de la programmation et d'un module UART qui nous servira lors de la mise en place de la communication série. Disposant déjà des outils de développement Microchip, nous ne perdrons pas de temps à l'installation de ces derniers. 
 
-\vspace{0.5cm}
 
-Une fois ce choix fait, nous avons recherché le microcontrolleur qui nous éviterait le maximum de contraintes par la suite. C'est pour cela que nous avons choisi le PIC24FV32KA301. Celui-ci dispose d'un régulateur interne qui génère une tension 5V à partir du 12V de l'alimentation externe. Il nous épargne donc la partie adaptation de tension. 
+Nous voulions travailler avec les produits de Microchip, ce choix c'est fait par habitude car nous avions déjà tous utiliser les produits Microchip et nous n'avions eu aucun problème avec ces composants. Avant tout, nous avons fait la liste des caractéristiques du microcontrôleur dont nous avions besoin.
 
-\vspace{0.5cm}
+\begin{itemize}
+	\item \textbf{Tension d'alimentation}
+	Nous avons fait le choix d'uniformiser les tensions d'alimentation du microcontrôleur, des capteurs et du convertisseur "Serie/USB". C'est pourquoi l'intégralité de la carte est alimenté en 5V.
 
-En outre, nous voulions un microcontrolleur assez rapide pour supporter les calculs complexes que nous aurons surement à faire lors de la partie sur la correction numérique. Ainsi, la fréquence de travail de notre microcontrolleur est de 16 MHz en interne et il dispose de module de multiplication et de semi-division (1 cycle pour une multiplication et 19 pour une division). 
+	\item \textbf{Fréquence de travail}
+	Afin de nous donner une certaine liberté concernant les calculs entre chaque échantillonnage des valeurs de capteur, nous avons opter un un microcontrôleur pouvant fonctionner à 32MHz. De plus, les microcontrôleurs microchip utilisent deux cycles d'horloge par instruction, ce qui nous donnent un microcontrôleur fonctionnant à 16 MIPS.
 
-\vspace{0.5cm}
+	\item \textbf{Conversion Analogique/Numérique}
+ 	Nous avons fait le choix de multiplier les points d'acquisitions, nous voulions pouvoir obtenir l'images numérique des capteurs, de la tension de sortie du montage différentielle ou de celles du correcteur. Nous voulions donc un microcontrôleur possédant au minimum 4 entrée permettant la convertion analogique/numérique.
 
-Enfin, notre microcontrolleur dispose d'un CAN 12 bits qui sera utile lors de la programmation et d'un module UART qui nous servira lors de la mise en place de la communication série. Disposant déjà des outils de développement Microchip, nous ne perdrons pas de temps à l'installation de ces derniers. 
+	\item \textbf{PWM et Timers} 
+	Nous n'avions pas énormément de contraintes concernant la génération du PWM. Les microcontrôleurs 16 bits microchip possédant des timers dédié pour chaque sortie de comparaison (PWM). Nous avions besoins de seulement une sortie "OutputCompare".
 
+	\item \textbf{Multiplicateur/Diviseur hardware}
+	Pour minimiser le temps de calcul de la solution numérique, nous cherchions un microcontrôleur possedant un multiplieur/diviseur hardware. Ce qui diminuera la temps de calcul entre chaque échantillonnage de façon non négligeable.
 
-%- Tension d'alimentation
-%- Frequence de travail
-%- module de conversion
-%- Disponibilité des outils de dev
-%- instructions evoluées MUL \& DIV pour le correcteur numérique
+	\item \textbf{Outils de développement}
+	Comme nous possédions déjà un programmateur microchip : Pickit 3. Nous avons chercher un microcontrôleur supportant la programmation et le débogage par Pickit 3.
 
-\subsection{Conversion A/D - PWM}
-Liste
-\\- Utilisation des modules
-\\- Programme + Explications
+\end{itemize}
 
+Nous avons donc cherché un microcontrôleur répondant ces impératifs. Nous avons trouvé le PIC24F32KA301 ayant les caractéristique suivante :
+\begin{itemize}
+\item \textbf{Tension d'alimentation :} entre 2V et 5,5V
+\item \textbf{Fréquence de travail :}jusqu'à 32Mhz
+\item \textbf{Conversion Analogique/Numérique :}convertisseur analogique/numérique 12 bit différentiel , 12 entrée, 100k échantillons par seconde. 
+\item \textbf{PWM et Timers :}3 output compare, résolution 16 bits
+\item \textbf{Multiplicateur/Diviseur hardware :}multiplieur hardware 16x16 bits, diviseur hardware 32x16 bit
+\item \textbf{Outils de développement :} Pickit 3 supporté
+
+\end{itemize}
 
 \subsubsection{Conversion A/D}
+
 Le module ADC offert par notre microcontrolleur comprend deux voies d'acquisition multiplexables avec un cycle d'échantillonnage-conversion relançable automatiquement. Dans notre cas nous utiliserons la voie A et le Timer1 génèrera l'événement qui déclenche le passage d'échantillonnage à conversion périodiquement et automatiquement (fréquence de l'évènement du Timer1 réglée à 1 kHz). L'échantillonnage reprendra dès la conversion terminée et le format des résultats sera en décimal sans signe puisque nous mesurons une tension qui sera entre 0 et 5V. 
 
 \vspace{0.5cm}
@@ -244,11 +267,27 @@ L'attente active n'est pas gênante puisque l'on récupère la valeur de l'écha
 
 Les codes C correspondant à la fonction d'initialisation et à la fonction de récupération d'un échantillon pourront être trouvés en annexe. 
 
+\subsection{PWM - Pulse Width Modulation}
 
-\subsection{Communication serie/USB}
-Liste
-\\- Ajout d'un driver USB/Série
-\\ Programme le cas échéant
+Chaque sortie PWM du microcontrolleur possèdent un Timer dédié, ce qui permait de ne pas monopoliser un Timer pour générer la sortie PWM.
+
+Pour configurer le Timer OC1 (Output Compare 1), il faut tout d'abord choisir le mode de fonctionnement du Timer. Nous avons choisis d'utiliser le Mode "EDGE-ALIGNED PWM".
+
+\begin{center}
+\includegraphics[width = 15cm]{SolutionAnalogique/PWMMode.png} 
+\end{center}
+
+Nous avons ensuite réfléchi à la l'ordre de grandeur de fréquence de la PWM. Cette dernière ne doit pas être inférieur à 30kHz, un fréquence inférieur risquerait de généré des fréquences audible et donc d'engendrer un  de la bobine. Il ne faut pas non plus que le fréquence de PWM soit trop élevé, sinon la résolution du rapport cyclique deviendrait trop faible.
+
+Nous avons trouvé le bon compromis : 62kHz ce qui nous donne une résolution de 8 bits pour le rapport cyclique en utilisant Fcy comme horloge d'entrée. Fcy est la fréquence de cycle.
+\begin{center}
+$F_osc = 32MHz$
+\\$F_cy = Fosc/2 = 16MHz$
+\\$F_PWM = 16MHz/2^8 = 62,5kHz$
+\end{center}
+\vspace{0.5cm}
+
+Les codes C correspondant à la fonction d'initialisation et à la fonction de récupération d'un échantillon pourront être trouvés en annexe. 
 
 \section{Controle de la puissance}
 
