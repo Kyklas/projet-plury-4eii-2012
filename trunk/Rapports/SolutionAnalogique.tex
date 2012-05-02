@@ -65,7 +65,7 @@ Un capteur à effet Hall permet de mesurer le champ magnétique $B$ grâce à la
 
 \subparagraph*{Implantation}~\\
 \begin{minipage}[t]{10cm}
-Pour mesurer les champs magnétiques de la bobine et du mobile, deux capteurs à effet Hall (modèles Allegro A1302), sont placés à chaque extrémité de la bobine. L'alignement de la bobine, du mobile et des capteurs est important car c'est le champ magnétique normal au capteur qui est mesuré. Il est ainsi possible de connaitre la position verticale du mobile, les deux capteurs étant placés symétriquement sur la bobine, ils mesurent le même champ résultant. Le champ résultant du mobile n'est pas le même pour les deux capteurs, en effet, le champ diminue avec la distance. Le bilan des champs magnétiques exercés sur les capteurs est le suivant :
+Pour mesurer les champs magnétiques de la bobine et du mobile deux capteurs à effet Hall (modèles Allegro A1302) sont placés à chaque extrémité de la bobine. L'alignement de la bobine, du mobile et des capteurs est important car c'est le champ magnétique normal au capteur qui est mesuré. Il est ainsi possible de connaitre la position verticale du mobile, les deux capteurs étant placés symétriquement sur la bobine, ils mesurent le même champ résultant. Le champ résultant du mobile n'est pas le même pour les deux capteurs, en effet, le champ diminue avec la distance. Le bilan des champs magnétiques exercés sur les capteurs est le suivant :
 \vspace{-0.3cm} \[B_{H2} = B_{Bob} + B_{Mob~Dist_{Mob-H2}}\]
 \vspace{-0.8cm} \[B_{H1} = B_{Bob} + B_{Mob~Dist_{Mob-H1}}\]
 L'image de la position du mobile est contenue dans  $B_{Mob~Dist_{Mob-H2}}$ et $B_{Mob~Dist_{Mob-H1}}$. L'image est obtenue par différence de $B_{H2}$ et $B_{H1}$, $V_{H2}-V_{H1}$
@@ -118,14 +118,10 @@ Le sommateur en entrée induit une division par deux des tensions. C'est pourquo
 
 \section{Correcteur Avance de phase}
 
-Choix des couples R-C ( Cf Meca ) ( Choix des série E6, E12 et du type des condensateurs)
-
-
-
 \subsection{Données}
 
 \noindent
-Pour le schéma et les formules (que nous avons quand même vérifié) du correcteur, nous avions le choix entre deux montages différents que nous avons trouvé sur internet :
+Pour le schéma et les formules (que nous avons quand même vérifiées) du correcteur, nous avions le choix entre deux montages différents que nous avons trouvé sur internet :
 
 \begin{center}
 \includegraphics[scale = 0.8]{SolutionAnalogique/Avph.png} 
@@ -145,11 +141,11 @@ Pour des raisons de simplifications, nous prendrons les résistances $R_1$ et $R
 
 \vspace{0.5cm}
 -- à dégager ???
-On fera plutôt varier les résistances que les condensateurs pour s'adapter au changement de poids. On conserve donc les mêmes valeurs de condensateurs. On trouve alors $R=119.090 K\Omega$ pour pouvoir gérer le changement de poids. Il sera donc possible de prendre des potentiomètres pour ajuster les constantes, corrigeant ainsi les écarts possibles des valeurs de condensateurs. 
+On fera plutôt varier les résistances que les condensateurs pour s'adapter au changement de poids. On conserve donc les mêmes valeurs de condensateurs. On trouve alors $R=119.090 K\Omega$ pour pouvoir gérer le changement de poids. Il sera donc possible de prendre des potentiomètres pour ajuster les constantes, corrigeant ainsi les écarts possibles des valeurs de condensateurs. Dans la pratique, on fera plutôt varier le gain du montage pour compenser le changement de poids. 
 
 \vspace{0.5cm}
 
-Nous avons cependant apporté une modification en enlevant le deuxième AOP pour des raisons d'économie. Cela cause juste l'apparition d'un facteur $\frac{-R2}{R1}$. Les résistances étant égales, la seule différence que cela fait est un signe "-" que nous compenserons grâce au microcontrolleur. Le schéma final du correcteur à avance de phase est donc le suivant :
+Nous avons cependant apporté une modification en enlevant le deuxième AOP pour des raisons d'économie. Cela cause juste l'apparition d'un facteur $\frac{-R2}{R1}$. Les résistances étant égales, la seule différence que cela fait est un signe "-" que nous compenserons grâce au microcontrôleur. Le schéma final du correcteur à avance de phase est donc le suivant :
 
 \begin{center}
 \includegraphics[scale = 0.8]{SolutionAnalogique/AvPhase.pdf}
@@ -192,60 +188,60 @@ Nous avons donc validé notre choix de montage de correcteur et nous avons déte
 
 
 \section{Conversion \& Communication}
-\subsection{Choix du microcontrolleur}
+\subsection{Choix du microcontrôleur}
 
-%Tout d'abord, nous voulions utiliser un microcontrolleur de la famille des PIC puisque nous étions davantage habitués à leur programmation et que nous trouvons que les documentations de Microchip sont plus pratique à lire que celle de TI.  %de l'aversion totale de tous les membre du groupe à l'égard des microcontrolleur TI (surement causée par le cours génialissime de M.Nezan en 3ème année). 
+Tout d'abord, nous voulions utiliser un microcontrôleur de la famille des PIC puisque nous étions davantage habitués à leur programmation et que nous trouvons que les documentations de Microchip sont plus pratique à lire que celle de TI. De plus, nous avons toujours eu une bonne expérience avec ces composants  %de l'aversion totale de tous les membre du groupe à l'égard des microcontrôleur TI (surement causée par le cours génialissime de M.Nezan en 3ème année). 
 %
 %\vspace{0.5cm}
 %
-%Une fois ce choix fait, nous avons recherché le microcontrolleur qui nous éviterait le maximum de contraintes par la suite. C'est pour cela que nous avons choisi le PIC24FV32KA301. Celui-ci dispose d'un régulateur interne qui génère une tension 5V à partir du 12V de l'alimentation externe. Il nous épargne donc la partie adaptation de tension. 
+%Une fois ce choix fait, nous avons recherché le microcontrôleur qui nous éviterait le maximum de contraintes par la suite. C'est pour cela que nous avons choisi le PIC24FV32KA301. Celui-ci dispose d'un régulateur interne qui génère une tension 3.3V à partir du 5V de l'alimentation externe. Il nous épargne donc la partie adaptation de tension. 
 %
 %\vspace{0.5cm}
 %
-%En outre, nous voulions un microcontrolleur assez rapide pour supporter les calculs complexes que nous aurons surement à faire lors de la partie sur la correction numérique. Ainsi, la fréquence de travail de notre microcontrolleur est de 16 MHz en interne et il dispose de module de multiplication et de semi-division (1 cycle pour une multiplication et 19 pour une division). 
+%En outre, nous voulions un microcontrôleur assez rapide pour supporter les calculs complexes que nous aurons surement à faire lors de la partie sur la correction numérique. Ainsi, la fréquence de travail de notre microcontrôleur est de 16 MHz en interne et il dispose de module de multiplication et de semi-division (1 cycle pour une multiplication et 19 pour une division). 
 %
 %\vspace{0.5cm}
 %
-%Enfin, notre microcontrolleur dispose d'un CAN 12 bits qui sera utile lors de la programmation et d'un module UART qui nous servira lors de la mise en place de la communication série. Disposant déjà des outils de développement Microchip, nous ne perdrons pas de temps à l'installation de ces derniers. 
+%Enfin, notre microcontrôleur dispose d'un CAN 12 bits qui sera utile lors de la programmation et d'un module UART qui nous servira lors de la mise en place de la communication série. Disposant déjà des outils de développement Microchip, nous ne perdrons pas de temps à l'installation de ces derniers. 
 
 
-Nous voulions travailler avec les produits de Microchip, ce choix c'est fait par habitude car nous avions déjà tous utiliser les produits Microchip et nous n'avions eu aucun problème avec ces composants. Avant tout, nous avons fait la liste des caractéristiques du microcontrôleur dont nous avions besoin.
+%Nous voulions travailler avec les produits de Microchip, ce choix c'est fait par habitude car nous avions déjà tous utiliser les produits Microchip et nous n'avions eu aucun problème avec ces composants. Avant tout, nous avons fait la liste des caractéristiques du microcontrôleur dont nous avions besoin.
 
 \begin{itemize}
 	\item \textbf{Tension d'alimentation}
-	Nous avons fait le choix d'uniformiser les tensions d'alimentation du microcontrôleur, des capteurs et du convertisseur "Serie/USB". C'est pourquoi l'intégralité de la carte est alimenté en 5V.
+	Nous avons fait le choix d'uniformiser les tensions d'alimentation du microcontrôleur, des capteurs et du convertisseur "Serie/USB" afin de se passer d'adaptation en tension. C'est pourquoi l'intégralité de la carte est alimenté en 5V, le microcontrôleur contenant un régulateur interne qui génère le 3.3V dont il a besoin en interne.
 
 	\item \textbf{Fréquence de travail}
-	Afin de nous donner une certaine liberté concernant les calculs entre chaque échantillonnage des valeurs de capteur, nous avons opter un un microcontrôleur pouvant fonctionner à 32MHz. De plus, les microcontrôleurs microchip utilisent deux cycles d'horloge par instruction, ce qui nous donnent un microcontrôleur fonctionnant à 16 MIPS.
+	Afin de nous donner une certaine liberté concernant les calculs entre chaque échantillonnage des valeurs de capteurs, nous avons opté pour un microcontrôleur pouvant fonctionner à 32MHz. Les microcontrôleurs Microchip utilisant deux cycles d'horloge par instruction, nous avons donc un microcontrôleur fonctionnant à 16 MIPS. 
 
 	\item \textbf{Conversion Analogique/Numérique}
- 	Nous avons fait le choix de multiplier les points d'acquisitions, nous voulions pouvoir obtenir l'images numérique des capteurs, de la tension de sortie du montage différentielle ou de celles du correcteur. Nous voulions donc un microcontrôleur possédant au minimum 4 entrée permettant la convertion analogique/numérique.
+ 	Nous avons fait le choix de multiplier les points d'acquisitions, nous voulions pouvoir obtenir l'image numérique des capteurs, de la tension de sortie du montage différentielle et de celle du correcteur. Nous voulions donc un microcontrôleur possédant au minimum 4 entrées permettant la conversion analogique/numérique.
 
 	\item \textbf{PWM et Timers} 
-	Nous n'avions pas énormément de contraintes concernant la génération du PWM. Les microcontrôleurs 16 bits microchip possédant des timers dédié pour chaque sortie de comparaison (PWM). Nous avions besoins de seulement une sortie "OutputCompare".
+	Nous n'avions pas énormément de contraintes concernant la génération du PWM. Les microcontrôleurs 16 bits Microchip possédant des timers dédiés pour chaque sortie de comparaison (PWM), nous avions seulement besoin d'une sortie "OutputCompare".
 
 	\item \textbf{Multiplicateur/Diviseur hardware}
-	Pour minimiser le temps de calcul de la solution numérique, nous cherchions un microcontrôleur possedant un multiplieur/diviseur hardware. Ce qui diminuera la temps de calcul entre chaque échantillonnage de façon non négligeable.
+	Afin de minimiser le temps de calcul de la solution numérique, nous avons cherché un microcontrôleur possédant un multiplieur/diviseur hardware. Cela qui diminuera la temps de calcul entre chaque échantillonnage de façon non négligeable (1 cycle pour une multiplication et 19 pour une division).
 
 	\item \textbf{Outils de développement}
-	Comme nous possédions déjà un programmateur microchip : Pickit 3. Nous avons chercher un microcontrôleur supportant la programmation et le débogage par Pickit 3.
+	Comme nous possédions déjà un programmateur Microchip : Pickit 3. Nous avons chercher un microcontrôleur supportant la programmation et le débogage par Pickit 3.
 
 \end{itemize}
 
-Nous avons donc cherché un microcontrôleur répondant ces impératifs. Nous avons trouvé le PIC24F32KA301 ayant les caractéristique suivante :
+Nous avons donc cherché un microcontrôleur répondant à ces impératifs. Nous avons trouvé le PIC24FV32KA301 ayant les caractéristiques suivantes :
 \begin{itemize}
 \item \textbf{Tension d'alimentation :} entre 2V et 5,5V
 \item \textbf{Fréquence de travail :}jusqu'à 32Mhz
-\item \textbf{Conversion Analogique/Numérique :}convertisseur analogique/numérique 12 bit différentiel , 12 entrée, 100k échantillons par seconde. 
-\item \textbf{PWM et Timers :}3 output compare, résolution 16 bits
-\item \textbf{Multiplicateur/Diviseur hardware :}multiplieur hardware 16x16 bits, diviseur hardware 32x16 bit
-\item \textbf{Outils de développement :} Pickit 3 supporté
+\item \textbf{Conversion Analogique/Numérique :}convertisseur analogique/numérique 12 bit différentiel , 12 entrées, 100kSa/s échantillons par seconde. 
+\item \textbf{PWM et Timers :}3 Output Compare, résolution 16 bits
+\item \textbf{Multiplicateur/Diviseur hardware :}multiplieur hardware 16x16 bits, semi-diviseur hardware 32x16 bit
+\item \textbf{Outils de développement :} Pickit3 supporté
 
 \end{itemize}
 
 \subsubsection{Conversion A/D}
 
-Le module ADC offert par notre microcontrolleur comprend deux voies d'acquisition multiplexables avec un cycle d'échantillonnage-conversion relançable automatiquement. Dans notre cas nous utiliserons la voie A et le Timer1 génèrera l'événement qui déclenche le passage d'échantillonnage à conversion périodiquement et automatiquement (fréquence de l'évènement du Timer1 réglée à 1 kHz). L'échantillonnage reprendra dès la conversion terminée et le format des résultats sera en décimal sans signe puisque nous mesurons une tension qui sera entre 0 et 5V. 
+Le module ADC offert par notre microcontrôleur comprend deux voies d'acquisition multiplexables avec un cycle d'échantillonnage-conversion relançable automatiquement. Dans notre cas nous utiliserons la voie A et le Timer1 génèrera l'événement qui déclenche le passage d'échantillonnage à conversion périodiquement et automatiquement (fréquence de l'évènement du Timer1 réglée à 1 kHz). L'échantillonnage reprendra dès la conversion terminée et le format des résultats sera en décimal sans signe puisque nous mesurons une tension qui sera entre 0 et 5V. 
 
 \vspace{0.5cm}
 
@@ -253,7 +249,7 @@ Ne reste plus qu'à régler la fréquence à laquelle ces cycles d'échantillonn
 
 \vspace{0.5cm}
 
-Après quelques tests, il apparait que l'échantillonnage le plus lent que l'on puisse faire est de période 992$\mu$s. En effet, on a $T_{AD} = (ACDS+1) * T_{CY}$ avec $T_{CY} = \frac{2}{F_{OSC}}$, $F_{OSC}$ étant la fréquence du microcontrolleur avant passage dans le module des PLL donc 8 MHz. On a donc $T_{CY} = 500 ns$ et en prenant le maximum d'ADCS qui vaut 63, on a $T_{AD} = 64 * T_{CY} = 32 \mu s$. Ensuite, on peut déclencher chaque cycle d'échantillonnage tout les $SAMC * T_{AD}$. En prenant le maximum de SAMC (soit 31), on obtient finalement $T_{samp} = 31 * T_{AD} = 992 \mu s$, ce qui est très proche de ce que l'on visait.  
+Après quelques tests, il apparait que l'échantillonnage le plus lent que l'on puisse faire est de période 992$\mu$s. En effet, on a $T_{AD} = (ACDS+1) * T_{CY}$ avec $T_{CY} = \frac{2}{F_{OSC}}$, $F_{OSC}$ étant la fréquence du microcontrôleur avant passage dans le module des PLL donc 8 MHz. On a donc $T_{CY} = 500 ns$ et en prenant le maximum d'ADCS qui vaut 63, on a $T_{AD} = 64 * T_{CY} = 32 \mu s$. Ensuite, on peut déclencher chaque cycle d'échantillonnage tout les $SAMC * T_{AD}$. En prenant le maximum de SAMC (soit 31), on obtient finalement $T_{samp} = 31 * T_{AD} = 992 \mu s$, ce qui est très proche de ce que l'on visait.  
 
 \vspace{0.5cm}
 
@@ -269,7 +265,7 @@ Les codes C correspondant à la fonction d'initialisation et à la fonction de r
 
 \subsection{PWM - Pulse Width Modulation}
 
-Chaque sortie PWM du microcontrolleur possèdent un Timer dédié, ce qui permait de ne pas monopoliser un Timer pour générer la sortie PWM.
+Chaque sortie PWM du microcontrôleur possèdent un Timer dédié, ce qui permait de ne pas monopoliser un Timer pour générer la sortie PWM.
 
 Pour configurer le Timer OC1 (Output Compare 1), il faut tout d'abord choisir le mode de fonctionnement du Timer. Nous avons choisis d'utiliser le Mode "EDGE-ALIGNED PWM".
 
@@ -332,7 +328,7 @@ Contrairement au circuit faisant la mesure différentielle des informations capt
 
 \medskip
 \noindent
-Nous avons choisi d'utiliser le circuit Allegro (A4950) possèdant les caractéristiques suivantes :
+Nous avons choisi d'utiliser le circuit Allegro (A4950) possédant les caractéristiques suivantes :
 \medskip
 \begin{itemize}
 	\item tension maximum de puissance $ V_{max} = 40 V $
@@ -379,7 +375,7 @@ $
 \noindent
 A noter que cette valeur de $R_{TH}$ est donnée dans le cas l'on aurait des plages de cuivre d'environ 2cm par 2cm de chaque côté du composant. De plus, la valeur de $R_{DSON}$ est une valeur pire cas.
 
-\subsubsection{Equations}
+\subsubsection{Équations}
 
 \noindent
 L'équation de la température de la jonction est donnée par :
@@ -418,12 +414,12 @@ $
 \subsubsection{Conclusion de l'étude thermique}
 
 \noindent
-Le résultat trouvé est très proche de la valeur limite du composant. Cependant, nous avons pris des paramètres extrèmes qui ne seront normalent pas atteint. De plus, nous avons augmenté la surface de cuivre qui assure la dissipation afin d'obtenir une marge plus grande par rapport à ce résultat. 
+Le résultat trouvé est très proche de la valeur limite du composant. Cependant, nous avons pris des paramètres extrêmes qui ne seront normalement pas atteint. De plus, nous avons augmenté la surface de cuivre qui assure la dissipation afin d'obtenir une marge plus grande par rapport à ce résultat. 
 
-\section{Résultats - Evolution}
+\section{Résultats - Évolution}
 Liste
 \\- Monitoring du fonctionnement
-\\- Résulatat expérience
+\\- Résultat expérience
 \\- Ouverture vers correcteur numérique
 
 
