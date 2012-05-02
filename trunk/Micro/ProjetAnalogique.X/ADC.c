@@ -19,7 +19,7 @@ void ADC_Init()
                                     // évènement du timer 1
     AD1CON1bits.FORM = 0b00;        // sélection du format des résultats :
                                     // décimal sans signe, justifié à droite
-    AD1CON1bits.ASAM = 0b1;         // redémarrage auto de la échantillonage
+    AD1CON1bits.ASAM = 0b1;         // redémarrage auto de l'échantillonage
                                     // après la fin de la conversion précédente
     AD1CON2bits.PVCFG = 0b00;       // sélection de la référence de tension
                                     // AVDD ==> 5v

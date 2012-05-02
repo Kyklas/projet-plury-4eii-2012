@@ -18,7 +18,7 @@ void TIMER1_Init ()
     T1CON=0x00;
     TMR1=0x00; // reset du timer
 
-    T1CONbits.TCS=0b0; // utilisation de l'horloge interne (Fcy)  (16 MHz )
+    T1CONbits.TCS=0b0; // utilisation de l'horloge interne (Fcy)  (16 MHz)
     T1CONbits.TCKPS=0b11; // prescaler par 256 ==> Fcy/256 = 62,5 khz
 
     PR1=62; // pour une période de timer1 : 1ms
@@ -33,28 +33,28 @@ void TIMER1_Init ()
     T1CONbits.TON=0b1;      //timer1 lancé
 }
 
+short const Vref = 1450; //1.77 * 4096.0 / 5.0;
 void fonction_T1Interrupt(void)
 {
-    unsigned short ADValue, Vref;
-    short DutyCycle;
-    Vref = 1.77 * 4096.0/5.0; // 1,85 V
-    ADValue = 0xFFF - ADC_Convert(POT1);
-
-    DutyCycle = Vref - ADValue;
-    
-    if (DutyCycle < 0)
+    short Mesure;
+    unsigned char DutyCycle;
+// Conditionnement du signal
+    Mesure = Vref - (0xFFF - ADC_Convert(POT1)); // Ajout de l'inverseur pour avance de phase
+    if (Mesure > 2047) Mesure = 2047;
+// Pilotage de la PWM
+    if (Mesure < 0)
     {
-        DutyCycle = -DutyCycle;
+        DutyCycle = (unsigned char) ((- Mesure) >> 3);
         MODE1 = 0;
         MODE2 = 1;
     }
     else
     {
+        DutyCycle = (unsigned char) (Mesure >> 3);
         MODE1 = 1;
         MODE2 = 0;
     }
-    DutyCycle = DutyCycle>>3;
-    PWM_SetDutyCycle((unsigned char)(DutyCycle));
+    PWM_SetDutyCycle(DutyCycle);
 }
 
 void __attribute__((interrupt,no_auto_psv)) _T1Interrupt(void)
