@@ -1,0 +1,19 @@
+convertisseur réso 12 bits
+sauf que peut pas aller à 12bits
+
+
+
+micro ==> 8 meg * 4 (pll) ==> 32 meg/2 = Fcy
+
+on veut echantilloner le plus vite possible
+On veut faire au moins 5 cycle PWM entre chaque echantillage
+
+exemple division par 2^10  ==> 16meg/1024 = 15625 Hz => FE = 3125 Hz
+exemple division par 2^8  ==> 16meg/256 = 62500 Hz => FE = 12500 Hz   ==> ce que l'on retient
+
+si freq trop basse, bobine siffle ==> plus de 20kHz (62.5K bien)
+mais faut utiliser un minimum de réso ==> 8 ==> FE = 12.5
+
+
+1111 1111
+0111 1111
