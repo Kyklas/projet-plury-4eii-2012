@@ -141,15 +141,15 @@ Dans le schéma retenu, le produit $R_1*C_1$ correspond à la constante $ T_av$ 
 
 \vspace{0.5cm}
 
-Pour des raisons de simplifications, nous prendrons les résistances $R_1$ et $R_2$ égales, le facteur 10 entre les constantes du numérateur et du dénominateur sera donc réalisé par un facteur 10 entre les valeurs des condensateurs. Pour le poids de $0.0897 kg$, en choisissant des composants avec des valeurs normalisées, on obtient $R=100.0 K\Omega$, $C_1=330 nF$ et $C_2=33 nF$. 
+Pour des raisons de simplifications, nous prendrons les résistances $R_1$ et $R_2$ égales, le facteur 10 entre les constantes du numérateur et du dénominateur sera donc réalisé par un facteur 10 entre les valeurs des condensateurs. En outre, pour ne pas avoir à utiliser des condensateurs trop volumineux (pour des raisons de praticité vis-à-vis de la carte) et non polarisés, nous ne les prendrons pas de trop grandes valeurs et nous compenserons cela avec les résistances. Pour le poids de $0.0897 kg$, en choisissant des composants avec des valeurs normalisées, on obtient ainsi $R=100.0 K\Omega$, $C_1=330 nF$ et $C_2=33 nF$.
+
+\vspace{0.5cm}
+-- à dégager ???
+On fera plutôt varier les résistances que les condensateurs pour s'adapter au changement de poids. On conserve donc les mêmes valeurs de condensateurs. On trouve alors $R=119.090 K\Omega$ pour pouvoir gérer le changement de poids. Il sera donc possible de prendre des potentiomètres pour ajuster les constantes, corrigeant ainsi les écarts possibles des valeurs de condensateurs. 
 
 \vspace{0.5cm}
 
-On fera plutôt varier les résistances que les condensateurs pour s'adapter au changement de poids. On conserve donc les mêmes valeurs de condensateurs. On trouve alors $R=119.090 K\Omega$. Il sera donc possible de prendre des potentiomètres pour ajuster les constantes, corrigeant ainsi les écarts possibles des valeurs de condensateurs. 
-
-\vspace{0.5cm}
-
-Nous avons cependant apporté une modification en enlevant le deuxième AOP pour des raisons d'économie. Cela cause juste l'apparition d'un facteur $\frac{-(R2+R1)}{R1}$. Nous compenserons ce signe moins grâce au microcontrolleur. Le schéma final du correcteur à avance de phase est donc le suivant :
+Nous avons cependant apporté une modification en enlevant le deuxième AOP pour des raisons d'économie. Cela cause juste l'apparition d'un facteur $\frac{-R2}{R1}$. Les résistances étant égales, la seule différence que cela fait est un signe "-" que nous compenserons grâce au microcontrolleur. Le schéma final du correcteur à avance de phase est donc le suivant :
 
 \begin{center}
 \includegraphics[scale = 0.8]{SolutionAnalogique/AvPhase.pdf}
@@ -161,7 +161,7 @@ Aussi, par le biais de MATLAB, nous avons pu obtenir la courbe théorique de not
 \includegraphics[scale = 0.8]{SolutionAnalogique/BodeAvPhase.pdf} 
 \end{center}
 
-A noter que la fréquence donnée est en $rad.s^-1$, elle vaut environ 16 Hz. On observe un gain de 10 dB à la fréquence de où l'on travaillera et dont il faudra tenir compte par la suite. 
+A noter que la fréquence donnée est en $rad.s^-1$, elle vaut environ 16 Hz et correspond bien au pole du correcteur calculé lors de la partie automatique. On observe un gain de 10 dB à la fréquence où l'on travaillera et dont il faudra tenir compte pour la suite. 
 
 
 
@@ -172,7 +172,7 @@ On simule le correcteur à avance de phase par le schémas suivant :
 \begin{center}
 \includegraphics[scale = 0.8]{SolutionAnalogique/schAvph.png} 
 \end{center}
-
+--à changer
 On obtient le résultat de simulation suivant : 
 
 \begin{center}
@@ -289,12 +289,12 @@ $F_osc = 32MHz$
 
 Les codes C correspondant à la fonction d'initialisation et à la fonction de récupération d'un échantillon pourront être trouvés en annexe. 
 
-\section{Controle de la puissance}
+\section{Contrôle de la puissance}
 
 	La génération de la puissance dans notre application est une partie critique. Faire léviter un mobile d'un poids d'une centaine de gramme soumis à la gravité nécessite l'emploi d'une bobine de taille importante en comparaison avec les selfs classiquement rencontrées dans les montages électroniques. L'objectif est de produire un champ magnétique puissant pour porter le mobile. Ceci implique la régulation de courants importants, naviguant autour de deux ampères. 
 
 \subsection{Choix d'un pont complet}
-	Pour contrôler le champ magnétique émis, nous avons opté pour le pilotage de la bobine en tension. Etant donné la forte intensité des courants invoqués et pour éviter un trop grand gaspillage énergétique, le cahier des charges imposait une régulation en commutation plutôt qu'en fonctionnement linéaire. La bobine étant d'inductance élevée et de résistance faible, elle forme donc un filtre passe bas :
+	Pour contrôler le champ magnétique émis, nous avons opté pour le pilotage de la bobine en tension. Étant donné la forte intensité des courants invoqués et pour éviter un trop grand gaspillage énergétique, le cahier des charges imposait une régulation en commutation plutôt qu'en fonctionnement linéaire. La bobine étant d'inductance élevée et de résistance faible, elle forme donc un filtre passe bas :
 
 \medskip
 $ L_{bob} = 14,9 mH $
