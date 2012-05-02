@@ -15,6 +15,6 @@
 void PLL_Init()
 {
     CLKDIV = 0;
-    CLKDIVbits.DOZEN = 0;       // Ratio Select bits : 1:1 => 32Mhz
-    while (!OSCCONbits.LOCK);   // Attent le vérouillage de la PLL
+    CLKDIVbits.DOZEN = 0; // Ratio Select bits : 1:1 => 32Mhz
+    while (!OSCCONbits.LOCK); // attendre que les pll soit bien lancées
 }
