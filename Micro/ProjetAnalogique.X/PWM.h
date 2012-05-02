@@ -18,8 +18,8 @@
 void PWM_Init();
 
 /**
- * \fn void PWM_Init ()
- * \brief Initialisation du PWM
+ * \fn void PWM_SetDutyCycle(unsigned char DutyCycle)
+ * \brief Modification du rapport cyclique
  *
  * \param DutyCycle Valeur du rapport cyclique
  */
