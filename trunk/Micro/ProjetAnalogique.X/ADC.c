@@ -14,7 +14,7 @@
  */
 void ADC_Init()
 {
-   // configuration du sens des e/s faites dans io_init
+    // configuration du sens des e/s faites dans io_init
     AD1CON1bits.SSRC = 0b0111;      // passage d'échantillonage à conversion sur
                                     // évènement du timer 1
     AD1CON1bits.FORM = 0b00;        // sélection du format des résultats :

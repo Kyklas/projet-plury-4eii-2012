@@ -24,14 +24,6 @@
     #define _ISRFAST __attribute__((interrupt, shadow, auto_psv))
 #endif
 
-//variables globales
-
-
-//pgr d'interruptions
-
-
-
-
 // Bits de configuration
 _FBS(BWRP_OFF & BSS_OFF);
 _FGS(GWRP_OFF & GSS0_OFF);
@@ -41,22 +33,16 @@ _FWDT(FWDTEN_OFF);
 _FPOR(BOREN_BOR3 & LVRCFG_OFF & PWRTEN_OFF & I2C1SEL_PRI & BORV_V30 & MCLRE_ON);
 _FICD(ICS_PGx2); // DEBUG_ON
 
-/*
- * main
- */
 int main(void)
 {
+    // Initialisation des différents modules
     PLL_Init();
     IO_Init();
     PWM_Init();
     ADC_Init();
     TIMER1_Init();
 
-
-
     while(1);
-
-
     return (EXIT_SUCCESS);
 }
 
