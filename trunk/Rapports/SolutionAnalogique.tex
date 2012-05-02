@@ -166,16 +166,16 @@ A noter que la fréquence donnée est en $rad.s^-1$, elle vaut environ 16 Hz et 
 On simule le correcteur à avance de phase par le schémas suivant : 
 
 \begin{center}
-\includegraphics[scale = 0.8]{SolutionAnalogique/schAvph.png} 
+\includegraphics[scale = 0.8]{SolutionAnalogique/orcad_sch.png} 
 \end{center}
---à changer
+
 On obtient le résultat de simulation suivant : 
 
 \begin{center}
-\includegraphics[scale = 0.8]{SolutionAnalogique/simuAvph.png} 
+\includegraphics[width = 15cm]{SolutionAnalogique/orcad_simu.png} 
 \end{center}
 
-% ajout du gain sous orcad + refaire schémas avec les bonnes valeurs
+
 Comme on peut le voir en comparant par rapport au résultat donné par MATLAB, le schéma répond comme on le souhaitait. 
 
 \vspace{0.5cm}
@@ -185,6 +185,14 @@ Comme on peut le voir en comparant par rapport au résultat donné par MATLAB, l
 Nous avons donc validé notre choix de montage de correcteur et nous avons déterminé des valeurs admissibles de composants analogiques grâce à cette étude. Il faudra cependant être attentif quant au choix des condensateurs vis-à-vis de leur fréquence de fonctionnement.  
 
 \subsection{Validation du modèle câblé}
+
+\vspace{0.5cm}
+
+\begin{center}
+\includegraphics[width = 10cm]{SolutionAnalogique/avph_reel.png} 
+\end{center}
+
+Comme on peut le voir sur cette photo où l'on à réglé un signal d'entrée de 16Hz , on a bien un gain de 10dB (gain d'environ 3) : tension d'entrée (CH2) à 1V, tension de sortie (CH1) à environ 3V. Au niveau du déphasage, on a un carreau d'écart pour une période de 6.2 carreau ce qui correspond bien à un déphasage de 60\char23. 
 
 
 \section{Conversion \& Communication}
