@@ -218,31 +218,36 @@ Tout d'abord, nous voulions utiliser un microcontrôleur de la famille des PIC p
 \begin{itemize}
 	\item \textbf{Tension d'alimentation}
 	Nous avons fait le choix d'uniformiser les tensions d'alimentation du microcontrôleur, des capteurs et du convertisseur "Serie/USB" afin de se passer d'adaptation en tension. C'est pourquoi l'intégralité de la carte est alimenté en 5V, le microcontrôleur contenant un régulateur interne qui génère le 3.3V dont il a besoin en interne.
-
+\vspace{0.5cm}
 	\item \textbf{Fréquence de travail}
 	Afin de nous donner une certaine liberté concernant les calculs entre chaque échantillonnage des valeurs de capteurs, nous avons opté pour un microcontrôleur pouvant fonctionner à 32MHz. Les microcontrôleurs Microchip utilisant deux cycles d'horloge par instruction, nous avons donc un microcontrôleur fonctionnant à 16 MIPS. 
-
+\vspace{0.5cm}
 	\item \textbf{Conversion Analogique/Numérique}
  	Nous avons fait le choix de multiplier les points d'acquisitions, nous voulions pouvoir obtenir l'image numérique des capteurs, de la tension de sortie du montage différentielle et de celle du correcteur. Nous voulions donc un microcontrôleur possédant au minimum 4 entrées permettant la conversion analogique/numérique.
-
+\vspace{0.5cm}
 	\item \textbf{PWM et Timers} 
 	Nous n'avions pas énormément de contraintes concernant la génération du PWM. Les microcontrôleurs 16 bits Microchip possédant des timers dédiés pour chaque sortie de comparaison (PWM), nous avions seulement besoin d'une sortie "OutputCompare".
-
+\vspace{0.5cm}
 	\item \textbf{Multiplicateur/Diviseur hardware}
 	Afin de minimiser le temps de calcul de la solution numérique, nous avons cherché un microcontrôleur possédant un multiplieur/diviseur hardware. Cela qui diminuera la temps de calcul entre chaque échantillonnage de façon non négligeable (1 cycle pour une multiplication et 19 pour une division).
-
+\vspace{0.5cm}
 	\item \textbf{Outils de développement}
 	Comme nous possédions déjà un programmateur Microchip : Pickit 3. Nous avons chercher un microcontrôleur supportant la programmation et le débogage par Pickit 3.
-
+\vspace{0.5cm}
 \end{itemize}
 
 Nous avons donc cherché un microcontrôleur répondant à ces impératifs. Nous avons trouvé le PIC24FV32KA301 ayant les caractéristiques suivantes :
 \begin{itemize}
 \item \textbf{Tension d'alimentation :} entre 2V et 5,5V
+\vspace{0.5cm}
 \item \textbf{Fréquence de travail :}jusqu'à 32Mhz
+\vspace{0.5cm}
 \item \textbf{Conversion Analogique/Numérique :}convertisseur analogique/numérique 12 bit différentiel , 12 entrées, 100kSa/s échantillons par seconde. 
+\vspace{0.5cm}
 \item \textbf{PWM et Timers :}3 Output Compare, résolution 16 bits
+\vspace{0.5cm}
 \item \textbf{Multiplicateur/Diviseur hardware :}multiplieur hardware 16x16 bits, semi-diviseur hardware 32x16 bit
+\vspace{0.5cm}
 \item \textbf{Outils de développement :} Pickit3 supporté
 
 \end{itemize}
