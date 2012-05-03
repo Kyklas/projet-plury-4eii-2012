@@ -42,7 +42,9 @@
 \maketitle
 
 \pagebreak
+\tableofcontents
 
+\pagebreak
 \section*{Introduction}
 
 Dans le premier rapport, nous avons analysé le problème d'automatique soulevé par l'asservissement en position du mobile dans un équilibre instable. Grâce à des simplifications théoriques, nous avons pu mettre en place un modèle physique nous permettant de proposer un correcteur analogique adapté. 
@@ -127,10 +129,30 @@ Le sommateur en entrée induit une division par deux des tensions. C'est pourquo
 \noindent
 Pour le schéma et les formules (que nous avons quand même vérifiées) du correcteur, nous avions le choix entre deux montages différents que nous avons trouvé sur internet :
 
-\begin{center}
-\includegraphics[scale = 0.8]{SolutionAnalogique/Avph.png} 
-\includegraphics[scale = 0.8]{SolutionAnalogique/Avph2.png}
-\end{center}
+
+
+\begin{figure}[!h]
+    \centering
+    \begin{tabular}{cc}
+      %\label{avph1}
+     % \caption{Solution de correcteur 1}
+      \includegraphics[width=8cm]{SolutionAnalogique/Avph.png} &
+     % \label{avph2}
+     % \caption{Solution de correcteur 2}
+      \includegraphics[width=8cm]{SolutionAnalogique/Avph2.png} \\
+
+      (a) & (b)\\
+    \end{tabular}
+    \caption{Légende: Deux solutions de réalisations analogiques pour le correcteur à avance de phase
+    \label{avph_sol_poss}}
+\end{figure}
+
+
+
+
+
+
+
 
 Nous avons retenu le premier des deux schémas en raison de sa possibilité de régler plus facilement le rapport entre le zéro et le pôle. 
 
@@ -144,22 +166,28 @@ Dans le schéma retenu, le produit $R_1*C_1$ correspond à la constante $ T_av$ 
 Pour des raisons de simplifications, nous prendrons les résistances $R_1$ et $R_2$ égales, le facteur 10 entre les constantes du numérateur et du dénominateur sera donc réalisé par un facteur 10 entre les valeurs des condensateurs. En outre, pour ne pas avoir à utiliser des condensateurs trop volumineux (pour des raisons de praticité vis-à-vis de la carte) et non polarisés, nous ne les prendrons pas de trop grandes valeurs et nous compenserons cela avec les résistances. Pour le poids de $0.0897 kg$, en choisissant des composants avec des valeurs normalisées, on obtient ainsi $R=100.0 K\Omega$, $C_1=330 nF$ et $C_2=33 nF$.
 
 \vspace{0.5cm}
--- à dégager ???
 On fera plutôt varier les résistances que les condensateurs pour s'adapter au changement de poids. On conserve donc les mêmes valeurs de condensateurs. On trouve alors $R=119.090 K\Omega$ pour pouvoir gérer le changement de poids. Il sera donc possible de prendre des potentiomètres pour ajuster les constantes, corrigeant ainsi les écarts possibles des valeurs de condensateurs. Dans la pratique, on fera plutôt varier le gain du montage pour compenser le changement de poids. 
 
 \vspace{0.5cm}
 
 Nous avons cependant apporté une modification en enlevant le deuxième AOP pour des raisons d'économie. Cela cause juste l'apparition d'un facteur $\frac{-R2}{R1}$. Les résistances étant égales, la seule différence que cela fait est un signe "-" que nous compenserons grâce au microcontrôleur. Le schéma final du correcteur à avance de phase est donc le suivant :
 
-\begin{center}
-\includegraphics[scale = 0.8]{SolutionAnalogique/AvPhase.pdf}
-\end{center}
+\begin{figure}[!h]
+    \centering
+	\includegraphics[scale = 0.8]{SolutionAnalogique/AvPhase.pdf}
+	\label{avph_schm}
+	\caption{Schémas retenu pour le correcteur à avance de phase}
+\end{figure}
 
 Aussi, par le biais de MATLAB, nous avons pu obtenir la courbe théorique de notre correcteur par avance de phase :
 
-\begin{center}
-\includegraphics[scale = 0.8]{SolutionAnalogique/BodeAvPhase.pdf} 
-\end{center}
+\begin{figure}[!h]
+    \centering
+	\includegraphics[scale = 0.8]{SolutionAnalogique/BodeAvPhase.pdf} 
+	\label{avph_bode}
+	\caption{Diagramme de gain et de phase du correcteur (Matlab)}
+\end{figure}
+
 
 A noter que la fréquence donnée est en $rad.s^-1$, elle vaut environ 16 Hz et correspond bien au pole du correcteur calculé lors de la partie automatique. On observe un gain de 10 dB à la fréquence où l'on travaillera et dont il faudra tenir compte pour la suite. 
 
@@ -169,15 +197,21 @@ A noter que la fréquence donnée est en $rad.s^-1$, elle vaut environ 16 Hz et 
 
 On simule le correcteur à avance de phase par le schémas suivant : 
 
-\begin{center}
-\includegraphics[scale = 0.8]{SolutionAnalogique/orcad_sch.png} 
-\end{center}
+\begin{figure}[!h]
+    \centering
+	\includegraphics[scale = 0.8]{SolutionAnalogique/orcad_sch.png} 
+	\label{avph_schm_simu}
+	\caption{Schémas de test utilisé pour la simulation avec Orcad}
+\end{figure}
 
 On obtient le résultat de simulation suivant : 
 
-\begin{center}
-\includegraphics[width = 15cm]{SolutionAnalogique/orcad_simu.png} 
-\end{center}
+\begin{figure}[!h]
+    \centering
+	\includegraphics[width = 15cm]{SolutionAnalogique/orcad_simu.png} 
+	\label{avph_schm_simu_res}
+	\caption{Diagramme de gain et de phase du correcteur (Orcad)}
+\end{figure}
 
 
 Comme on peut le voir en comparant par rapport au résultat donné par MATLAB, le schéma répond comme on le souhaitait. 
@@ -192,17 +226,20 @@ Nous avons donc validé notre choix de montage de correcteur et nous avons déte
 
 \vspace{0.5cm}
 
-\begin{center}
-\includegraphics[width = 10cm]{SolutionAnalogique/avph_reel.png} 
-\end{center}
+\begin{figure}[!h]
+    \centering
+	\includegraphics[width = 10cm]{SolutionAnalogique/avph_reel.png} 
+	\label{avph_reel}
+	\caption{Résultat observé du correcteur à avance de phase}
+\end{figure}
 
-Comme on peut le voir sur cette photo où l'on à réglé un signal d'entrée de 16Hz , on a bien un gain de 10dB (gain d'environ 3) : tension d'entrée (CH2) à 1V, tension de sortie (CH1) à environ 3V. Au niveau du déphasage, on a un carreau d'écart pour une période de 6.2 carreau ce qui correspond bien à un déphasage de 60\char23. 
+Comme on peut le voir sur cette photo où l'on à réglé un signal d'entrée de 16Hz , on a bien un gain de 10dB (gain d'environ 3) : tension d'entrée (CH2) à 1V, tension de sortie (CH1) à environ 3V. Au niveau du déphasage, on a un carreau d'écart pour une période de 6.2 carreau ce qui correspond bien à un déphasage de 60\char23 attendu. 
 
 
 \section{Conversion \& Communication}
 \subsection{Choix du microcontrôleur}
 
-Tout d'abord, nous voulions utiliser un microcontrôleur de la famille des PIC puisque nous étions davantage habitués à leur programmation et que nous trouvons que les documentations de Microchip sont plus pratique à lire que celle de TI. De plus, nous avons toujours eu une bonne expérience avec ces composants  %de l'aversion totale de tous les membre du groupe à l'égard des microcontrôleur TI (surement causée par le cours génialissime de M.Nezan en 3ème année). 
+Tout d'abord, nous voulions utiliser un microcontrôleur de la famille des PIC puisque nous étions davantage habitués à leur programmation et que nous avons toujours eu une bonne expérience avec ces composants.  %de l'aversion totale de tous les membre du groupe à l'égard des microcontrôleur TI (surement causée par le cours génialissime de M.Nezan en 3ème année). 
 %
 %\vspace{0.5cm}
 %
@@ -278,21 +315,24 @@ L'attente active n'est pas gênante puisque l'on récupère la valeur de l'écha
 
 \vspace{0.5cm}
 
-Les codes C correspondant à la fonction d'initialisation et à la fonction de récupération d'un échantillon pourront être trouvés en annexe. 
+%Les codes C correspondant à la fonction d'initialisation et à la fonction de récupération d'un échantillon pourront être trouvés en annexe. 
 
 \subsection{PWM - Pulse Width Modulation}
 
-Chaque sortie PWM du microcontrôleur possèdent un Timer dédié, ce qui permait de ne pas monopoliser un Timer pour générer la sortie PWM.
+Chaque sortie PWM du microcontrôleur possèdent un Timer dédié ce qui permet de ne pas monopoliser un Timer pour générer la sortie PWM.
 
-Pour configurer le Timer OC1 (Output Compare 1), il faut tout d'abord choisir le mode de fonctionnement du Timer. Nous avons choisis d'utiliser le Mode "EDGE-ALIGNED PWM".
+Pour configurer le Timer OC1 (Output Compare 1), il faut tout d'abord choisir le mode de fonctionnement du Timer. Nous avons choisi d'utiliser le Mode "EDGE-ALIGNED PWM".
 
-\begin{center}
-\includegraphics[width = 15cm]{SolutionAnalogique/PWMMode.png} 
-\end{center}
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width = 15cm]{SolutionAnalogique/PWMMode.png} 
+	\label{pwm_mode}
+	\caption{Schémas de principe du mode EDGE-ALIGNED PWM}
+\end{figure}
 
-Nous avons ensuite réfléchi à la l'ordre de grandeur de fréquence de la PWM. Cette dernière ne doit pas être inférieur à 30kHz, un fréquence inférieur risquerait de généré des fréquences audible et donc d'engendrer un  de la bobine. Il ne faut pas non plus que le fréquence de PWM soit trop élevé, sinon la résolution du rapport cyclique deviendrait trop faible.
+Nous avons ensuite réfléchi à l'ordre de grandeur de fréquence de la PWM. Cette dernière ne doit pas être inférieure à 30 kHz, un fréquence inférieure risquerait de générer des fréquences audibles et donc d'engendrer un bruit avec de la bobine. Il ne faut pas non plus que la fréquence de la PWM soit trop élevée, sinon la résolution du rapport cyclique deviendrait trop faible.
 
-Nous avons trouvé le bon compromis : 62kHz ce qui nous donne une résolution de 8 bits pour le rapport cyclique en utilisant Fcy comme horloge d'entrée. Fcy est la fréquence de cycle.
+Nous avons trouvé par le calcul le bon compromis : 62 kHz. Cela nous donne une résolution de 8 bits pour le rapport cyclique en utilisant Fcy comme horloge d'entrée Fcy étant la fréquence de cycle.
 \begin{center}
 $F_osc = 32MHz$
 \\$F_cy = Fosc/2 = 16MHz$
@@ -300,7 +340,7 @@ $F_osc = 32MHz$
 \end{center}
 \vspace{0.5cm}
 
-Les codes C correspondant à la fonction d'initialisation et à la fonction de récupération d'un échantillon pourront être trouvés en annexe. 
+%Les codes C correspondant à la fonction d'initialisation et à la fonction de récupération d'un échantillon pourront être trouvés en annexe. 
 
 \section{Contrôle de la puissance}
 
@@ -332,9 +372,12 @@ Pour générer les impulsions de tension, nous avions le choix entre trois solut
 	\item \textbf{Pont en H complet :} solution ultime permettant de faire circuler le courant dans les deux sens sans disposer d'une source d'alimentation de puissance négative.
 \end{itemize}
 
-\begin{center}
-\includegraphics[width = 15cm]{SolutionAnalogique/Ponts.png} 
-\end{center}
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width = 15cm]{SolutionAnalogique/Ponts.png} 
+	\label{ponts}
+	\caption{Solutions pour générer les impulsions de tension}
+\end{figure}
 
 \medskip
 Nous avons supposé que la possibilité d'inverser le sens du courant dans la bobine pouvait être intéressante pour notre application et ayant pour contrainte de conception la présence d'une seule source d'alimentation de puissance, nous avons sélectionné la solution du pont complet. Après discussion avec des encadrants du projet, nous avons émis l'hypothèse que la répulsion de la bobine pourrait améliorer la stabilité de l'asservissement et la consommation électrique globale du système. Ce qui semble certain c'est qu'elle facilite le positionnement manuel initial du mobile. Nous pourrons par la suite affirmer ou infirmer ces hypothèses en contraignant ou non le pont à fonctionner dans un seul sens. Nous saurons donc si le choix du pont complet était judicieux. Cette solution à l'inconvénient majeur d'être largement plus onéreuse à mettre en place que la première solution à un seul transistor.
@@ -360,9 +403,12 @@ Nous avons choisi d'utiliser le circuit Allegro (A4950) possédant les caractér
 \medskip
 Nous l'avons sélectionné car il était disponible, très compact et c'était aussi le moins cher qui puisse satisfaire les exigences de notre application. En choisissant ce composant, nous avons négligé deux aspects qui ont débouché sur des difficultés d'intégration importantes : la taille réduite du boitier et la nécessité d'un très bon dispositif de dissipation thermique pour le refroidir.
 
-\begin{center}
-\includegraphics[width = 15cm]{SolutionAnalogique/A4950.png} 
-\end{center}
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width = 15cm]{SolutionAnalogique/A4950.png} 
+	\label{pont_h}
+	\caption{Diagramme fonctionnel du pont en H}
+\end{figure}
 
 \subsection{Réalisation de la platine de puissance}
 
@@ -439,9 +485,19 @@ Liste
 \\- Résultat expérience
 \\- Ouverture vers correcteur numérique
 
+\subsection{Prix de la solution}
 
-\subsection{Bibliographie}
+Nous avons fait une rapide évaluation du prix de notre solution. Pour se faire, nous avons pris en compte les pris pour 500 pièces de Farnell. Ce choix est discutable quand on voit la différence de prix selon les quantité commandées mais il permet tout de même de se faire une idée de ce que serait le prix de revient de notre solutions dans le cas d'une production intensive. Le prix trouvé est d'environ 26 euros pour les composants seuls. Étant donné la taille de notre carte, nous évaluons à 14 euros les coûts concernant l'achat de la carte et le routage, amenant le prix total à une quarantaine d'euros. Il est certain que ce prix peut descendre en n'utilisant pas un pont complet et en trouvant une alternative moins onéreuse au FT232. 
 
+Le détail du prix des composants pourra être trouvé en annexe. 
+
+
+\section{Conclusion}
+
+
+\pagebreak
+\section{Bibliographie}
+\medskip
 - Cours de GEE, A. Meghebbar :
 \newline \textit{\underline{\url{fsi.univ-tlemcen.dz/cours/Support-Cours-Commande-Analogique-Master-Electrotechnique10.pdf}}} 
 
@@ -452,7 +508,15 @@ Liste
 \newline \textit{\underline{\url{http://www.esiee.fr/~francaio/enseignement/version_pdf/III_amplidiff.pdf}}} page 13
 
 
-\subsection{Annexe}
+\pagebreak
+\section{Annexe}
+\medskip
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=10cm]{SolutionAnalogique/cout.png}
+	\label{cout}
+	\caption{Tableau répertoriant les composants utilisés et leurs coûts}
+\end{figure}
 
 \end{document}
 
