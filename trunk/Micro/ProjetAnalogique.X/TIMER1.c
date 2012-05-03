@@ -33,7 +33,7 @@ void TIMER1_Init ()
 
 
 // Tension d'offset
-short const Vref = 1450;        // 1.77 * 4096.0 / 5.0;
+short const Vref = 1524;        // 1.77 * 4096.0 / 5.0;
 
 void fonction_T1Interrupt(void)
 {
@@ -43,24 +43,28 @@ void fonction_T1Interrupt(void)
 // Conditionnement du signal
 // ==========================================
     // Ajout de l'inverseur pour avance de phase
-    Mesure = Vref - (0xFFF - ADC_Convert(POT1)); 
-    if (Mesure > 2047)
-        Mesure = 2047;
+    short ADC;
+    ADC  = ADC_Convert(POT1);
+    Mesure = Vref - ADC;
+    if (Mesure > 511)
+        Mesure = 511;
+    if (Mesure < -1023)
+        Mesure = -1023;
 
 // ==========================================
 // Pilotage de la PWM
 // ==========================================
     if (Mesure < 0)
     {
-        DutyCycle = (unsigned char) ((- Mesure) >> 3);
-        MODE1 = 0;
-        MODE2 = 1;
+        DutyCycle = (unsigned char) ((- Mesure) >> 2);
+        MODE1 = 1;
+        MODE2 = 0;
     }
     else
     {
-        DutyCycle = (unsigned char) (Mesure >> 3);
-        MODE1 = 1;
-        MODE2 = 0;
+        DutyCycle = (unsigned char) (Mesure >> 1);
+        MODE1 = 0;
+        MODE2 = 1;
     }
     PWM_SetDutyCycle(DutyCycle);
 }

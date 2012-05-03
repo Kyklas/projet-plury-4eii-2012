@@ -41,6 +41,7 @@ int main(void)
     PWM_Init();
     ADC_Init();
     TIMER1_Init();
+    //UART_Init(9600);
 
     while(1);
     return (EXIT_SUCCESS);
