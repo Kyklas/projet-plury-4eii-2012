@@ -47,7 +47,7 @@ void UART_Init(int Baudrate)
 void UART_Send (char byte)
 {
     while(U2STAbits.UTXBF);		//Attente place libre sur Buffer
-    U2TXREG=byte;                   //Place l'octet et commence transmission
+    U2TXREG=byte;                       //Place l'octet et commence transmission
     while(!U2STAbits.TRMT);		//Attente fin de transmission
 }
 
