@@ -15,17 +15,17 @@
 void UART_Init(int Baudrate)
 {
     U2MODE = 0;
-    U2MODEbits.USIDL = 0;   // Continue module operation in Idle mode
-    U2MODEbits.IREN = 0;    // IrDA encoder and decoder are disabled
-    U2MODEbits.RTSMD = 0;   // UxRTS pin is in Flow Control mode (??)
-    U2MODEbits.UEN = 0b00;  // Disabled RTS & CTS
-    U2MODEbits.WAKE = 0;    // No wake-up enabled
-    U2MODEbits.LPBACK = 0;  // Loopback mode diseabled
-    U2MODEbits.ABAUD = 0;   // Baud rate measurement is disabled or completed
-    U2MODEbits.RXINV = 0;   // UxRX Idle state is ?1?
-    U2MODEbits.BRGH = 0;    // Standard Speed Mode
-    U2MODEbits.PDSEL = 0b00; // 8 bits, no parity
-    U2MODEbits.STSEL = 0b0; // 1 stop bit
+    U2MODEbits.USIDL = 0;       // Continue module operation in Idle mode
+    U2MODEbits.IREN = 0;        // IrDA encoder and decoder are disabled
+    U2MODEbits.RTSMD = 0;       // UxRTS pin is in Flow Control mode (??)
+    U2MODEbits.UEN = 0b00;      // Disabled RTS & CTS
+    U2MODEbits.WAKE = 0;        // No wake-up enabled
+    U2MODEbits.LPBACK = 0;      // Loopback mode diseabled
+    U2MODEbits.ABAUD = 0;       // Baud rate measurement is disabled or completed
+    U2MODEbits.RXINV = 0;       // UxRX Idle state is ?1?
+    U2MODEbits.BRGH = 0;        // Standard Speed Mode
+    U2MODEbits.PDSEL = 0b00;    // 8 bits, no parity
+    U2MODEbits.STSEL = 0b0;     // 1 stop bit
     U2STA = 0;
 
     U2BRG=((16000000/Baudrate)/16) - 1;   //Set Baudrate
