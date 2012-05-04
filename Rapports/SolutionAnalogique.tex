@@ -473,7 +473,6 @@ La plupart des composants de gestion de puissance sont intégrés dans des boiti
 Le circuit imprimé réalisé possède deux plans de masse destinés à dissiper un maximum de chaleur. Le plan inférieur couvre quasiment toute la surface de la plaque et le plan supérieur est représenté par la surface hachurée verte. Trois vias servent à assurer la conduction thermique entre les plans.
 
 \subsection{Utilisation du four à refusion}
-
 Pour souder le circuit AL4950 et notamment le pad thermique, nous avons utilisé un four à refusion. La datasheet ne proposant pas de consigne de température, nous avons utilisé une consigne par défaut. Le four nous a permis d'assurer une conduction thermique suffisante entre le pad et la surface cuivrée.
 
 \begin{figure}[h!]
@@ -482,24 +481,50 @@ Pour souder le circuit AL4950 et notamment le pad thermique, nous avons utilisé
 	\caption{Le four utilisé pour souder le pont}
 \end{figure}
 
-\section{Résultats - Evolution}
+\subsection{Changement du composant de puissance}
+Avec notre pont complet nous avons réussi à faire léviter le mobile. D'abord la partie aimanté seule, ensuite avec le leste. Nous avons constaté que l'échauffement était important, que la dissipation faite par le circuit imprimé était relativement bonne mais en définitive insuffisante. Après règlages, nous avons réussi à respecter le cahier des charges avec la partie aimantée seule mais pas avec le mobile leste. Au delà d'une distance de lévitation de 14 mm, l'échauffement était trop élevé et la protection thermique du circuit se déclenchait innopinément faisant chuter le mobile. La consommation de courant était mauvaise à cause de la forte valeur de $ R_{DSON} $.
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width = 8cm]{SolutionAnalogique/VueThermique.png}
+	\caption{Vue du pont en fonctionnement avec caméra thermique}
+\end{figure}
+
+Nous avons donc essayé d'améliorer la dissipation en
 
 \section{Résultats - Evolution}
-Liste
-\\- Monitoring du fonctionnement
-\\- Résultat expérience
-\\- Ouverture vers correcteur numérique
 
 \subsection{Prix de la solution}
-
 Nous avons fait une rapide évaluation du prix de notre solution. Pour se faire, nous avons pris en compte les prix pour 1 et pour 500 pièces de Farnell. On obtient ainsi une fourchette relativement large qui permet de se donner une idée du coût de notre solutions selon le contexte (production intensive ou prototype). Le prix trouvé est d'environ 19 euros pour les composants seuls avec les prix pour 1000 et d'environ 32 euros pour les composants seuls avec les prix pour 1. Étant donné la taille de notre carte, nous évaluons à 8 euros les coûts concernant l'achat de la carte et le routage dans le cas d'une production massive et à 12 euros dans le cas de la conception d'un prototype. Cela amène le prix total à une fourchette de 27 à 44 euros selon le type de production. Il est certain que ce prix peut descendre en n'utilisant pas un pont complet et en trouvant une alternative moins onéreuse au FT232. 
 
  
 Le détail du prix des composants pourra être trouvé en annexe. 
 
-
 \section{Conclusion}
 
+%
+%\pagebreak
+%\section{Bibliographie}
+%\medskip
+%- Cours de GEE, A. Meghebbar :
+%\newline \textit{\underline{\url{fsi.univ-tlemcen.dz/cours/Support-Cours-Commande-Analogique-Master-Electrotechnique10.pdf}}} 
+%
+%- Cours de systèmes asservis linéaires, Jean Philippe MULLER : 
+%\newline \textit{\underline{\url{http://www.ta-formation.com/cours-sal/n-sal.pdf}}} diapo 28
+%
+%- Cours sur les amplificateurs d'instrumentation, Olivier FRANÇAIS : 
+%\newline \textit{\underline{\url{http://www.esiee.fr/~francaio/enseignement/version_pdf/III_amplidiff.pdf}}} page 13
+%
+%
+%\pagebreak
+%\section{Annexe}
+%\medskip
+%\begin{figure}[!h]
+%	\centering
+%	\includegraphics[width=10cm]{SolutionAnalogique/cout.png}
+%	\label{cout}
+%	\caption{Tableau répertoriant les composants utilisés et leurs coûts}
+%\end{figure}
 
 \pagebreak
 \section{Bibliographie}
