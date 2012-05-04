@@ -464,32 +464,34 @@ Pour intégrer notre pont complet dans la chaine de commande, nous avons réalis
 
 La plupart des composants de gestion de puissance sont intégrés dans des boitiers imposants, possédant des surfaces métaliques permettant une dissipation de la chaleur améliorée (TO 220, pentawatt, S0T23 ...). On trouve aussi des composants en boitier DIP avec des pattes, en général deux paires situées au centre, prévues pour évacuer la chaleur . La technologie de dissipation de notre pont est tout autre : le boitier utilisé est de type SOIC standard à la différence qu'il comporte un \emph{pad thermique} relié au substrat du circuit et situé en dessous du composant. L'objectif est de dissiper la chaleur produite dans les différentes couches de cuivre avoisinantes. Les illustrations de la datasheet du A4950 conseillent l'utilisation de vias pour répartir la chaleur dans les circuits imprimés multicouches et proposent un layout particulier.
 
-\begin{figure}[h!]
+\begin{figure}[ht!]
 	\centering
 	\includegraphics[width = 15cm]{SolutionAnalogique/Layout.png}
 	\caption{Le circuit imprimé de la carte fille}
 \end{figure}
+
 Le circuit imprimé réalisé possède deux plans de masse destinés à dissiper un maximum de chaleur. Le plan inférieur couvre quasiment toute la surface de la plaque et le plan supérieur est représenté par la surface hachurée verte. Trois vias servent à assurer la conduction thermique entre les plans.
 
 \subsection{Utilisation du four à refusion}
-Pour souder le circuit AL4950 et notamment le pad thermique, nous avons utilisé un four à refusion. La datasheet ne proposant pas de consigne de température, nous avons utilisé une consigne par défaut. Le four nous a permis d'assurer une conduction thermique suffisante entre le pad et la surface cuivrée.
+\begin{wrapfigure}{r}{6cm}
+	\includegraphics[width = 4cm]{SolutionAnalogique/fourarefusion.jpg}
+	\caption{Le four}
+\end{wrapfigure}
 
-\begin{figure}[h!]
-	\centering
-	\includegraphics[width = 8cm]{SolutionAnalogique/fourarefusion.jpg}
-	\caption{Le four utilisé pour souder le pont}
-\end{figure}
+Pour souder le circuit AL4950 et notamment le pad thermique, nous avons utilisé un four à refusion. La datasheet ne proposant pas de consigne de température, nous avons utilisé une consigne par défaut. Le four nous a permis d'assurer une conduction thermique suffisante entre le pad et la surface cuivrée. 
 
 \subsection{Changement du composant de puissance}
 Avec notre pont complet nous avons réussi à faire léviter le mobile. D'abord la partie aimanté seule, ensuite avec le leste. Nous avons constaté que l'échauffement était important, que la dissipation faite par le circuit imprimé était relativement bonne mais en définitive insuffisante. Après règlages, nous avons réussi à respecter le cahier des charges avec la partie aimantée seule mais pas avec le mobile leste. Au delà d'une distance de lévitation de 14 mm, l'échauffement était trop élevé et la protection thermique du circuit se déclenchait innopinément faisant chuter le mobile. La consommation de courant était mauvaise à cause de la forte valeur de $ R_{DSON} $.
 
-\begin{figure}[h!]
+\begin{figure}[ht!]
 	\centering
 	\includegraphics[width = 8cm]{SolutionAnalogique/VueThermique.png}
 	\caption{Vue du pont en fonctionnement avec caméra thermique}
 \end{figure}
 
-Nous avons donc essayé d'améliorer la dissipation en
+Nous avons donc essayé d'améliorer la dissipation en ajoutant un radiateur en cuivre à la platine fille. Le radiateur devait étendre encore la surface de dissipation. Suite à une manipulation maladroite, la carte de puissance a été endommagée et le pont désolidarisé. Après une tentative de réparation, la puissance ne fonctionnant plus, nous avons décidé de profiter de cet accident pour changer de composant.
+
+Le nouveau composant sélectionné est le circuit L6203 de ST-Microelectronics .
 
 \section{Résultats - Evolution}
 
