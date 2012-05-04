@@ -27,7 +27,6 @@
 %%% HEADERS & FOOTERS
 %\usepackage{fancyhdr} % This should be set AFTER setting up the page geometry
 %\pagestyle{fancy} % options: empty , plain , fancy
-
 % Rapport projet pluridisciplinaire : etude thermique du pont en H
 % : Xavier Galzin, Stanislas Bertrand, Romain Desille, Frédéric Meslin
 
@@ -500,31 +499,26 @@ Nous avons fait une rapide évaluation du prix de notre solution. Pour se faire,
  
 Le détail du prix des composants pourra être trouvé en annexe. 
 
-\section{Conclusion}
+\subsection{Validation des fonctionnalités}
 
-%
-%\pagebreak
-%\section{Bibliographie}
-%\medskip
-%- Cours de GEE, A. Meghebbar :
-%\newline \textit{\underline{\url{fsi.univ-tlemcen.dz/cours/Support-Cours-Commande-Analogique-Master-Electrotechnique10.pdf}}} 
-%
-%- Cours de systèmes asservis linéaires, Jean Philippe MULLER : 
-%\newline \textit{\underline{\url{http://www.ta-formation.com/cours-sal/n-sal.pdf}}} diapo 28
-%
-%- Cours sur les amplificateurs d'instrumentation, Olivier FRANÇAIS : 
-%\newline \textit{\underline{\url{http://www.esiee.fr/~francaio/enseignement/version_pdf/III_amplidiff.pdf}}} page 13
-%
-%
-%\pagebreak
-%\section{Annexe}
-%\medskip
-%\begin{figure}[!h]
-%	\centering
-%	\includegraphics[width=10cm]{SolutionAnalogique/cout.png}
-%	\label{cout}
-%	\caption{Tableau répertoriant les composants utilisés et leurs coûts}
-%\end{figure}
+\subparagraph{Différentiel}~\\
+Le montage différentiel utilisé réalise correctement ca fonctionalité. Le gain du montage a été augmenté pour permettre la lévitation du mobile. Le gain vaie maintenant entre 1.87 et 21. Pour l'instant certaines limitation dans la chaine d'asservissement ne permettent pas de régler correctement ce gain. Une fois ces limitations comprise et prise en compte, un gain judicieux sera choisi.
+
+\subparagraph{Correcteur analogique}~\\
+Le correct analogique réalisé par un montage avance de phase permet la lévitation du mobile. Un essai d'asservissement sans ce correcteur serait un bon test.
+
+\subparagraph{Microcontroller \& Communication}~\\
+La génération du signal PWM par le microcontroller permet le pilotage de la bobine, La lévitation en atteste. Des fonctionnalités suplémentaires restent à implémenter. Il serait intéressant de pouvoir monitorer l'asservissement. Pour cela la communication série est nécessaire mais cette partie est en cours de validation.
+
+\subparagraph{Puissance}~\\
+La première solution technique envisagé permet le pilotage de la bobine cependant la disipation thermique occasionne des limitations qui semblent perturber notre asservissement (oscillations, tremblements). Malgé ces inconvénients, cette solution nous a permit de se confronter à la technologie CMS et ces outils.
+
+\subsection{Correcteur numérique}
+Le correcteur analogique permet l'asservissement du mobile mais le système n'est pas précisement modèlisé et la modèlisation est relativement rigide. Pour notre réalisation, il est difficile de modifier, règler le correcteur avance de phase.
+Une solution de correction numérique permetrais des réglages plus facile.
+ 
+
+
 
 \pagebreak
 \section{Bibliographie}
