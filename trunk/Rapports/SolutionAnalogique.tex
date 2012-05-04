@@ -372,14 +372,12 @@ Pour générer les impulsions de tension, nous avions le choix entre trois solut
 	\item \textbf{Pont en H complet :} solution ultime permettant de faire circuler le courant dans les deux sens sans disposer d'une source d'alimentation de puissance négative.
 \end{itemize}
 
-\begin{figure}[!h]
-	\centering
-	\includegraphics[width = 15cm]{SolutionAnalogique/Ponts.png} 
-	\label{ponts}
-	\caption{Solutions pour générer les impulsions de tension}
+\begin{figure}[h!]
+\centering
+\includegraphics[width = 15cm]{SolutionAnalogique/Ponts.png} 
+\caption{Différentes solutions de distribution de la puissance}
 \end{figure}
 
-\medskip
 Nous avons supposé que la possibilité d'inverser le sens du courant dans la bobine pouvait être intéressante pour notre application et ayant pour contrainte de conception la présence d'une seule source d'alimentation de puissance, nous avons sélectionné la solution du pont complet. Après discussion avec des encadrants du projet, nous avons émis l'hypothèse que la répulsion de la bobine pourrait améliorer la stabilité de l'asservissement et la consommation électrique globale du système. Ce qui semble certain c'est qu'elle facilite le positionnement manuel initial du mobile. Nous pourrons par la suite affirmer ou infirmer ces hypothèses en contraignant ou non le pont à fonctionner dans un seul sens. Nous saurons donc si le choix du pont complet était judicieux. Cette solution à l'inconvénient majeur d'être largement plus onéreuse à mettre en place que la première solution à un seul transistor.
 
 \subsection{Choix du composant intégré}
@@ -388,98 +386,105 @@ Contrairement au circuit faisant la mesure différentielle des informations capt
 
 \medskip
 \noindent
-Nous avons choisi d'utiliser le circuit Allegro (A4950) possédant les caractéristiques suivantes :
+Nous avons choisi le circuit Allegro (A4950) possèdant les caractéristiques suivantes :
 \medskip
 \begin{itemize}
-	\item tension maximum de puissance $ V_{max} = 40 V $
-	\item courant maximum de puissance $ I_{max} = 3.5 A $ \newline
-	(tolérance de pics à $ I_{peak} = 6.0 A$
-	\item faible $R_{DS_{on}} = 0.8 \Omega $ maximum @ $ T_j = 25 \char23 C $ \newline
+	\item Tension maximum de puissance $ V_{max} = 40 V $
+	\item Courant maximum de puissance $ I_{max} = 3.5 A $, tolérance de pics à $ I_{peak} = 6.0 A$
+	\item Faible $R_{DS_{on}} = 0.8 \Omega $ maximum @ $ T_j = 25 \char23 C $ \newline
 	et $R_{DS_{on}} = 1.3 \Omega $ typique @ $ T_j = 125 \char23 C $
-	\item niveaux logiques d'entrée compatibles avec logique 0-5V
-	\item boitier miniature CMS SOICN 8 avec pad thermique
+	\item Niveaux logiques d'entrée compatibles avec logique 0 - 5V
+	\item Boitier miniature CMS SOICN 8 avec pad thermique
 \end {itemize}
 
-\medskip
-Nous l'avons sélectionné car il était disponible, très compact et c'était aussi le moins cher qui puisse satisfaire les exigences de notre application. En choisissant ce composant, nous avons négligé deux aspects qui ont débouché sur des difficultés d'intégration importantes : la taille réduite du boitier et la nécessité d'un très bon dispositif de dissipation thermique pour le refroidir.
-
-\begin{figure}[!h]
+\begin{figure}[h!]
 	\centering
 	\includegraphics[width = 15cm]{SolutionAnalogique/A4950.png} 
-	\label{pont_h}
-	\caption{Diagramme fonctionnel du pont en H}
+	\caption{Schéma bloc interne du composant}
 \end{figure}
 
-\subsection{Réalisation de la platine de puissance}
+\medskip
+Le schéma interne précise les différents modules intégrés au composant. Le bloc \emph{control logic} pilote les grilles des transistors MOS de puissance par l'intermédiaire d'amplificateurs. On remarque la présence d'une pompe de charge pour générer une tension positive supérieure à la tension présente sur $ V_{VBB} $ car tous les transistors du pont sont des MOSFET à canal N. Un dispositif de comparateur permet d'implanter une limitation de courant dans le pont. Il fonctionne en comparant la tension présente sur $ V_{LSS} $ avec la tension de référence $ V_{REF} $ après une division par 10. Nous avons donc ajouté une résistance de mesure et de puissance de $ 0.1 \Omega $. Ceci nous donne une correspondance directe entre la tension de référence et le courant maximum autorisé dans le pont.
 
-\subsection{Utilisation du four à refusion}
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width = 15cm]{SolutionAnalogique/PWMtimings.png} 
+	\caption{Modes de fonctionnement du circuit}
+\end{figure}
+
+Ce diagramme illustre les différents modes de fonctionnement du circuit. On en retiens deux modes utiles pour notre application : le mode forward et reverse. Les deux autres modes sont des modes de freinage, utilisés pour la commande de moteurs à courant continu. Pour alimenter notre bobine dans un certain sens, il suffit de piloter l'une des entrées $ IN_1 $ ou $ IN_2 $ et de forcer l'autre à la masse. Nous n'avons donc eu besoin que d'une sortie PWM sur notre microcontroleur pour contrôler entièrement le pont.
+
+\medskip
+En plus de ses bonnes caractéristiques électriques et de son pilotage aisé, ce circuit est disponible au catalogue Farnell et fait partie des composants les moins chers. En le choisissant, nous avons quand même négligé deux aspects qui ont débouché sur des difficultés d'intégration importantes : la taille réduite du boitier (SOICN 8) et la nécessité d'un bon dispositif de dissipation thermique pour le refroidir.
 
 \subsection{Analyse de la dissipation thermique}
+Avant de réaliser la carte fille intégrant le pont nous avons fait une étude de dissipation thermique. Cet aspect était nécessaire pour concevoir le circuit imprimé en conséquence.
 
+\subsubsection{Caractéristiques thermiques}
+Les données techniques composants sont les suivantes :
 
+\medskip
+\noindent
+$ R_{TH} = 62 \char23C.W\up{-1} $ : résistance thermique du boitier \newline
+$ T_{JUNC\_{MAX}} = 160 \char23C $ : température maximale de la jonction \newline
+$ T_{AMB} = 25\char23C $ : température ambiente considérée \newline
+$ R_{DSON\_{MAX}} = 1.3 \Omega $ : résistance drain - source interne \newline
+\noindent
 
-\subsubsection{Données}
+On ne peut que constater que la valeur de $ R_{DSON\_{MAX}} $ est élevée en comparaison à celle de bon transistors MOS discrets. Cette caractéristique est discriminante pour le rendement et permet le calcul la puissance perdue par effet Joule. La valeur de $R_{TH}$ est donnée par le fabricant pour une dissipation de la chaleur dans un circuit imprimé deux couches, de 0.8 mm d'épaisseur et suffisament étendues. Dans le cas d'une conception à 4 couches, cette valeur peut descendre jusqu'à $ 35 \char23C.W\up{-1} $.
+
+\subsubsection{Analyse de l'échauffement}
 
 \noindent
-D'après la Datasheet du A4950 :
-
-\vspace{0.5cm}
-
+L'équation de la température de la jonction est donnée par : \newline
+\medskip
 \noindent
-$ 
-R_{TH} = 62 \char123C/W  \\
-T_{JUNC\_MAX} = 160 \char123C  \\
-T_{AMB} = 25\char123C  \\
-R_{DSON} = 1.3 \Omega  \\
-$
+$ T_{JUNC} = R_{TH} * P_{DIS} + T_{AMB} $
 
-
-
+\medskip
 \noindent
-A noter que cette valeur de $R_{TH}$ est donnée dans le cas l'on aurait des plages de cuivre d'environ 2cm par 2cm de chaque côté du composant. De plus, la valeur de $R_{DSON}$ est une valeur pire cas.
+Si on considère que le courant moyen distribué par le pont vaut : \newline
+$ I_{MOY} = 1.28 A $
 
-\subsubsection{Équations}
-
+\medskip
 \noindent
-L'équation de la température de la jonction est donnée par :
+On obtient la puissance dissipée par le composant : \newline
+$ P_{DIS} = R_{DSON} * I_{MOY}\up{2} = 1.3 * 1.28\up{2} = 5.2 W $
 
-\vspace{0.5cm}
-
+\medskip
 \noindent
-$
-T_{JUNC} = R_{TH} * P_{DIS} + T_{AMB}
-$
-
-\vspace{0.5cm}
-
-\noindent
-P étant la puissance \textbf{dissipée} dans le composant que l'on calculera par la formule :
-
-\vspace{0.5cm}
-
-\noindent
-$
-P_{DIS} = R_{DSON} * I\up{2} = 1.3 * 1.28\up{2} = 5.2 W
-$
-
-\vspace{0.5cm}
-
-\noindent
-Finalement, on obtient :
-
-\vspace{0.5cm}
-
-\noindent
-$
-T_{JUNC} = 62 * 5.2 + 25 = 157.06 \char123C
-$
+Et par conséquence la température de la jonction en fonctionnement : \newline
+$ T_{JUNC} = R_{TH} * P_{DIS} +  T_{AMB} = 62 * 5.2 + 25 = 157 \char23 C $
 
 \subsubsection{Conclusion de l'étude thermique}
 
-\noindent
-Le résultat trouvé est très proche de la valeur limite du composant. Cependant, nous avons pris des paramètres extrêmes qui ne seront normalement pas atteint. De plus, nous avons augmenté la surface de cuivre qui assure la dissipation afin d'obtenir une marge plus grande par rapport à ce résultat. 
+	On constate que le résultat trouvé est très proche de la valeur limite de la température de jonction $ T_{JUNC\_{MAX}} $ du composant. Cependant, nous avons effectué le calcul dans le pire des cas et on pouvait présumer que cette situation ne sera pas atteinte.
 
-\section{Résultats - Évolution}
+\subsection{Réalisation de la platine de puissance}
+Pour intégrer notre pont complet dans la chaine de commande, nous avons réalisé une platine fille dédiée s'enfichant sur le circuit imprimé. L'intérêt était de pouvoir changer de composant de puissance au cas où la dissipation n'était pas suffisante pour le faire fonctionner. Le fait que la platine soit surélevée par rapport à la carte mère améliorait aussi son aération et donc sa dissipation.
+
+La plupart des composants de gestion de puissance sont intégrés dans des boitiers imposants, possédant des surfaces métaliques permettant une dissipation de la chaleur améliorée (TO 220, pentawatt, S0T23 ...). On trouve aussi des composants en boitier DIP avec des pattes, en général deux paires situées au centre, prévues pour évacuer la chaleur . La technologie de dissipation de notre pont est tout autre : le boitier utilisé est de type SOIC standard à la différence qu'il comporte un \emph{pad thermique} relié au substrat du circuit et situé en dessous du composant. L'objectif est de dissiper la chaleur produite dans les différentes couches de cuivre avoisinantes. Les illustrations de la datasheet du A4950 conseillent l'utilisation de vias pour répartir la chaleur dans les circuits imprimés multicouches et proposent un layout particulier.
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width = 15cm]{SolutionAnalogique/Layout.png}
+	\caption{Le circuit imprimé de la carte fille}
+\end{figure}
+Le circuit imprimé réalisé possède deux plans de masse destinés à dissiper un maximum de chaleur. Le plan inférieur couvre quasiment toute la surface de la plaque et le plan supérieur est représenté par la surface hachurée verte. Trois vias servent à assurer la conduction thermique entre les plans.
+
+\subsection{Utilisation du four à refusion}
+
+Pour souder le circuit AL4950 et notamment le pad thermique, nous avons utilisé un four à refusion. La datasheet ne proposant pas de consigne de température, nous avons utilisé une consigne par défaut. Le four nous a permis d'assurer une conduction thermique suffisante entre le pad et la surface cuivrée.
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width = 8cm]{SolutionAnalogique/fourarefusion.jpg}
+	\caption{Le four utilisé pour souder le pont}
+\end{figure}
+
+\section{Résultats - Evolution}
+
+\section{Résultats - Evolution}
 Liste
 \\- Monitoring du fonctionnement
 \\- Résultat expérience
