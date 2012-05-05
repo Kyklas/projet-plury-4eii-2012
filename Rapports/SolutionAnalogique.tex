@@ -1,7 +1,7 @@
 % !TEX TS-program = pdflatex
 % !TEX encoding = UTF-8 Unicode
 
-%%% DOCUMENT DEFINITION
+%%% DOCUMENT DEFINITIONS
 \documentclass[11pt, french]{article} % use larger type; default would be 10pt
 \usepackage[utf8]{inputenc} % set input encoding (not needed with XeLaTeX)
 
@@ -59,7 +59,6 @@ Ce présent rapport détaille la réalisation électronique de notre projet. Par
 \section{Capteur \& Conditionnement}
 \subsection{Capteur à Effet Hall}
 
-
 \subparagraph*{Principe du capteur à Effet Hall}~\\
 \begin{minipage}[t]{10cm}
 \vspace{-0.3cm}
@@ -67,8 +66,7 @@ Ce présent rapport détaille la réalisation électronique de notre projet. Par
 Un capteur à effet Hall permet de mesurer le champ magnétique $B$ grâce à la déformation d'un courant $I_0$ dans un conducteur ou semi-conducteur, soumis à ce champ. La déformation du flux d'électron génère une différence de potentiels aux bords du conducteur : $V_h =K_h \cdot B \cdot I_0$. Cette relation considère $B$ comme le champ magnétique normal à la surface du conducteur.
 \end{minipage}
 
-
-\subparagraph*{Implantation}~\\
+\subparagraph*{Implantation des capteurs}~\\
 \begin{minipage}[t]{10cm}
 Pour mesurer les champs magnétiques de la bobine et du mobile deux capteurs à effet Hall (modèles Allegro A1302) sont placés à chaque extrémité de la bobine. L'alignement de la bobine, du mobile et des capteurs est important car c'est le champ magnétique normal au capteur qui est mesuré. Il est ainsi possible de connaitre la position verticale du mobile, les deux capteurs étant placés symétriquement sur la bobine, ils mesurent le même champ résultant. Le champ résultant du mobile n'est pas le même pour les deux capteurs, en effet, le champ diminue avec la distance. Le bilan des champs magnétiques exercés sur les capteurs est le suivant :
 \vspace{-0.3cm} \[B_{H2} = B_{Bob} + B_{Mob~Dist_{Mob-H2}}\]
@@ -83,7 +81,7 @@ L'image de la position du mobile est contenue dans  $B_{Mob~Dist_{Mob-H2}}$ et $
 \end{minipage}
 
 
-\subparagraph*{Caractéristiques électronique}~\\
+\subparagraph*{Caractéristiques électroniques}~\\
 Les capteurs Allegro A1302 conviennent à notre application car ils sont optimisés pour des systèmes de positionnement linéaires ou radiaux. Le capteur peut être alimenté par une tension de 5V, tension utilisé par nos montages analogiques. Le signal de sortie ne nécessite aucun conditionnement car la mesure effectuée est filtrée et amplifiée en interne et le niveau de sortie est directement compatible. Le circuit a une faible impédance de sortie, caractéristique importante pour les montages réalisés par la suite.
 
 \subsection{Montage différentiel}
@@ -100,7 +98,7 @@ Ce montage n'est pas réalisé de manière complètement intégrée ce qui dégr
 
 L'étude du schema donne la relation suivante : $V_s=(1+2 \frac{R}{R0})(V_1-V_2) + V_{offset}$. La mesure de la tension maximale de sortie permet de régler la valeur de l'offset, $V_{offset}=\frac{V_{max}}{2}$, $V_{max}=3.7$V. Cela permet de maximiser les variations du signal en le centrant dans la plage de sortie de l'AOP.
 
-\subsection{Consigne Analogique}
+\subsection{Consigne analogique}
 \begin{wrapfigure}{r}{0.5\linewidth}
   \includegraphics[width=\linewidth]{SolutionAnalogique/AmpInstCons.pdf}
   \label{DiffConsigne}  
@@ -121,14 +119,12 @@ Le sommateur en entrée induit une division par deux des tensions. C'est pourquo
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-\section{Correcteur Avance de phase}
+\section{Correcteur à avance de phase}
 
 \subsection{Données}
 
 \noindent
-Pour le schéma et les formules (que nous avons quand même vérifiées) du correcteur, nous avions le choix entre deux montages différents que nous avons trouvé sur internet :
-
-
+Pour le schéma et les formules (que nous avons vérifiées) du correcteur, nous avions le choix entre deux montages différents que nous avons trouvé sur internet :
 
 \begin{figure}[!h]
     \centering
@@ -142,19 +138,11 @@ Pour le schéma et les formules (que nous avons quand même vérifiées) du corr
 
       (a) & (b)\\
     \end{tabular}
-    \caption{Légende: Deux solutions de réalisations analogiques pour le correcteur à avance de phase
+    \caption{Deux solutions de réalisations analogiques pour le correcteur à avance de phase
     \label{avph_sol_poss}}
 \end{figure}
 
-
-
-
-
-
-
-
-Nous avons retenu le premier des deux schémas en raison de sa possibilité de régler plus facilement le rapport entre le zéro et le pôle. 
-
+Nous avons retenu le premier des deux schémas en raison de sa possibilité de régler plus facilement le rapport entre les constantes de temps du zéro et du pôle de la fonction. 
 
 \subsection{Détermination de valeurs des composants}
 
@@ -162,10 +150,10 @@ Dans le schéma retenu, le produit $R_1*C_1$ correspond à la constante $ T_av$ 
 
 \vspace{0.5cm}
 
-Pour des raisons de simplifications, nous prendrons les résistances $R_1$ et $R_2$ égales, le facteur 10 entre les constantes du numérateur et du dénominateur sera donc réalisé par un facteur 10 entre les valeurs des condensateurs. En outre, pour ne pas avoir à utiliser des condensateurs trop volumineux (pour des raisons de praticité vis-à-vis de la carte) et non polarisés, nous ne les prendrons pas de trop grandes valeurs et nous compenserons cela avec les résistances. Pour le poids de $0.0897 kg$, en choisissant des composants avec des valeurs normalisées, on obtient ainsi $R=100.0 K\Omega$, $C_1=330 nF$ et $C_2=33 nF$.
+Pour des raisons de simplifications, nous prendrons les résistances $R_1$ et $R_2$ égales, le facteur 10 entre les constantes de temps du numérateur et du dénominateur sera donc réalisé par un facteur 10 entre les valeurs des condensateurs. En outre, pour ne pas avoir à utiliser des condensateurs trop grands et non polarisés (pour des raisons de coût principalement), nous ne les prendrons pas de trop grandes valeurs et nous compenserons cela avec les résistances. Pour le poids de $0.0897 kg$, en choisissant des composants avec des valeurs normalisées, on obtient ainsi $R=100.0 K\Omega$, $C_1=330 nF$ et $C_2=33 nF$.
 
 \vspace{0.5cm}
-On fera plutôt varier les résistances que les condensateurs pour s'adapter au changement de poids. On conserve donc les mêmes valeurs de condensateurs. On trouve alors $R=119.090 K\Omega$ pour pouvoir gérer le changement de poids. Il sera donc possible de prendre des potentiomètres pour ajuster les constantes, corrigeant ainsi les écarts possibles des valeurs de condensateurs. Dans la pratique, on fera plutôt varier le gain du montage pour compenser le changement de poids. 
+On fera plutôt varier les résistances que les condensateurs pour s'adapter au changement de poids. On conserve donc les mêmes valeurs de condensateurs. On trouve alors $R=119.090 K\Omega$ pour pouvoir gérer le changement de poids. Il sera donc possible de prendre des potentiomètres pour ajuster les constantes, corrigeant ainsi les écarts possibles lié à la tolérance sur les valeurs des condensateurs. Dans la pratique, on fera plutôt varier le gain du montage pour compenser le changement de poids. 
 
 \vspace{0.5cm}
 
@@ -175,32 +163,28 @@ Nous avons cependant apporté une modification en enlevant le deuxième AOP pour
     \centering
 	\includegraphics[scale = 0.8]{SolutionAnalogique/AvPhase.pdf}
 	\label{avph_schm}
-	\caption{Schémas retenu pour le correcteur à avance de phase}
+	\caption{Schéma retenu pour le correcteur à avance de phase}
 \end{figure}
 
 Aussi, par le biais de MATLAB, nous avons pu obtenir la courbe théorique de notre correcteur par avance de phase :
-
 \begin{figure}[!h]
     \centering
-	\includegraphics[scale = 0.8]{SolutionAnalogique/BodeAvPhase.pdf} 
+	\includegraphics[scale = 0.95]{SolutionAnalogique/BodeAvPhase.pdf} 
 	\label{avph_bode}
 	\caption{Diagramme de gain et de phase du correcteur (Matlab)}
 \end{figure}
 
-
 A noter que la fréquence donnée est en $rad.s^-1$, elle vaut environ 16 Hz et correspond bien au pole du correcteur calculé lors de la partie automatique. On observe un gain de 10 dB à la fréquence où l'on travaillera et dont il faudra tenir compte pour la suite. 
-
-
 
 \subsection{Validation par simulation PSpice}
 
-On simule le correcteur à avance de phase par le schémas suivant : 
+On simule le correcteur à avance de phase par le schéma suivant : 
 
 \begin{figure}[!h]
     \centering
-	\includegraphics[scale = 0.8]{SolutionAnalogique/orcad_sch.png} 
+	\includegraphics[scale = 0.9]{SolutionAnalogique/orcad_sch.png} 
 	\label{avph_schm_simu}
-	\caption{Schémas de test utilisé pour la simulation avec Orcad}
+	\caption{Schéma de test utilisé pour la simulation avec Orcad}
 \end{figure}
 
 On obtient le résultat de simulation suivant : 
@@ -223,86 +207,87 @@ Nous avons donc validé notre choix de montage de correcteur et nous avons déte
 
 \subsection{Validation du modèle câblé}
 
-\vspace{0.5cm}
-
 \begin{figure}[!h]
     \centering
-	\includegraphics[width = 10cm]{SolutionAnalogique/avph_reel.png} 
+	\includegraphics[width = 12cm]{SolutionAnalogique/avph_reel.png} 
 	\label{avph_reel}
 	\caption{Résultat observé du correcteur à avance de phase}
 \end{figure}
 
-Comme on peut le voir sur cette photo où l'on à réglé un signal d'entrée de 16Hz , on a bien un gain de 10dB (gain d'environ 3) : tension d'entrée (CH2) à 1V, tension de sortie (CH1) à environ 3V. Au niveau du déphasage, on a un carreau d'écart pour une période de 6.2 carreau ce qui correspond bien à un déphasage de 60\char23 attendu. 
+Comme on peut le voir sur cette photo où l'on à réglé un signal d'entrée de 16Hz , on a bien un gain de 10dB (gain d'environ 3) : tension d'entrée (CH2) à 1V, tension de sortie (CH1) à environ 3V. Au niveau du déphasage, on a un carreau d'écart pour une période de 6.2 carreaux ce qui correspond bien à un déphasage de 60\char23 attendu. 
 
 
 \section{Conversion \& Communication}
 \subsection{Choix du microcontrôleur}
 
-Tout d'abord, nous voulions utiliser un microcontrôleur de la famille des PIC puisque nous étions davantage habitués à leur programmation et que nous avons toujours eu une bonne expérience avec ces composants.  %de l'aversion totale de tous les membre du groupe à l'égard des microcontrôleur TI (surement causée par le cours génialissime de M.Nezan en 3ème année). 
-%
-%\vspace{0.5cm}
-%
-%Une fois ce choix fait, nous avons recherché le microcontrôleur qui nous éviterait le maximum de contraintes par la suite. C'est pour cela que nous avons choisi le PIC24FV32KA301. Celui-ci dispose d'un régulateur interne qui génère une tension 3.3V à partir du 5V de l'alimentation externe. Il nous épargne donc la partie adaptation de tension. 
-%
-%\vspace{0.5cm}
-%
-%En outre, nous voulions un microcontrôleur assez rapide pour supporter les calculs complexes que nous aurons surement à faire lors de la partie sur la correction numérique. Ainsi, la fréquence de travail de notre microcontrôleur est de 16 MHz en interne et il dispose de module de multiplication et de semi-division (1 cycle pour une multiplication et 19 pour une division). 
-%
-%\vspace{0.5cm}
-%
-%Enfin, notre microcontrôleur dispose d'un CAN 12 bits qui sera utile lors de la programmation et d'un module UART qui nous servira lors de la mise en place de la communication série. Disposant déjà des outils de développement Microchip, nous ne perdrons pas de temps à l'installation de ces derniers. 
+Tout d'abord, nous voulions utiliser un microcontrôleur de la famille des Microchip PIC puisque nous étions pour la majorité davantage habitués à leur programmation et que nous avons toujours eu une bonne expérience avec ces composants. %de l'aversion totale de tous les membre du groupe à l'égard des microcontrôleur TI (surement causée par le cours génialissime de M.Nezan en 3ème année). 
 
+\vspace{0.5cm}
 
-%Nous voulions travailler avec les produits de Microchip, ce choix c'est fait par habitude car nous avions déjà tous utiliser les produits Microchip et nous n'avions eu aucun problème avec ces composants. Avant tout, nous avons fait la liste des caractéristiques du microcontrôleur dont nous avions besoin.
+Une fois ce choix fait, nous avons recherché le microcontrôleur qui satisfaisait toutes les contraintes à venir. C'est pour cela que nous avons choisi le PIC24FV32KA301. Ce microcontrôleur est compatible 5V et dispose d'un régulateur interne qui génère une tension 3.3V nécessaire pour le coeur à partir de l'alimentation externe. Il nous épargne aussi la partie adaptation de tension obligatoire pour interfacer les résultats des capteurs et de la partie analogique.
 
+\vspace{0.5cm}
+
+En outre, nous voulions un microcontrôleur assez rapide pour supporter les calculs plus complexes que nous aurons à faire lors de la partie correction numérique. Ainsi, la fréquence de travail de notre microcontrôleur est de 16 MHz en interne et il dispose de module de multiplication et de semi-division (1 cycle pour une multiplication et 19 pour une division). 
+
+\vspace{0.5cm}
+
+Enfin, notre microcontrôleur dispose d'un CAN 12 bits qui sera utile lors de l'acquisition des signaux et d'un module UART qui nous servira lors de la mise en place de la communication série. Disposant déjà des outils de développement Microchip, nous ne perdrons pas de temps à l'installation et la prise en main de ces derniers. 
+
+Nous voulions travailler avec les produits de Microchip, ce choix s'est fait par habitude car nous avions déjà tous utilisé leurs produits et n'avions eu aucun problème avec ces composants. Avant tout, nous avons fait la liste des caractéristiques du microcontrôleur dont nous avions besoin :
+
+\vspace{0.5cm}
 \begin{itemize}
-	\item \textbf{Tension d'alimentation}
+	\item \textbf{Tension d'alimentation.}
 	Nous avons fait le choix d'uniformiser les tensions d'alimentation du microcontrôleur, des capteurs et du convertisseur "Serie/USB" afin de se passer d'adaptation en tension. C'est pourquoi l'intégralité de la carte est alimenté en 5V, le microcontrôleur contenant un régulateur interne qui génère le 3.3V dont il a besoin en interne.
 \vspace{0.5cm}
-	\item \textbf{Fréquence de travail}
+	\item \textbf{Fréquence de travail.}
 	Afin de nous donner une certaine liberté concernant les calculs entre chaque échantillonnage des valeurs de capteurs, nous avons opté pour un microcontrôleur pouvant fonctionner à 32MHz. Les microcontrôleurs Microchip utilisant deux cycles d'horloge par instruction, nous avons donc un microcontrôleur fonctionnant à 16 MIPS. 
 \vspace{0.5cm}
-	\item \textbf{Conversion Analogique/Numérique}
- 	Nous avons fait le choix de multiplier les points d'acquisitions, nous voulions pouvoir obtenir l'image numérique des capteurs, de la tension de sortie du montage différentielle et de celle du correcteur. Nous voulions donc un microcontrôleur possédant au minimum 4 entrées permettant la conversion analogique/numérique.
+	\item \textbf{Conversion Analogique/Numérique.}
+ 	Nous avons fait le choix de multiplier les points d'acquisitions, nous voulions pouvoir obtenir l'image numérique des capteurs, de la tension de sortie du montage différentiel et de celle du correcteur. Nous voulions donc un microcontrôleur possédant au minimum 4 entrées permettant la conversion analogique/numérique.
 \vspace{0.5cm}
-	\item \textbf{PWM et Timers} 
-	Nous n'avions pas énormément de contraintes concernant la génération du PWM. Les microcontrôleurs 16 bits Microchip possédant des timers dédiés pour chaque sortie de comparaison (PWM), nous avions seulement besoin d'une sortie "OutputCompare".
+	\item \textbf{PWM et Timers.} 
+	Nous n'avions pas énormément de contraintes concernant la génération des signaux PWM, ces microcontrôleurs possédant des timers dédiés pour chaque sortie de comparaison PWM. En tout et pour tout, nous n'avions seulement besoin que d'une sortie de type "Output Compare".
 \vspace{0.5cm}
 	\item \textbf{Multiplicateur/Diviseur hardware}
-	Afin de minimiser le temps de calcul de la solution numérique, nous avons cherché un microcontrôleur possédant un multiplieur/diviseur hardware. Cela qui diminuera la temps de calcul entre chaque échantillonnage de façon non négligeable (1 cycle pour une multiplication et 19 pour une division).
+	Afin de minimiser le temps de calcul de la solution numérique, nous avons cherché un microcontrôleur possédant un multiplieur/diviseur hardware. Cela diminuera la temps de calcul nécessaire entre chaque période d'échantillonnage de façon non négligeable (1 cycle pour une multiplication et 19 pour une division).
 \vspace{0.5cm}
 	\item \textbf{Outils de développement}
-	Comme nous possédions déjà un programmateur Microchip : Pickit 3. Nous avons chercher un microcontrôleur supportant la programmation et le débogage par Pickit 3.
-\vspace{0.5cm}
+	Comme nous possédions déjà un programmateur Microchip : Pickit 3. Nous avons cherché un microcontrôleur supportant la programmation et le débogage par bus ICSP.
 \end{itemize}
 
-Nous avons donc cherché un microcontrôleur répondant à ces impératifs. Nous avons trouvé le PIC24FV32KA301 ayant les caractéristiques suivantes :
+\vspace{0.5cm}
+\noindent
+Nous avons donc cherché un microcontrôleur répondant à tous ces impératifs. Nous avons trouvé le PIC24FV32KA301 ayant les caractéristiques suivantes :
+\vspace{0.5cm}
+
 \begin{itemize}
 \item \textbf{Tension d'alimentation :} entre 2V et 5,5V
 \vspace{0.5cm}
-\item \textbf{Fréquence de travail :}jusqu'à 32Mhz
+\item \textbf{Fréquence de travail :} jusqu'à 32Mhz
 \vspace{0.5cm}
-\item \textbf{Conversion Analogique/Numérique :}convertisseur analogique/numérique 12 bit différentiel , 12 entrées, 100kSa/s échantillons par seconde. 
+\item \textbf{Conversion Analogique/Numérique :} convertisseur analogique/numérique 12 bit différentiel , 12 entrées, 100kSa/s échantillons par seconde. 
 \vspace{0.5cm}
 \item \textbf{PWM et Timers :}3 Output Compare, résolution 16 bits
 \vspace{0.5cm}
-\item \textbf{Multiplicateur/Diviseur hardware :}multiplieur hardware 16x16 bits, semi-diviseur hardware 32x16 bit
+\item \textbf{Multiplicateur/Diviseur hardware :} multiplieur hardware 16x16 bits, semi-diviseur hardware 32 x16 bits
 \vspace{0.5cm}
 \item \textbf{Outils de développement :} Pickit3 supporté
 
 \end{itemize}
 
-\subsubsection{Conversion A/D}
+\subsection{Conversion A/D}
 
-Le module ADC offert par notre microcontrôleur comprend deux voies d'acquisition multiplexables avec un cycle d'échantillonnage-conversion relançable automatiquement. Dans notre cas nous utiliserons la voie A et le Timer1 génèrera l'événement qui déclenche le passage d'échantillonnage à conversion périodiquement et automatiquement (fréquence de l'évènement du Timer1 réglée à 1 kHz). L'échantillonnage reprendra dès la conversion terminée et le format des résultats sera en décimal sans signe puisque nous mesurons une tension qui sera entre 0 et 5V. 
-
-\vspace{0.5cm}
-
-Ne reste plus qu'à régler la fréquence à laquelle ces cycles d'échantillonnage-conversion vont se répéter. Dans notre cas, nous avions déterminé dans le rapport sur la partie automatique qu'une fréquence d'1 kHz serait suffisante. 
+Le module ADC offert par notre microcontrôleur comprend deux voies d'acquisition multiplexables avec un cycle d'échantillonnage-conversion redéclenchable automatiquement sur débordement timer. Dans notre cas nous utiliserons la voie A et le Timer1 qui génèrera l'événement déclenchant le passage de l'échantillonnage à la conversion périodiquement et automatiquement (fréquence de l'évènement du Timer1 réglée à 1 kHz). L'échantillonnage reprendra dès la conversion terminée et le format des résultats sera fourni en décimal sans signe puisque nous allons mesurer une tension qui sera comprise entre 0 et 5V. 
 
 \vspace{0.5cm}
 
-Après quelques tests, il apparait que l'échantillonnage le plus lent que l'on puisse faire est de période 992$\mu$s. En effet, on a $T_{AD} = (ACDS+1) * T_{CY}$ avec $T_{CY} = \frac{2}{F_{OSC}}$, $F_{OSC}$ étant la fréquence du microcontrôleur avant passage dans le module des PLL donc 8 MHz. On a donc $T_{CY} = 500 ns$ et en prenant le maximum d'ADCS qui vaut 63, on a $T_{AD} = 64 * T_{CY} = 32 \mu s$. Ensuite, on peut déclencher chaque cycle d'échantillonnage tout les $SAMC * T_{AD}$. En prenant le maximum de SAMC (soit 31), on obtient finalement $T_{samp} = 31 * T_{AD} = 992 \mu s$, ce qui est très proche de ce que l'on visait.  
+Il ne reste plus qu'à régler la fréquence à laquelle ces cycles d'échantillonnage - conversion vont se répéter. Dans notre cas, nous avions déterminé dans le rapport sur la partie automatique qu'une fréquence d'1 kHz serait suffisante. 
+
+\vspace{0.5cm}
+
+Après quelques tests, il apparait que l'échantillonnage le plus lent que l'on puisse faire est de période 992$\mu$s. En effet, on a $T_{AD} = (ACDS+1) * T_{CY}$ avec $T_{CY} = \frac{2}{F_{OSC}}$, $F_{OSC}$ étant la fréquence du microcontrôleur avant passage dans le module des PLL donc 8 MHz. On a donc $T_{CY} = 500 ns$ et en prenant le maximum d'ADCS qui vaut 63, on a $T_{AD} = 64 * T_{CY} = 32 \mu s$. Ensuite, on peut déclencher chaque cycle d'échantillonnage tous les $SAMC * T_{AD}$. En prenant le maximum de SAMC (soit 31), on obtient finalement $T_{samp} = 31 * T_{AD} = 992 \mu s$, ce qui est très proche de ce que l'on visait.  
 
 \vspace{0.5cm}
 
@@ -310,26 +295,24 @@ Une fois la phase d'initialisation effectuée, la fonction qui récupère l'éch
 
 \vspace{0.5cm}
 
-L'attente active n'est pas gênante puisque l'on récupère la valeur de l'échantillon à chaque début d'interruption sur le Timer 1 et que la conversion, qui est très rapide à effectuer, à déjà débuté dès lors que l'on a généré le signal d'interruption du Timer 1. On enchaine ensuite avec la suite du programme pendant que l'échantillonnage reprend et on termine normalement largement avant la prochaine interruption.
-
-\vspace{0.5cm}
+L'attente active n'est pas gênante puisque l'on récupère la valeur de l'échantillon à chaque début d'interruption sur le Timer 1 et que la conversion, qui est très rapide à effectuer, a déjà débutée dès lors que l'on a généré le signal d'interruption du Timer 1. On enchaine ensuite avec la suite du programme pendant que l'échantillonnage reprend et on termine largement avant la prochaine interruption.
 
 %Les codes C correspondant à la fonction d'initialisation et à la fonction de récupération d'un échantillon pourront être trouvés en annexe. 
 
 \subsection{PWM - Pulse Width Modulation}
 
-Chaque sortie PWM du microcontrôleur possèdent un Timer dédié ce qui permet de ne pas monopoliser un Timer pour générer la sortie PWM.
+Chaque sortie PWM du microcontrôleur possède un Timer dédié ce qui permet de ne pas monopoliser un Timer pour générer la sortie PWM. Pour configurer le Timer OC1 (Output Compare 1), il faut tout d'abord choisir le mode de fonctionnement du Timer. Nous avons choisi d'utiliser le Mode "EDGE-ALIGNED PWM".
 
-Pour configurer le Timer OC1 (Output Compare 1), il faut tout d'abord choisir le mode de fonctionnement du Timer. Nous avons choisi d'utiliser le Mode "EDGE-ALIGNED PWM".
+\vspace{0.5cm}
 
 \begin{figure}[!h]
 	\centering
 	\includegraphics[width = 15cm]{SolutionAnalogique/PWMMode.png} 
 	\label{pwm_mode}
-	\caption{Schémas de principe du mode EDGE-ALIGNED PWM}
+	\caption{Schéma de principe du mode EDGE-ALIGNED PWM}
 \end{figure}
 
-Nous avons ensuite réfléchi à l'ordre de grandeur de fréquence de la PWM. Cette dernière ne doit pas être inférieure à 30 kHz, un fréquence inférieure risquerait de générer des fréquences audibles et donc d'engendrer un bruit avec de la bobine. Il ne faut pas non plus que la fréquence de la PWM soit trop élevée, sinon la résolution du rapport cyclique deviendrait trop faible.
+Nous avons ensuite réfléchi à l'ordre de grandeur de fréquence de la PWM. Cette dernière ne doit pas être inférieure à 20 kHz, un fréquence inférieure risquerait de générer des vibrations audibles et donc d'engendrer un bruit avec la bobine. Il ne faut pas non plus que la fréquence de la PWM soit trop élevée, sinon la résolution du rapport cyclique deviendrait trop faible.
 
 Nous avons trouvé par le calcul le bon compromis : 62 kHz. Cela nous donne une résolution de 8 bits pour le rapport cyclique en utilisant Fcy comme horloge d'entrée Fcy étant la fréquence de cycle.
 \begin{center}
@@ -377,7 +360,7 @@ Pour générer les impulsions de tension, nous avions le choix entre trois solut
 \caption{Différentes solutions de distribution de la puissance}
 \end{figure}
 
-Nous avons supposé que la possibilité d'inverser le sens du courant dans la bobine pouvait être intéressante pour notre application et ayant pour contrainte de conception la présence d'une seule source d'alimentation de puissance, nous avons sélectionné la solution du pont complet. Après discussion avec des encadrants du projet, nous avons émis l'hypothèse que la répulsion de la bobine pourrait améliorer la stabilité de l'asservissement et la consommation électrique globale du système. Ce qui semble certain c'est qu'elle facilite le positionnement manuel initial du mobile. Nous pourrons par la suite affirmer ou infirmer ces hypothèses en contraignant ou non le pont à fonctionner dans un seul sens. Nous saurons donc si le choix du pont complet était judicieux. Cette solution à l'inconvénient majeur d'être largement plus onéreuse à mettre en place que la première solution à un seul transistor.
+Nous avons supposé que la possibilité d'inverser le sens du courant dans la bobine pouvait être intéressante pour notre application et ayant pour contrainte de conception la présence d'une seule source d'alimentation de puissance, nous avons sélectionné la solution du pont complet. Après discussion avec les encadrants du projet, nous avons émis l'hypothèse que la répulsion de la bobine pourrait améliorer la stabilité de l'asservissement et la consommation électrique globale du système. Ce qui semble certain c'est qu'elle facilite le positionnement manuel initial du mobile. Nous pourrons par la suite affirmer ou infirmer ces hypothèses en contraignant ou non le pont à fonctionner dans un seul sens. Nous saurons donc si le choix du pont complet était judicieux. Cette solution à l'inconvénient majeur d'être largement plus onéreuse à mettre en place que la première solution à un seul transistor.
 
 \subsection{Choix du composant intégré}
 
@@ -385,7 +368,7 @@ Contrairement au circuit faisant la mesure différentielle des informations capt
 
 \medskip
 \noindent
-Nous avons choisi le circuit Allegro (A4950) possèdant les caractéristiques suivantes :
+Nous avons choisi le circuit Allegro (A4950) possédant les caractéristiques suivantes :
 \medskip
 \begin{itemize}
 	\item Tension maximum de puissance $ V_{max} = 40 V $
@@ -411,7 +394,7 @@ Le schéma interne précise les différents modules intégrés au composant. Le 
 	\caption{Modes de fonctionnement du circuit}
 \end{figure}
 
-Ce diagramme illustre les différents modes de fonctionnement du circuit. On en retiens deux modes utiles pour notre application : le mode forward et reverse. Les deux autres modes sont des modes de freinage, utilisés pour la commande de moteurs à courant continu. Pour alimenter notre bobine dans un certain sens, il suffit de piloter l'une des entrées $ IN_1 $ ou $ IN_2 $ et de forcer l'autre à la masse. Nous n'avons donc eu besoin que d'une sortie PWM sur notre microcontroleur pour contrôler entièrement le pont.
+Ce diagramme illustre les différents modes de fonctionnement du circuit. On en retiens deux modes utiles pour notre application : le mode "forward" et le mode "reverse". Les deux autres modes sont des modes de freinage, utilisés pour la commande de moteurs à courant continu. Pour alimenter notre bobine dans un certain sens, il suffit de piloter l'une des entrées $ IN_1 $ ou $ IN_2 $ et de forcer l'autre à la masse. Nous n'avons donc eu besoin que d'une sortie PWM sur notre microcontrôleur pour contrôler entièrement le pont.
 
 \medskip
 En plus de ses bonnes caractéristiques électriques et de son pilotage aisé, ce circuit est disponible au catalogue Farnell et fait partie des composants les moins chers. En le choisissant, nous avons quand même négligé deux aspects qui ont débouché sur des difficultés d'intégration importantes : la taille réduite du boitier (SOICN 8) et la nécessité d'un bon dispositif de dissipation thermique pour le refroidir.
@@ -426,11 +409,11 @@ Les données techniques composants sont les suivantes :
 \noindent
 $ R_{TH} = 62 \char23C.W\up{-1} $ : résistance thermique du boitier \newline
 $ T_{JUNC\_{MAX}} = 160 \char23C $ : température maximale de la jonction \newline
-$ T_{AMB} = 25\char23C $ : température ambiente considérée \newline
+$ T_{AMB} = 25\char23C $ : température ambiante considérée \newline
 $ R_{DSON\_{MAX}} = 1.3 \Omega $ : résistance drain - source interne \newline
 \noindent
 
-On ne peut que constater que la valeur de $ R_{DSON\_{MAX}} $ est élevée en comparaison à celle de bon transistors MOS discrets. Cette caractéristique est discriminante pour le rendement et permet le calcul la puissance perdue par effet Joule. La valeur de $R_{TH}$ est donnée par le fabricant pour une dissipation de la chaleur dans un circuit imprimé deux couches, de 0.8 mm d'épaisseur et suffisament étendues. Dans le cas d'une conception à 4 couches, cette valeur peut descendre jusqu'à $ 35 \char23C.W\up{-1} $.
+On ne peut que constater que la valeur de $ R_{DSON\_{MAX}} $ est élevée en comparaison à celle de bon transistors MOS discrets. Cette caractéristique est discriminante pour le rendement et permet le calcul la puissance perdue par effet Joule. La valeur de $R_{TH}$ est donnée par le fabricant pour une dissipation de la chaleur dans un circuit imprimé deux couches, de 0.8 mm d'épaisseur et suffisamment étendues. Dans le cas d'une conception à 4 couches, cette valeur peut descendre jusqu'à $ 35 \char23C.W\up{-1} $.
 
 \subsubsection{Analyse de l'échauffement}
 
@@ -462,7 +445,7 @@ $ T_{JUNC} = R_{TH} * P_{DIS} +  T_{AMB} = 62 * 5.2 + 25 = 157 \char23 C $
 \subsection{Réalisation de la platine de puissance}
 Pour intégrer notre pont complet dans la chaine de commande, nous avons réalisé une platine fille dédiée s'enfichant sur le circuit imprimé. L'intérêt était de pouvoir changer de composant de puissance au cas où la dissipation n'était pas suffisante pour le faire fonctionner. Le fait que la platine soit surélevée par rapport à la carte mère améliorait aussi son aération et donc sa dissipation.
 
-La plupart des composants de gestion de puissance sont intégrés dans des boitiers imposants, possédant des surfaces métaliques permettant une dissipation de la chaleur améliorée (TO 220, pentawatt, S0T23 ...). On trouve aussi des composants en boitier DIP avec des pattes, en général deux paires situées au centre, prévues pour évacuer la chaleur . La technologie de dissipation de notre pont est tout autre : le boitier utilisé est de type SOIC standard à la différence qu'il comporte un \emph{pad thermique} relié au substrat du circuit et situé en dessous du composant. L'objectif est de dissiper la chaleur produite dans les différentes couches de cuivre avoisinantes. Les illustrations de la datasheet du A4950 conseillent l'utilisation de vias pour répartir la chaleur dans les circuits imprimés multicouches et proposent un layout particulier.
+La plupart des composants de gestion de puissance sont intégrés dans des boitiers imposants, possédant des surfaces métalliques permettant une dissipation de la chaleur améliorée (TO 220, pentawatt, S0T23 ...). On trouve aussi des composants en boitier DIP avec des pattes, en général deux paires situées au centre, prévues pour évacuer la chaleur . La technologie de dissipation de notre pont est tout autre : le boitier utilisé est de type SOIC standard à la différence qu'il comporte un \emph{pad thermique} relié au substrat du circuit et situé en dessous du composant. L'objectif est de dissiper la chaleur produite dans les différentes couches de cuivre avoisinantes. Les illustrations de la datasheet du A4950 conseillent l'utilisation de vias pour répartir la chaleur dans les circuits imprimés multicouches et proposent un layout particulier.
 
 \begin{figure}[ht!]
 	\centering
@@ -481,50 +464,55 @@ Le circuit imprimé réalisé possède deux plans de masse destinés à dissiper
 Pour souder le circuit AL4950 et notamment le pad thermique, nous avons utilisé un four à refusion. La datasheet ne proposant pas de consigne de température, nous avons utilisé une consigne par défaut. Le four nous a permis d'assurer une conduction thermique suffisante entre le pad et la surface cuivrée. 
 
 \subsection{Changement du composant de puissance}
-Avec notre pont complet nous avons réussi à faire léviter le mobile. D'abord la partie aimanté seule, ensuite avec le leste. Nous avons constaté que l'échauffement était important, que la dissipation faite par le circuit imprimé était relativement bonne mais en définitive insuffisante. Après règlages, nous avons réussi à respecter le cahier des charges avec la partie aimantée seule mais pas avec le mobile leste. Au delà d'une distance de lévitation de 14 mm, l'échauffement était trop élevé et la protection thermique du circuit se déclenchait innopinément faisant chuter le mobile. La consommation de courant était mauvaise à cause de la forte valeur de $ R_{DSON} $.
+Avec notre pont complet nous avons réussi à faire léviter le mobile. D'abord la partie aimanté seule, ensuite avec le leste. Nous avons constaté que l'échauffement était important, que la dissipation faite par le circuit imprimé était relativement bonne mais en définitive insuffisante. Après réglages, nous avons réussi à respecter le cahier des charges avec la partie aimantée seule mais pas avec le mobile leste. Au delà d'une distance de lévitation de 14 mm, l'échauffement était trop élevé et la protection thermique du circuit se déclenchait inopinément faisant chuter le mobile. La consommation de courant était mauvaise à cause de la forte valeur de $ R_{DSON} $.
 
 \begin{figure}[ht!]
 	\centering
-	\includegraphics[width = 8cm]{SolutionAnalogique/VueThermique.png}
+	\includegraphics[width = 12cm]{SolutionAnalogique/VueThermique.png}
 	\caption{Vue du pont en fonctionnement avec caméra thermique}
 \end{figure}
 
 Nous avons donc essayé d'améliorer la dissipation en ajoutant un radiateur en cuivre à la platine fille. Le radiateur devait étendre encore la surface de dissipation. Suite à une manipulation maladroite, la carte de puissance a été endommagée et le pont désolidarisé. Après une tentative de réparation, la puissance ne fonctionnant plus, nous avons décidé de profiter de cet accident pour changer de composant.
 
-Le nouveau composant sélectionné est le circuit L6203 de ST-Microelectronics .
+\medskip
+Le nouveau composant sélectionné est le circuit L6203 de ST-Microelectronics . Nous l'avons choisi pour son format de boitier multiwatt permettant l'adjonction d'un radiateur et pour son mode de fonctionnement proche du circuit AL4950. Ce composant à l'avantage de posséder un $ R_{DSON} \approx 270 m\Omega $, largement inférieur au précédent pont. Malgré ces excellentes caractéristiques, le circuit ne dispose pas d'une limitation de courant par mesure et comparaison avec une tension de référence. Cette fonctionnalité était pourtant très intéressante pour protéger la bobine contre une trop forte intensité en cas de défaut de programme. Nous allons décider prochainement de son éventuelle implémentation à l'aide de composants externes.
+
+Ce composant avait été écarté lors du premier choix de pont à cause de son coût supérieur, en lien avec sa faible résistivité, au AL4950. Nous avons donc décidé d'abandonner la solution CMS mais de conserver le dispositif du pont plutôt que de le remplacer par un simple transistor de puissance. Nous avons jugé que la légère surconsommation engendrée valait bien le gain en facilité de placement du mobile pour l'utilisateur à l'allumage de la lampe. De plus, après discussion avec les encadrants du projet et des résultats de mesures expérimentales, nous avons constaté qu'il était possible de faire léviter le mobile avec une consommation énergétique quasiment nulle, en plaçant la consigne à une certaine distance de la bobine. Malheureusement cette distance est faible par rapport à celle imposée par le cahier des charges. On pourrait néanmoins envisager une telle solution pour une lampe plus "écologique" avec l'aide d'aimants plus puissants et d'un mobile plus léger.
+
+\medskip
+La prochaine étape est maintenant de réaliser la nouvelle platine de puissance dès réception du nouveau composant de puissance.
 
 \section{Résultats - Evolution}
 
 \subsection{Prix de la solution}
-Nous avons fait une rapide évaluation du prix de notre solution. Pour se faire, nous avons pris en compte les prix pour 1 et pour 500 pièces de Farnell. On obtient ainsi une fourchette relativement large qui permet de se donner une idée du coût de notre solutions selon le contexte (production intensive ou prototype). Le prix trouvé est d'environ 19 euros pour les composants seuls avec les prix pour 1000 et d'environ 32 euros pour les composants seuls avec les prix pour 1. Étant donné la taille de notre carte, nous évaluons à 8 euros les coûts concernant l'achat de la carte et le routage dans le cas d'une production massive et à 12 euros dans le cas de la conception d'un prototype. Cela amène le prix total à une fourchette de 27 à 44 euros selon le type de production. Il est certain que ce prix peut descendre en n'utilisant pas un pont complet et en trouvant une alternative moins onéreuse au FT232. 
-
+Nous avons fait une rapide évaluation du coût de réalisation de notre solution. Pour se faire, nous avons pris en compte les prix des composants à l'unité et pour 1000 pièces au catalogue de Farnell. On obtient ainsi une fourchette relativement large qui permet de se donner une idée du coût de notre solution selon le contexte (production en série ou exemplaire prototype). Le prix estimé est d'environ 19 euros pour les composants seuls avec les prix de gros et d'environ 32 euros pour les composants seuls pour un prototype. Étant donné la taille de notre carte, nous évaluons à 8 euros les coûts concernant la fabrication du PCB dans le cas d'une production massive et à 12 euros dans le cas de la conception d'un prototype. Cela amène le prix total à une fourchette de 27 à 44 euros selon le type de production. Il est certain que ce prix peut descendre en n'utilisant pas un pont complet et en trouvant une alternative moins onéreuse au circuit convertisseur série - USB FT232RL. 
  
 Le détail du prix des composants pourra être trouvé en annexe. 
 
 \subsection{Validation des fonctionnalités}
 
 \subparagraph{Différentiel}~\\
-Le montage différentiel utilisé réalise correctement ca fonctionalité. Le gain du montage a été augmenté pour permettre la lévitation du mobile. Le gain vaie maintenant entre 1.87 et 21. Pour l'instant certaines limitation dans la chaine d'asservissement ne permettent pas de régler correctement ce gain. Une fois ces limitations comprise et prise en compte, un gain judicieux sera choisi.
+Le montage différentiel utilisé réalise correctement sa fonctionnalité. Le gain du montage a été augmenté pour permettre la lévitation du mobile avec le leste. Il varie maintenant entre 1.87 et 21. Il reste pour l'instant des limitations dans la chaine d'asservissement qui ne permettent pas de régler correctement ce gain. Une fois ces limitations identifiées et prises en compte, un gain judicieux sera choisi.
 
 \subparagraph{Correcteur analogique}~\\
-Le correct analogique réalisé par un montage avance de phase permet la lévitation du mobile. Un essai d'asservissement sans ce correcteur serait un bon test.
+Le correcteur analogique réalisé par le montage avance de phase permet la lévitation du mobile. Un essai d'asservissement sans ce correcteur serait un bon test.
 
-\subparagraph{Microcontroller \& Communication}~\\
-La génération du signal PWM par le microcontroller permet le pilotage de la bobine, La lévitation en atteste. Des fonctionnalités suplémentaires restent à implémenter. Il serait intéressant de pouvoir monitorer l'asservissement. Pour cela la communication série est nécessaire mais cette partie est en cours de validation.
+\subparagraph{Microcontrôleur \& Communication}~\\
+La génération du signal PWM par le microcontrôleur permet le pilotage de la bobine, La lévitation en atteste. Des fonctionnalités supplémentaires restent à implémenter. Il serait intéressant de pouvoir "monitorer" les paramètres d'asservissement. Pour cela la communication série est nécessaire mais cette partie est encore en cours de validation.
 
 \subparagraph{Puissance}~\\
-La première solution technique envisagé permet le pilotage de la bobine cependant la disipation thermique occasionne des limitations qui semblent perturber notre asservissement (oscillations, tremblements). Malgé ces inconvénients, cette solution nous a permit de se confronter à la technologie CMS et ces outils.
+La première solution technique envisagée permet le pilotage de la bobine, cependant la forte dissipation et la protection thermique occasionnent des limitations qui perturbent notre asservissement (oscillations, tremblements). Malgré ces inconvénients, cette solution nous a permis de se confronter à la technologie CMS et ces outils associés.
 
 \subsection{Correcteur numérique}
-Le correcteur analogique permet l'asservissement du mobile mais le système n'est pas précisement modèlisé et la modèlisation est relativement rigide. Pour notre réalisation, il est difficile de modifier, règler le correcteur avance de phase.
-Une solution de correction numérique permetrais des réglages plus facile.
- 
+Le correcteur analogique permet l'asservissement du mobile mais le système n'est pas précisément modélisé et cette modélisation est relativement rigide. Pour notre réalisation, il est difficile de modifier, régler le correcteur à avance de phase.
+Une solution de correction numérique permettrait des réglages plus faciles.
 
-
-
-\pagebreak
 \section{Bibliographie}
 \medskip
+- Cours d'électronique analogique, S. Haese (INSA Rennes)
+
+- Cours d'automatique, S. Guégan (INSA Rennes)
+
 - Cours de GEE, A. Meghebbar :
 \newline \textit{\underline{\url{fsi.univ-tlemcen.dz/cours/Support-Cours-Commande-Analogique-Master-Electrotechnique10.pdf}}} 
 
@@ -534,7 +522,6 @@ Une solution de correction numérique permetrais des réglages plus facile.
 - Cours sur les amplificateurs d'instrumentation, Olivier FRANÇAIS : 
 \newline \textit{\underline{\url{http://www.esiee.fr/~francaio/enseignement/version_pdf/III_amplidiff.pdf}}} page 13
 
-
 \pagebreak
 \section{Annexe}
 \medskip
@@ -542,10 +529,28 @@ Une solution de correction numérique permetrais des réglages plus facile.
 	\centering
 	\includegraphics[width=15cm]{SolutionAnalogique/cout.png}
 	\label{cout}
-	\caption{Tableau répertoriant les composants utilisés et leurs coûts}
+	\caption{Tableau répertoriant les composants utilisés et leur coût}
 \end{figure}
 
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=15cm]{SolutionAnalogique/top_silk.png}
+	\label{cout}
+	\caption{Top silk carte mère}
+\end{figure}
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=15cm]{SolutionAnalogique/top_copper.png}
+	\label{cout}
+	\caption{Top copper carte mère}
+\end{figure}
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=15cm]{SolutionAnalogique/bottom_copper.png}
+	\label{cout}
+	\caption{Bottom copper carte mère}
+\end{figure}
 \end{document}
-
-
 
