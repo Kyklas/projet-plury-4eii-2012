@@ -222,19 +222,20 @@ Comme on peut le voir sur cette photo où l'on à réglé un signal d'entrée de
 
 Tout d'abord, nous voulions utiliser un microcontrôleur de la famille des Microchip PIC puisque nous étions pour la majorité davantage habitués à leur programmation et que nous avons toujours eu une bonne expérience avec ces composants. %de l'aversion totale de tous les membre du groupe à l'égard des microcontrôleur TI (surement causée par le cours génialissime de M.Nezan en 3ème année). 
 
-\vspace{0.5cm}
+%\vspace{0.5cm}
 
-Une fois ce choix fait, nous avons recherché le microcontrôleur qui satisfaisait toutes les contraintes à venir. C'est pour cela que nous avons choisi le PIC24FV32KA301. Ce microcontrôleur est compatible 5V et dispose d'un régulateur interne qui génère une tension 3.3V nécessaire pour le coeur à partir de l'alimentation externe. Il nous épargne aussi la partie adaptation de tension obligatoire pour interfacer les résultats des capteurs et de la partie analogique.
+%Une fois ce choix fait, nous avons recherché le microcontrôleur qui satisfaisait toutes les contraintes à venir. C'est pour cela que nous avons choisi le PIC24FV32KA301. Ce microcontrôleur est compatible 5V et dispose d'un régulateur interne qui génère une tension 3.3V nécessaire pour le coeur à partir de l'alimentation externe. Il nous épargne aussi la partie adaptation de tension obligatoire pour interfacer les résultats des capteurs et de la partie analogique.
 
-\vspace{0.5cm}
+%\vspace{0.5cm}
 
-En outre, nous voulions un microcontrôleur assez rapide pour supporter les calculs plus complexes que nous aurons à faire lors de la partie correction numérique. Ainsi, la fréquence de travail de notre microcontrôleur est de 16 MHz en interne et il dispose de module de multiplication et de semi-division (1 cycle pour une multiplication et 19 pour une division). 
+%En outre, nous voulions un microcontrôleur assez rapide pour supporter les calculs plus complexes que nous aurons à faire lors de la partie correction numérique. Ainsi, la fréquence de travail de notre microcontrôleur est de 16 MHz en interne et il dispose de module de multiplication et de semi-division (1 cycle pour une multiplication et 19 pour une division). 
 
-\vspace{0.5cm}
+%\vspace{0.5cm}
 
-Enfin, notre microcontrôleur dispose d'un CAN 12 bits qui sera utile lors de l'acquisition des signaux et d'un module UART qui nous servira lors de la mise en place de la communication série. Disposant déjà des outils de développement Microchip, nous ne perdrons pas de temps à l'installation et la prise en main de ces derniers. 
+%Enfin, notre microcontrôleur dispose d'un CAN 12 bits qui sera utile lors de l'acquisition des signaux et d'un module UART qui nous servira lors de la mise en place de la communication série. Disposant déjà des outils de développement Microchip, nous ne perdrons pas de temps à l'installation et la prise en main de ces derniers. 
 
-Nous voulions travailler avec les produits de Microchip, ce choix s'est fait par habitude car nous avions déjà tous utilisé leurs produits et n'avions eu aucun problème avec ces composants. Avant tout, nous avons fait la liste des caractéristiques du microcontrôleur dont nous avions besoin :
+%Nous voulions travailler avec les produits de Microchip, ce choix s'est fait par habitude car nous avions déjà tous utilisé leurs produits et n'avions eu aucun problème avec ces composants. 
+Avant tout, nous avons fait la liste des caractéristiques du microcontrôleur dont nous avions besoin :
 
 \vspace{0.5cm}
 \begin{itemize}
