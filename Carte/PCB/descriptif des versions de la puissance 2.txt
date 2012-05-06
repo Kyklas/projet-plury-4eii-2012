@@ -4,5 +4,5 @@ puissance2 :   ++ respecte la taille de la carte prévue initialement
 puissance2_2 : ++ pas de connexions qui passent entre les pattes du pont en H
                -- agrandissement de la carte (léger) en x et en y
 
-puissance2_3 : ++ pas de connexions qui passent entre les pattes du pont en H, agrandissement en x seulement
+puissance2_3 : ++ pas de connexions qui passent entre les pattes du pont en H, pas d'agrandissement requis
                -- piste de masse longue et torteuse pour relier Vref->C2->Masse
