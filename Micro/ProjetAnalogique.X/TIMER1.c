@@ -21,8 +21,8 @@ void TIMER1_Init ()
     T1CONbits.TCS=0b0;      // utilisation de l'horloge interne (Fcy)  (16 MHz)
     T1CONbits.TCKPS=0b11;   // prescaler par 256 ==> Fcy/256 = 62,5 khz
 
-    PR1=62;                 // pour une période de timer1 : 1ms
-    //PR1=20;               // pour une période de timer1 : 0.3ms
+    //PR1=62;                 // pour une période de timer1 : 1ms
+    PR1=248;               // pour une période de timer1 : 4ms
 
     // réglage interruption pour générer l'événement pour ADC
     IPC0bits.T1IP = 0x01;   // Priorité de l'interruption
@@ -36,7 +36,7 @@ void TIMER1_Init ()
 #define DEF_VREF 1524
 const short Vref = DEF_VREF;        // 1.77 * 4096.0 / 5.0;
 
-void fonction_T1Interrupt(void)
+inline void fonction_T1Interrupt(void)
 {
     short Mesure;
     unsigned char DutyCycle;
@@ -73,11 +73,11 @@ void fonction_T1Interrupt(void)
 
 // Initialisation pour le premier calcule
 long input0;
-        long input1;
+long input1;
 long output0;
-        long output1;
+long output1;
 
-void fonction_T1Interrupt_num(void)
+inline void fonction_T1Interrupt_num(void)
 {
     unsigned char DutyCycle;
 // ==========================================
@@ -100,7 +100,8 @@ void fonction_T1Interrupt_num(void)
 	
 	#define GAIN 0  // Normalement à 5 équivalant au correcteur normal, 4 : double l'éntrée, 3 : quadruple l'entrée
 	//output0 = (9*output1)>>5+(195*input0-172*input1)>>GAIN;
-        output0 = 
+        output0 = 0.279f * output1 + 6.083f * input0 - 5.362f * input1;
+        output0 *= 4;
 	// la sortie output bien que en long(32bits), peut être représenté en short(16bits), cela pour ne pas saturer les calculs
 	// un décalage de 8 donne bien une représentation sur un char
 	
@@ -112,25 +113,25 @@ void fonction_T1Interrupt_num(void)
 	//#define GAIN 5  // Normalement à 5 équivalant au correcteur normal, 4 : double l'éntrée, 3 : quadruple l'entrée
 	//output[0] = (47*output[1])>>6+(279*input[0]-270*input[1])>>GAIN;
 	 
-	/*
-    if (output[0] > 511)
-        output[0] = 511;
-    if (output[0] < -1023)
-        output[0] = -1023;
-	*/
+	
+    if (output0 > 65535)
+        output0 = 65535;
+    if (output0 < -65535)
+        output0 = -65535;
+	
 	
 // ==========================================
 // Pilotage de la PWM
 // ==========================================
     if (output0 < 0)
     {
-        DutyCycle = (unsigned char) ((- output0) >> 8);
+        DutyCycle = (unsigned char) ((- output0) >> 7);
         MODE1 = 1;
         MODE2 = 0;
     }
     else
     {
-        DutyCycle = (unsigned char) (output0 >> 8);
+        DutyCycle = (unsigned char) (output0 >> 7);
         MODE1 = 0;
         MODE2 = 1;
     }
@@ -143,6 +144,6 @@ void fonction_T1Interrupt_num(void)
 
 void __attribute__((interrupt,no_auto_psv)) _T1Interrupt(void)
 {
-    fonction_T1Interrupt_num();
+    fonction_T1Interrupt();
     IFS0bits.T1IF = 0; //Reset Timer1 interrupt flag and Return from ISR
 }
