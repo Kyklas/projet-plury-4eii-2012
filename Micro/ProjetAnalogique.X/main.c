@@ -5,6 +5,9 @@
  * Created on 12 mars 2012, 17:52
  */
 
+#include "UART.h"
+
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <p24FV32KA301.h>
@@ -41,7 +44,10 @@ int main(void)
     PWM_Init();
     ADC_Init();
     TIMER1_Init();
-    //UART_Init(9600);
+   // UART_Init();
+
+   // while (U2MODEbits.ABAUD);
+   // UART_Send_string("Connection : OK");
 
     while(1);
     return (EXIT_SUCCESS);

@@ -26,8 +26,8 @@ void IO_Init()
     // Mclr & Vcap : Réglage hardware
 
 
-    TRISBbits.TRISB0 = 0; // Tx
-    TRISBbits.TRISB1 = 1; // Rx
+    //TRISBbits.TRISB0 = 0; // Tx
+    //TRISBbits.TRISB1 = 1; // Rx
     TRISBbits.TRISB2 = 1; // Button
 
     TRISBbits.TRISB4 = 0; // MODE 1
@@ -35,8 +35,8 @@ void IO_Init()
     TRISBbits.TRISB7 = 0; // PWM
     TRISBbits.TRISB8 = 0; // SCL
     TRISBbits.TRISB9 = 1; // SDA
-    TRISBbits.TRISB12 = 1; // Pot1/D
-    TRISBbits.TRISB13 = 1; // Pot2/C
+    TRISBbits.TRISB12 = 1; // Pot1/C
+    TRISBbits.TRISB13 = 1; // Pot2/D
     TRISBbits.TRISB14 = 1; // Pot3/H2
     TRISBbits.TRISB15 = 1; // Pot4/H1
 
