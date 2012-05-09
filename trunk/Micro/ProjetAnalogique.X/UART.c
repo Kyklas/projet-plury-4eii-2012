@@ -58,7 +58,7 @@ void UART_Send_string (char * string)
     }
 }
 
-void fonction_U2RXInterrupt(void)
+inline void fonction_U2RXInterrupt(void)
 {
     //UART_Send((char)U2RXREG);
 }
