@@ -15,7 +15,23 @@
  * \fn void UART_Init (int Baudrate)
  * \brief Initialisation de l'UART
  */
-void UART_Init (int Baudrate);
+void UART_Init ();
+
+/**
+ * \fn void UART_Send_char (char byte)
+ * \brief Envoi un caractère
+ * 
+ * \param byte Caractère à envoyer
+ */
+void UART_Send_char (char byte);
+
+/**
+ * \fn void UART_Send_string (char * string)
+ * \brief Envoi une chaine de caractères
+ *
+ * \param string Chaine de caractère à envoyer
+ */
+void UART_Send_string (char * string);
 
 void fonction_U2RXInterrupt(void);
 

@@ -26,7 +26,7 @@ void ADC_Init ();
 /**
  * \fn void ADC_Convert ()
  * \brief Lancement d'une conversion sur une voie
- * \parami[in] voie sur laquelle convertir
+ * \param[in] voie sur laquelle convertir
  * \return le résultat de la conversion
  *  */
 unsigned short ADC_Convert(int voie);
