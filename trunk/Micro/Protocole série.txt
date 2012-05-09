@@ -14,12 +14,12 @@ Trames génériques :
 
 * Trame de contrôle :
 Trame : typ r/w log ad4 ad3 ad2 ad1 ad0 <8 bits>
-	 0   0   0   x   x   x   x   0
+	 0   0   0   x   x   x   x   x
 
 -> typ : type de trame (0 : contrôle | 1 : données)
 -> r/w : type de transfert (0 : lecture | 1 : écriture)
 -> log : type de données envoyées (0 : entiers 16 bits | 1 : chaines de caractères)
--> (ad4 ... ad0) : adresse de la valeur concernée (0 - 16)
+-> (ad4 ... ad0) : adresse de la valeur concernée (0 -32)
 
 * Trame de données entières :
   MSB : typ b06 b05 b04 b03 b02 b01 b00 <8 bits>
@@ -62,7 +62,7 @@ Exemples de trames :
 
 * Lecture de données
 Trame : typ r/w log ad4 ad3 ad2 ad1 ad0 <8 bits>
-	 0   0   0   x   x   x   x   0
+	 0   0   0   x   x   x   x   x
 -> Demande de lecture d'une valeur
 
 Réponse immédiate : une trame de données entières
