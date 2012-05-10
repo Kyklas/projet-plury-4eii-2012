@@ -36,7 +36,7 @@ void TIMER1_Init ()
 #define DEF_VREF 1524
 const short Vref = DEF_VREF;        // 1.77 * 4096.0 / 5.0;
 
-inline void fonction_T1Interrupt(void)
+inline void fonctionAnalog_T1Interrupt(void)
 {
     short Mesure;
     unsigned char DutyCycle;
@@ -77,7 +77,7 @@ long input1;
 long output0;
 long output1;
 
-inline void fonction_T1Interrupt_num(void)
+inline void fonctionNumerique_T1Interrupt(void)
 {
     unsigned char DutyCycle;
 // ==========================================
@@ -144,6 +144,6 @@ inline void fonction_T1Interrupt_num(void)
 
 void __attribute__((interrupt,no_auto_psv)) _T1Interrupt(void)
 {
-    fonction_T1Interrupt();
+    fonctionAnalog_T1Interrupt();
     IFS0bits.T1IF = 0; //Reset Timer1 interrupt flag and Return from ISR
 }
