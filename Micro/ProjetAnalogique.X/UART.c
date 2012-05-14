@@ -8,6 +8,8 @@
 
 #include "UART.h"
 
+char Tags[32];
+
 /**
  * \fn void UART_Init ()
  * \brief Initialisation de l'UART
@@ -58,9 +60,37 @@ void UART_Send_string (char * string)
     }
 }
 
+void UART_Send_Log (char * log)
+{
+    #define CMD 0xA0
+    UART_Send_char(CMD);
+    UART_Send_string(log);
+    UART_Send_char(0x00);
+}
+
 inline void fonction_U2RXInterrupt(void)
 {
-    //UART_Send((char)U2RXREG);
+    static int i = 0;
+    static int TagAdr;
+    unsigned char rx = U2RXREG;
+
+    if (rx & 0x80)      // Demande
+    {
+        if (rx & 0x40)  // Ecriture
+        {
+            if (!i)
+            {
+                TagAdr = rx & 0x1F;
+                Tags[TagAdr] = 0;
+            }
+            else
+            {
+                Tags[TagAdr] |= (rx & 0x0F) << (4*i);
+                i++;
+                i%=4;
+            }
+        }
+    }
 }
 
 void __attribute__((interrupt,no_auto_psv)) _U2RXInterrupt(void)

@@ -11,8 +11,6 @@
 #include "PWM.h"
 #include "IO.h"
 
-unsigned int resultat=0;
-
 void TIMER1_Init ()
 {
     T1CON=0x00;

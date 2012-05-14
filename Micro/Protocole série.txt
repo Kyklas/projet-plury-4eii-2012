@@ -16,45 +16,46 @@ Trames génériques :
 Trame : typ r/w log ad4 ad3 ad2 ad1 ad0 <8 bits>
 	 0   0   0   x   x   x   x   x
 
--> typ : type de trame (0 : contrôle | 1 : données)
+-> typ : type de trame (1 : contrôle | 0 : données)
 -> r/w : type de transfert (0 : lecture | 1 : écriture)
 -> log : type de données envoyées (0 : entiers 16 bits | 1 : chaines de caractères)
 -> (ad4 ... ad0) : adresse de la valeur concernée (0 -32)
 
 * Trame de données entières :
   MSB : typ b06 b05 b04 b03 b02 b01 b00 <8 bits>
-	 1   0   0   0  d15 d14 d13 d12
+	 0   0   0   0  d15 d14 d13 d12
 
   MSB : typ b06 b05 b04 b03 b02 b01 b00 <8 bits>
-	 1   0   0   0  d11 d10 d09 d08
+	 0   0   0   0  d11 d10 d09 d08
 
   LSB : typ b06 b05 b04 b03 b02 b01 b00 <8 bits>
-	 1   0   0   0  d07 d06 d05 d04
+	 0   0   0   0  d07 d06 d05 d04
 
   LSB : typ b06 b05 b04 b03 b02 b01 b00 <8 bits>
-	 1   0   0   0  d03 d02 d01 d00
+	 0   0   0   0  d03 d02 d01 d00
+
 
 -> typ : type de trame (0 : contrôle | 1 : données)
 -> (d15 ... d00) : valeur de la donnée 16 bits
 
 * Trame de données chaine de caractères :
 Char1 : typ da6 da5 da4 da3 da2 da1 da0 <8 bits>
-	 1  ch6 ch5 ch4 ch3 ch2 ch1 ch0
+	 0  ch6 ch5 ch4 ch3 ch2 ch1 ch0
 
 Char2 : typ da6 da5 da4 da3 da2 da1 da0 <8 bits>
-	 1  ch6 ch5 ch4 ch3 ch2 ch1 ch0
+	 0  ch6 ch5 ch4 ch3 ch2 ch1 ch0
 
 	...
 
 Charn : typ da6 da5 da4 da3 da2 da1 da0 <8 bits>
-	 1  ch6 ch5 ch4 ch3 ch2 ch1 ch0
+	 0  ch6 ch5 ch4 ch3 ch2 ch1 ch0
 
 	...
 
-End   : typ da6 da5 da4 da3 da2 da1 da0 <8 bits>
-	 1   0   0   0   0   0   0   0
+  FIN : typ b06 b05 b04 b03 b02 b01 b00 <8 bits>
+	 0   0   0   0   0   0   0   0
 
--> typ : type de trame (0 : contrôle | 1 : données)
+-> typ : type de trame (1 : contrôle | 0 : données)
 -> (ch6 ... ch0) : caractère table ASCII individuel
 Le paquet end termine la transmission de la chaine
 
@@ -62,18 +63,18 @@ Exemples de trames :
 
 * Lecture de données
 Trame : typ r/w log ad4 ad3 ad2 ad1 ad0 <8 bits>
-	 0   0   0   x   x   x   x   x
+	 1   0   0   x   x   x   x   x
 -> Demande de lecture d'une valeur
 
 Réponse immédiate : une trame de données entières
 
 * Ecriture de données
 Trame : typ r/w log ad4 ad3 ad2 ad1 ad0 <8 bits>
-	 0   1   0   x   x   x   x   x
+	 1   1   0   x   x   x   x   x
 Suivie d'une trame de données entières
 -> Demande d'écriture de données + donnée
 
 * Envoi d'un message de log
 Trame : typ r/w log ad4 ad3 ad2 ad1 ad0 <8 bits>
-	 0   U   1   U   U   U   U   U
+	 1   U   1   U   U   U   U   U
 Suivie d'une trame de chaine de caractères

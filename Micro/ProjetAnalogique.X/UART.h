@@ -18,20 +18,12 @@
 void UART_Init ();
 
 /**
- * \fn void UART_Send_char (char byte)
- * \brief Envoi un caractère
+ * \fn void UART_Send_Log (char * log)
+ * \brief Envoi un log
  * 
- * \param byte Caractère à envoyer
+ * \param log log à envoyer
  */
-void UART_Send_char (char byte);
-
-/**
- * \fn void UART_Send_string (char * string)
- * \brief Envoi une chaine de caractères
- *
- * \param string Chaine de caractère à envoyer
- */
-void UART_Send_string (char * string);
+void UART_Send_Log (char * log);
 
 void fonction_U2RXInterrupt(void);
 
