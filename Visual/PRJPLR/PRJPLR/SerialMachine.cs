@@ -146,9 +146,17 @@ namespace PRJPLR
             }
         }
 
-        public void Send()
+        public void Send_Data(byte index, short data)
         {
+            byte[] buffer = new byte[5];
 
+            buffer[0] = (byte)(0xC0 | (index & 0x1F));
+            buffer[1] = (byte)(data & 0x000F);
+            buffer[2] = (byte)((data >> 4) & 0x000F);
+            buffer[3] = (byte)((data >> 8) & 0x000F);
+            buffer[4] = (byte)((data >> 12) & 0x000F);
+
+            _serialPort.Write(buffer, 0, 5);
         }
     }
 }

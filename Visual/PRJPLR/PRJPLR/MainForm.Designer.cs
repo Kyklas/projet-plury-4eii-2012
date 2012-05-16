@@ -39,8 +39,14 @@
             this.Lbx_Logs = new System.Windows.Forms.ListBox();
             this.Btn_ExportLogs = new System.Windows.Forms.Button();
             this.TimerRefreshLogs = new System.Windows.Forms.Timer(this.components);
+            this.Grbx_Tags = new System.Windows.Forms.GroupBox();
+            this.Grbx_ConnexionType = new System.Windows.Forms.GroupBox();
+            this.Rbtn_Analogic = new System.Windows.Forms.RadioButton();
+            this.Rbtn_Numeric = new System.Windows.Forms.RadioButton();
             this.Grbx_connection.SuspendLayout();
             this.Grbx_Logs.SuspendLayout();
+            this.Grbx_Tags.SuspendLayout();
+            this.Grbx_ConnexionType.SuspendLayout();
             this.SuspendLayout();
             // 
             // Grbx_connection
@@ -135,11 +141,56 @@
             // 
             this.TimerRefreshLogs.Tick += new System.EventHandler(this.TimerRefreshLogs_Tick);
             // 
+            // Grbx_Tags
+            // 
+            this.Grbx_Tags.Controls.Add(this.Grbx_ConnexionType);
+            this.Grbx_Tags.Location = new System.Drawing.Point(278, 12);
+            this.Grbx_Tags.Name = "Grbx_Tags";
+            this.Grbx_Tags.Size = new System.Drawing.Size(282, 269);
+            this.Grbx_Tags.TabIndex = 2;
+            this.Grbx_Tags.TabStop = false;
+            this.Grbx_Tags.Text = "Tags";
+            // 
+            // Grbx_ConnexionType
+            // 
+            this.Grbx_ConnexionType.Controls.Add(this.Rbtn_Numeric);
+            this.Grbx_ConnexionType.Controls.Add(this.Rbtn_Analogic);
+            this.Grbx_ConnexionType.Location = new System.Drawing.Point(185, 19);
+            this.Grbx_ConnexionType.Name = "Grbx_ConnexionType";
+            this.Grbx_ConnexionType.Size = new System.Drawing.Size(91, 66);
+            this.Grbx_ConnexionType.TabIndex = 0;
+            this.Grbx_ConnexionType.TabStop = false;
+            this.Grbx_ConnexionType.Text = "Correction";
+            // 
+            // Rbtn_Analogic
+            // 
+            this.Rbtn_Analogic.AutoSize = true;
+            this.Rbtn_Analogic.Checked = true;
+            this.Rbtn_Analogic.Location = new System.Drawing.Point(6, 19);
+            this.Rbtn_Analogic.Name = "Rbtn_Analogic";
+            this.Rbtn_Analogic.Size = new System.Drawing.Size(78, 17);
+            this.Rbtn_Analogic.TabIndex = 0;
+            this.Rbtn_Analogic.Text = "Analogique";
+            this.Rbtn_Analogic.UseVisualStyleBackColor = true;
+            this.Rbtn_Analogic.CheckedChanged += new System.EventHandler(this.Rbtn_Analogic_CheckedChanged);
+            // 
+            // Rbtn_Numeric
+            // 
+            this.Rbtn_Numeric.AutoSize = true;
+            this.Rbtn_Numeric.Location = new System.Drawing.Point(6, 42);
+            this.Rbtn_Numeric.Name = "Rbtn_Numeric";
+            this.Rbtn_Numeric.Size = new System.Drawing.Size(76, 17);
+            this.Rbtn_Numeric.TabIndex = 0;
+            this.Rbtn_Numeric.Text = "Numerique";
+            this.Rbtn_Numeric.UseVisualStyleBackColor = true;
+            this.Rbtn_Numeric.CheckedChanged += new System.EventHandler(this.Rbtn_Numeric_CheckedChanged);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(283, 288);
+            this.ClientSize = new System.Drawing.Size(572, 288);
+            this.Controls.Add(this.Grbx_Tags);
             this.Controls.Add(this.Grbx_Logs);
             this.Controls.Add(this.Grbx_connection);
             this.Name = "MainForm";
@@ -148,6 +199,9 @@
             this.Grbx_connection.ResumeLayout(false);
             this.Grbx_connection.PerformLayout();
             this.Grbx_Logs.ResumeLayout(false);
+            this.Grbx_Tags.ResumeLayout(false);
+            this.Grbx_ConnexionType.ResumeLayout(false);
+            this.Grbx_ConnexionType.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -164,5 +218,9 @@
         private System.Windows.Forms.ListBox Lbx_Logs;
         private System.Windows.Forms.Button Btn_ExportLogs;
         private System.Windows.Forms.Timer TimerRefreshLogs;
+        private System.Windows.Forms.GroupBox Grbx_Tags;
+        private System.Windows.Forms.GroupBox Grbx_ConnexionType;
+        private System.Windows.Forms.RadioButton Rbtn_Numeric;
+        private System.Windows.Forms.RadioButton Rbtn_Analogic;
     }
 }

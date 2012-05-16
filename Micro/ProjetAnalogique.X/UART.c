@@ -73,21 +73,23 @@ inline void fonction_U2RXInterrupt(void)
     static int i = 0;
     static int TagAdr;
     unsigned char rx = U2RXREG;
-
     if (rx & 0x80)      // Demande
     {
         if (rx & 0x40)  // Ecriture
         {
             if (!i)
             {
+                UART_Send_Log("CMD");
                 TagAdr = rx & 0x1F;
                 Tags[TagAdr] = 0;
+                i++;
             }
             else
             {
-                Tags[TagAdr] |= (rx & 0x0F) << (4*i);
+                UART_Send_Log("DATA");
+                Tags[TagAdr] |= (rx & 0x0F) << (4*(i-1));
                 i++;
-                i%=4;
+                i%=5;
             }
         }
     }
@@ -95,7 +97,7 @@ inline void fonction_U2RXInterrupt(void)
 
 void __attribute__((interrupt,no_auto_psv)) _U2RXInterrupt(void)
 {
-    fonction_U2RXInterrupt();
     _U2RXIF=0;
+    fonction_U2RXInterrupt();
 }
 

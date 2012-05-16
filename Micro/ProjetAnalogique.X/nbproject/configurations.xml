@@ -97,7 +97,7 @@
         <property key="Freeze All Other Peripherals" value="true"/>
         <property key="I2C1" value="true"/>
         <property key="INPUT CAPTURE 1" value="true"/>
-        <property key="OUTPUT COMPARE 1" value="true"/>
+        <property key="OUTPUT COMPARE 1" value="false"/>
         <property key="SPI 1" value="true"/>
         <property key="SecureSegment.SegmentProgramming" value="FullChipProgramming"/>
         <property key="TIMER1" value="true"/>

@@ -55,10 +55,20 @@ namespace PRJPLR
                 logsTxt.WriteLine(log.Date.ToString() + " - " + log.Message);
             }
             logsTxt.Close();
+
+
         }
 
-        private void Rdio_Ana_CheckedChanged(object sender, EventArgs e)
+        private void Rbtn_Analogic_CheckedChanged(object sender, EventArgs e)
         {
+            if (Rbtn_Analogic.Checked)
+                _serialMachine.Send_Data(0, 0);
+        }
+
+        private void Rbtn_Numeric_CheckedChanged(object sender, EventArgs e)
+        {
+            if (Rbtn_Numeric.Checked)
+                _serialMachine.Send_Data(0, 1);
         }
     }
 }
