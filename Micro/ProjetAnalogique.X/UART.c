@@ -35,8 +35,7 @@ void UART_Init()
 
     U2MODEbits.UARTEN = 1;
 
-    IPC7bits.U2TXIP = 7;   //Set Uart TX Interrupt Priority
-    IPC7bits.U2RXIP = 6;   //Set Uart RX Interrupt Priority
+    IPC7bits.U2RXIP = 1;   //Set Uart RX Interrupt Priority
 
     U2STAbits.UTXEN = 1;    //Enable Transmit
     IEC1bits.U2TXIE = 0;    //Enable Transmit Interrupt
@@ -60,6 +59,13 @@ void UART_Send_string (char * string)
     }
 }
 
+void UART_Send_Tab (char * tab, int size)
+{
+    int i;
+    for (i=0; i<size ; i++)
+        UART_Send_char(tab[i]);
+}
+
 void UART_Send_Log (char * log)
 {
     #define CMD 0xA0
@@ -72,32 +78,44 @@ inline void fonction_U2RXInterrupt(void)
 {
     static int i = 0;
     static int TagAdr;
+    static unsigned char RXbuffer[4];
+    char TXbuffer[5];
+
     unsigned char rx = U2RXREG;
     if (rx & 0x80)      // Demande
     {
         if (rx & 0x40)  // Ecriture
         {
-            if (!i)
-            {
-                UART_Send_Log("CMD");
-                TagAdr = rx & 0x1F;
-                Tags[TagAdr] = 0;
-                i++;
-            }
-            else
-            {
-                UART_Send_Log("DATA");
-                Tags[TagAdr] |= (rx & 0x0F) << (4*(i-1));
-                i++;
-                i%=5;
-            }
+            TagAdr = rx & 0x1F;
+            i = 0;
+        }
+        else            // Lecture
+        {
+            TagAdr = rx & 0x1F;
+            TXbuffer[0] = 0x80 | TagAdr;
+            TXbuffer[1] = (Tags[TagAdr] >> 12) & 0x0F;
+            TXbuffer[2] = (Tags[TagAdr] >> 8) & 0x0F;
+            TXbuffer[3] = (Tags[TagAdr] >> 4) & 0x0F;
+            TXbuffer[4] = (Tags[TagAdr]) & 0x0F;
+            UART_Send_Tab (TXbuffer, 5);
+            UART_Send_Log("Read : finish");
+        }
+    }
+    else    // Donnée
+    {
+        RXbuffer[i++] = rx;
+        if (i == 4)
+        {
+            Tags[TagAdr] = 0;
+            Tags[TagAdr] = (short)((short)(((RXbuffer[0] & 0x0F)<<12))|(short)(((RXbuffer[1] & 0x0F)<<8))|(short)(((RXbuffer[2] & 0x0F)<<4))|(short)(RXbuffer[3] & 0x0F));
+            UART_Send_Log("Write : finish");
         }
     }
 }
 
 void __attribute__((interrupt,no_auto_psv)) _U2RXInterrupt(void)
 {
-    _U2RXIF=0;
     fonction_U2RXInterrupt();
+    _U2RXIF=0;
 }
 
