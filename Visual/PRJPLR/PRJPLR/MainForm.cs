@@ -30,6 +30,7 @@ namespace PRJPLR
             {
                 _serialMachine.Open(Tbx_PortNum.Text, int.Parse(Tbx_BaudRate.Text));
                 Grbx_Logs.Enabled = true;
+                Grbx_Tags.Enabled = true;
                 TimerRefreshLogs.Start();
             }
             catch (Exception ex)
@@ -40,21 +41,31 @@ namespace PRJPLR
 
         private void TimerRefreshLogs_Tick(object sender, EventArgs e)
         {
-            foreach (Log log in _serialMachine.Logs)
+            for (int i = 0; i < _serialMachine.Logs.Count; i++)
             {
-                if (!Lbx_Logs.Items.Contains(log)) Lbx_Logs.Items.Add(log);
+                if (!Lbx_Logs.Items.Contains(_serialMachine.Logs[i])) Lbx_Logs.Items.Add(_serialMachine.Logs[i]);
             }
-            
+
+            TbxTestRead.Text = _serialMachine.Tags["Test"].ToString();
+
         }
 
         private void Btn_ExportLogs_Click(object sender, EventArgs e)
         {
-            StreamWriter logsTxt = new StreamWriter("log.txt", true);
-            foreach (Log log in _serialMachine.Logs)
+            try
             {
-                logsTxt.WriteLine(log.Date.ToString() + " - " + log.Message);
+                StreamWriter logsTxt = new StreamWriter("log.txt", true);
+                foreach (Log log in _serialMachine.Logs)
+                {
+                    logsTxt.WriteLine(log.Date.ToString() + " - " + log.Message);
+                }
+                logsTxt.Close();
+                MessageBox.Show("Exportation réussi !", "logs", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            logsTxt.Close();
+            catch
+            {
+                MessageBox.Show("Exportation : Erreur", "logs", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
 
 
         }
@@ -69,6 +80,21 @@ namespace PRJPLR
         {
             if (Rbtn_Numeric.Checked)
                 _serialMachine.Send_Data(0, 1);
+        }
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            _serialMachine.Close();
+        }
+
+        private void TbxTestWrite_TextChanged(object sender, EventArgs e)
+        {
+            _serialMachine.Send_Data(1, short.Parse(TbxTestWrite.Text));
+        }
+
+        private void BtnTestRead_Click(object sender, EventArgs e)
+        {
+            _serialMachine.Read_Data(1);
         }
     }
 }
