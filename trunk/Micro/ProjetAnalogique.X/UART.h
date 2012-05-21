@@ -27,4 +27,8 @@ void UART_Send_Log (char * log);
 
 void fonction_U2RXInterrupt(void);
 
+
+extern char Tags[32];
+#define ISNUMERIC Tags[0]
+
 #endif

@@ -10,6 +10,7 @@
 #include "ADC.h"
 #include "PWM.h"
 #include "IO.h"
+#include "UART.h"
 
 void TIMER1_Init ()
 {
@@ -23,7 +24,7 @@ void TIMER1_Init ()
     //PR1=248;               // pour une période de timer1 : 4ms
 
     // réglage interruption pour générer l'événement pour ADC
-    IPC0bits.T1IP = 0x01;   // Priorité de l'interruption
+    IPC0bits.T1IP = 2;   // Priorité de l'interruption
     IFS0bits.T1IF = 0;      // Clear Interrupt Flag
     IEC0bits.T1IE = 1;      // Autorisation de l'interruption Timer1
     T1CONbits.TON=0b1;      // Timer1 lancé
@@ -86,7 +87,6 @@ inline void fonctionNumerique_T1Interrupt(void)
     short ADC, DutyCycle;
     ADC  = ADC_Convert(POT1);
     input[0] = (float)(Vref - ADC);
-
     output[0] = 8.272*input[0] - 7.917*input[1] + 0.2*output[1];
     output[0]*=4.5;
 
@@ -127,13 +127,14 @@ inline void fonctionNumerique_T1Interrupt(void)
 
 void __attribute__((interrupt,no_auto_psv)) _T1Interrupt(void)
 {
-
-    //PR1=62;               // pour une période de timer1 : 4ms
-    //fonctionAnalog_T1Interrupt();
-
-    //PR1=248;               // pour une période de timer1 : 4ms
-    fonctionNumerique_T1Interrupt();
-
+    if (ISNUMERIC)
+    {
+        fonctionNumerique_T1Interrupt();
+    }
+    else
+    {
+        fonctionAnalog_T1Interrupt();
+    }
 
     IFS0bits.T1IF = 0; //Reset Timer1 interrupt flag and Return from ISR
 }
