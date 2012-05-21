@@ -40,12 +40,17 @@
             this.Btn_ExportLogs = new System.Windows.Forms.Button();
             this.TimerRefreshLogs = new System.Windows.Forms.Timer(this.components);
             this.Grbx_Tags = new System.Windows.Forms.GroupBox();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.BtnTestRead = new System.Windows.Forms.Button();
+            this.TbxTestRead = new System.Windows.Forms.TextBox();
+            this.TbxTestWrite = new System.Windows.Forms.TextBox();
             this.Grbx_ConnexionType = new System.Windows.Forms.GroupBox();
-            this.Rbtn_Analogic = new System.Windows.Forms.RadioButton();
             this.Rbtn_Numeric = new System.Windows.Forms.RadioButton();
+            this.Rbtn_Analogic = new System.Windows.Forms.RadioButton();
             this.Grbx_connection.SuspendLayout();
             this.Grbx_Logs.SuspendLayout();
             this.Grbx_Tags.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.Grbx_ConnexionType.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -114,7 +119,7 @@
             this.Grbx_Logs.Enabled = false;
             this.Grbx_Logs.Location = new System.Drawing.Point(12, 97);
             this.Grbx_Logs.Name = "Grbx_Logs";
-            this.Grbx_Logs.Size = new System.Drawing.Size(260, 184);
+            this.Grbx_Logs.Size = new System.Drawing.Size(260, 179);
             this.Grbx_Logs.TabIndex = 1;
             this.Grbx_Logs.TabStop = false;
             this.Grbx_Logs.Text = "Logs";
@@ -129,7 +134,7 @@
             // 
             // Btn_ExportLogs
             // 
-            this.Btn_ExportLogs.Location = new System.Drawing.Point(181, 147);
+            this.Btn_ExportLogs.Location = new System.Drawing.Point(181, 146);
             this.Btn_ExportLogs.Name = "Btn_ExportLogs";
             this.Btn_ExportLogs.Size = new System.Drawing.Size(73, 27);
             this.Btn_ExportLogs.TabIndex = 0;
@@ -143,36 +148,62 @@
             // 
             // Grbx_Tags
             // 
+            this.Grbx_Tags.Controls.Add(this.groupBox1);
             this.Grbx_Tags.Controls.Add(this.Grbx_ConnexionType);
+            this.Grbx_Tags.Enabled = false;
             this.Grbx_Tags.Location = new System.Drawing.Point(278, 12);
             this.Grbx_Tags.Name = "Grbx_Tags";
-            this.Grbx_Tags.Size = new System.Drawing.Size(282, 269);
+            this.Grbx_Tags.Size = new System.Drawing.Size(282, 264);
             this.Grbx_Tags.TabIndex = 2;
             this.Grbx_Tags.TabStop = false;
-            this.Grbx_Tags.Text = "Tags";
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.BtnTestRead);
+            this.groupBox1.Controls.Add(this.TbxTestRead);
+            this.groupBox1.Controls.Add(this.TbxTestWrite);
+            this.groupBox1.Location = new System.Drawing.Point(6, 154);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(91, 104);
+            this.groupBox1.TabIndex = 1;
+            this.groupBox1.TabStop = false;
+            // 
+            // BtnTestRead
+            // 
+            this.BtnTestRead.Location = new System.Drawing.Point(6, 71);
+            this.BtnTestRead.Name = "BtnTestRead";
+            this.BtnTestRead.Size = new System.Drawing.Size(79, 27);
+            this.BtnTestRead.TabIndex = 2;
+            this.BtnTestRead.Text = "Read";
+            this.BtnTestRead.UseVisualStyleBackColor = true;
+            this.BtnTestRead.Click += new System.EventHandler(this.BtnTestRead_Click);
+            // 
+            // TbxTestRead
+            // 
+            this.TbxTestRead.Enabled = false;
+            this.TbxTestRead.Location = new System.Drawing.Point(6, 45);
+            this.TbxTestRead.Name = "TbxTestRead";
+            this.TbxTestRead.Size = new System.Drawing.Size(79, 20);
+            this.TbxTestRead.TabIndex = 1;
+            // 
+            // TbxTestWrite
+            // 
+            this.TbxTestWrite.Location = new System.Drawing.Point(6, 19);
+            this.TbxTestWrite.Name = "TbxTestWrite";
+            this.TbxTestWrite.Size = new System.Drawing.Size(79, 20);
+            this.TbxTestWrite.TabIndex = 0;
+            this.TbxTestWrite.TextChanged += new System.EventHandler(this.TbxTestWrite_TextChanged);
             // 
             // Grbx_ConnexionType
             // 
             this.Grbx_ConnexionType.Controls.Add(this.Rbtn_Numeric);
             this.Grbx_ConnexionType.Controls.Add(this.Rbtn_Analogic);
-            this.Grbx_ConnexionType.Location = new System.Drawing.Point(185, 19);
+            this.Grbx_ConnexionType.Location = new System.Drawing.Point(6, 12);
             this.Grbx_ConnexionType.Name = "Grbx_ConnexionType";
             this.Grbx_ConnexionType.Size = new System.Drawing.Size(91, 66);
             this.Grbx_ConnexionType.TabIndex = 0;
             this.Grbx_ConnexionType.TabStop = false;
             this.Grbx_ConnexionType.Text = "Correction";
-            // 
-            // Rbtn_Analogic
-            // 
-            this.Rbtn_Analogic.AutoSize = true;
-            this.Rbtn_Analogic.Checked = true;
-            this.Rbtn_Analogic.Location = new System.Drawing.Point(6, 19);
-            this.Rbtn_Analogic.Name = "Rbtn_Analogic";
-            this.Rbtn_Analogic.Size = new System.Drawing.Size(78, 17);
-            this.Rbtn_Analogic.TabIndex = 0;
-            this.Rbtn_Analogic.Text = "Analogique";
-            this.Rbtn_Analogic.UseVisualStyleBackColor = true;
-            this.Rbtn_Analogic.CheckedChanged += new System.EventHandler(this.Rbtn_Analogic_CheckedChanged);
             // 
             // Rbtn_Numeric
             // 
@@ -185,6 +216,19 @@
             this.Rbtn_Numeric.UseVisualStyleBackColor = true;
             this.Rbtn_Numeric.CheckedChanged += new System.EventHandler(this.Rbtn_Numeric_CheckedChanged);
             // 
+            // Rbtn_Analogic
+            // 
+            this.Rbtn_Analogic.AutoSize = true;
+            this.Rbtn_Analogic.Checked = true;
+            this.Rbtn_Analogic.Location = new System.Drawing.Point(6, 19);
+            this.Rbtn_Analogic.Name = "Rbtn_Analogic";
+            this.Rbtn_Analogic.Size = new System.Drawing.Size(78, 17);
+            this.Rbtn_Analogic.TabIndex = 0;
+            this.Rbtn_Analogic.TabStop = true;
+            this.Rbtn_Analogic.Text = "Analogique";
+            this.Rbtn_Analogic.UseVisualStyleBackColor = true;
+            this.Rbtn_Analogic.CheckedChanged += new System.EventHandler(this.Rbtn_Analogic_CheckedChanged);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -193,13 +237,18 @@
             this.Controls.Add(this.Grbx_Tags);
             this.Controls.Add(this.Grbx_Logs);
             this.Controls.Add(this.Grbx_connection);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.MaximizeBox = false;
             this.Name = "MainForm";
             this.Text = "MainForm";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.Grbx_connection.ResumeLayout(false);
             this.Grbx_connection.PerformLayout();
             this.Grbx_Logs.ResumeLayout(false);
             this.Grbx_Tags.ResumeLayout(false);
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.Grbx_ConnexionType.ResumeLayout(false);
             this.Grbx_ConnexionType.PerformLayout();
             this.ResumeLayout(false);
@@ -222,5 +271,9 @@
         private System.Windows.Forms.GroupBox Grbx_ConnexionType;
         private System.Windows.Forms.RadioButton Rbtn_Numeric;
         private System.Windows.Forms.RadioButton Rbtn_Analogic;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Button BtnTestRead;
+        private System.Windows.Forms.TextBox TbxTestRead;
+        private System.Windows.Forms.TextBox TbxTestWrite;
     }
 }
