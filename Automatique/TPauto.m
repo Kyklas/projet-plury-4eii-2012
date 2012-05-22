@@ -66,15 +66,31 @@ Sys = Sys_elec * Sys_meca*Kc_Hall
 % Version Numérique
 Felec = 1/(2*pi*Telec);
 Fav = 1/(2*pi*0.1*Tav);
-Te = 1/(Felec*6);
+Te = 1/(Felec*10);
 Tavf = 1/(Fav*6);
 
-Sys_d = C2d(Sys,Te,'ZOH')
+Te = 1*10^-3;
 
+ disp('Equation numérique du système');
+Sys_d = C2d(Sys,Te,'ZOH')
+ disp('Equation numérique du correcteur');
 Correct_d = C2d(Cor_av,Te,'foh')
 rltool(Sys_d);
 rltool(Sys_d * Correct_d);
 
+%figure
+%rlocusplot(24*Sys_d * Correct_d)
+%figure
+%rlocusplot(24 * Correct_d)
+
+gain = 1;
+numz1=8.272
+numz0=-7.917
+denz1=1
+denz0=-0.9
+correcteur_micro = tf([numz1 numz0],[denz1 denz0],Te)
+
+rltool(gain*Sys_d * correcteur_micro);
 
 
 
