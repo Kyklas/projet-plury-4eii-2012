@@ -66,7 +66,7 @@ Sys = Sys_elec * Sys_meca*Kc_Hall
 % Version Numérique
 Felec = 1/(2*pi*Telec);
 Fav = 1/(2*pi*0.1*Tav);
-Te = 1/(Felec*10);
+Te = 1/(Felec*24);
 Tavf = 1/(Fav*6);
 
 Te = 1*10^-3;
@@ -83,14 +83,68 @@ rltool(Sys_d * Correct_d);
 %figure
 %rlocusplot(24 * Correct_d)
 
+%%%%% Xavier Romain mercredi solex %%%%
 gain = 1;
-numz1=8.272
-numz0=-7.917
-denz1=1
-denz0=-0.9
+numz1=8.272;
+numz0=-7.915;
+denz1=1;
+denz0=-0.9;
 correcteur_micro = tf([numz1 numz0],[denz1 denz0],Te)
+rltool(gain*Sys_d * correcteur_micro);
 
+%%%% Test, correcteur numérique théorique, aprox arrière ( Zoh )
+
+gain = 1;
+numz1=10;
+numz0=-9.776;
+denz1=1;
+denz0=-0.7756;
+correcteur_micro = tf([numz1 numz0],[denz1 denz0],Te)
+rltool(gain*Sys_d * correcteur_micro);
+
+%%%% Test, déplacement du pole du correcteur, diminution du gain nécessaire
+
+gain = 1;
+numz1=10;
+numz0=-9.776;
+denz1=1;
+denz0=-0.85;
+correcteur_micro = tf([numz1 numz0],[denz1 denz0],Te)
+rltool(gain*Sys_d * correcteur_micro);
+
+%%%% Test, déplacement du pole du correcteur, gain equivalant au correcteur
+%%%% mercredi du solex
+
+gain = 1;
+numz1=10;
+numz0=-9.776;
+denz1=1;
+denz0=-0.94;
+correcteur_micro = tf([numz1 numz0],[denz1 denz0],Te)
 rltool(gain*Sys_d * correcteur_micro);
 
 
+%%%%%%%%% Fin test numerique 1 %%%%%%%%%%
+
+
+%%% Correcteur foh
+
+gain = 1;
+numz1=8.947;
+numz0=-8.723;
+denz1=1;
+denz0=-0.7756;
+correcteur_micro = tf([numz1 numz0],[denz1 denz0],Te);
+rltool(gain*Sys_d * correcteur_micro);
+
+
+%%% Correcteur foh,  déplacement du pole du correcteur
+
+gain = 1;
+numz1=8.947;
+numz0=-8.723;
+denz1=1;
+denz0=-0.94;
+correcteur_micro = tf([numz1 numz0],[denz1 denz0],Te);
+rltool(gain*Sys_d * correcteur_micro);
 
