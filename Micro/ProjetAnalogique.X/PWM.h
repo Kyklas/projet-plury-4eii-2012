@@ -25,4 +25,12 @@ void PWM_Init();
  */
 void PWM_SetDutyCycle(unsigned short DutyCycle);
 
+/**
+ * \fn void PWM_SetFreq(unsigned short Freq)
+ * \brief Modification de la fréquence
+ *
+ * \param Freq Fréquence
+ */
+void PWM_SetFreq(unsigned short Freq);
+
 #endif

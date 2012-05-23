@@ -1,6 +1,6 @@
 ﻿namespace PRJPLR
 {
-    partial class MainForm
+    partial class Gravitron
     {
         /// <summary>
         /// Required designer variable.
@@ -40,18 +40,43 @@
             this.Btn_ExportLogs = new System.Windows.Forms.Button();
             this.TimerRefreshLogs = new System.Windows.Forms.Timer(this.components);
             this.Grbx_Tags = new System.Windows.Forms.GroupBox();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.BtnTestRead = new System.Windows.Forms.Button();
-            this.TbxTestRead = new System.Windows.Forms.TextBox();
-            this.TbxTestWrite = new System.Windows.Forms.TextBox();
+            this.Grbx_CorrectionNum = new System.Windows.Forms.GroupBox();
+            this.Btn_Applied = new System.Windows.Forms.Button();
+            this.Grbx_Equation = new System.Windows.Forms.GroupBox();
+            this.Nud_GainOUT = new System.Windows.Forms.NumericUpDown();
+            this.Lbl_GainOUT = new System.Windows.Forms.Label();
+            this.Mtbx_Yk1 = new System.Windows.Forms.MaskedTextBox();
+            this.Lbl_GainIN = new System.Windows.Forms.Label();
+            this.Nud_GainIN = new System.Windows.Forms.NumericUpDown();
+            this.Mtbx_Xk1 = new System.Windows.Forms.MaskedTextBox();
+            this.Mtbx_Xk = new System.Windows.Forms.MaskedTextBox();
+            this.Lbl_Equation = new System.Windows.Forms.Label();
             this.Grbx_ConnexionType = new System.Windows.Forms.GroupBox();
             this.Rbtn_Numeric = new System.Windows.Forms.RadioButton();
             this.Rbtn_Analogic = new System.Windows.Forms.RadioButton();
+            this.label1 = new System.Windows.Forms.Label();
+            this.Nud_Alpha = new System.Windows.Forms.NumericUpDown();
+            this.Nud_Te = new System.Windows.Forms.NumericUpDown();
+            this.Lbl_Te = new System.Windows.Forms.Label();
+            this.Lbl_Alpha = new System.Windows.Forms.Label();
+            this.Nud_Kd = new System.Windows.Forms.NumericUpDown();
+            this.Nud_Td = new System.Windows.Forms.NumericUpDown();
+            this.Lbl_Td = new System.Windows.Forms.Label();
+            this.Lbl_Kd = new System.Windows.Forms.Label();
+            this.TimerMESURE = new System.Windows.Forms.Timer(this.components);
+            this.Btn_ExportMesure = new System.Windows.Forms.Button();
             this.Grbx_connection.SuspendLayout();
             this.Grbx_Logs.SuspendLayout();
             this.Grbx_Tags.SuspendLayout();
-            this.groupBox1.SuspendLayout();
+            this.Grbx_CorrectionNum.SuspendLayout();
+            this.Grbx_Equation.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Nud_GainOUT)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Nud_GainIN)).BeginInit();
             this.Grbx_ConnexionType.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Nud_Alpha)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Nud_Te)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Nud_Kd)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Nud_Td)).BeginInit();
             this.SuspendLayout();
             // 
             // Grbx_connection
@@ -129,6 +154,7 @@
             this.Lbx_Logs.FormattingEnabled = true;
             this.Lbx_Logs.Location = new System.Drawing.Point(9, 20);
             this.Lbx_Logs.Name = "Lbx_Logs";
+            this.Lbx_Logs.ScrollAlwaysVisible = true;
             this.Lbx_Logs.Size = new System.Drawing.Size(245, 121);
             this.Lbx_Logs.TabIndex = 0;
             // 
@@ -148,51 +174,174 @@
             // 
             // Grbx_Tags
             // 
-            this.Grbx_Tags.Controls.Add(this.groupBox1);
+            this.Grbx_Tags.Controls.Add(this.Grbx_CorrectionNum);
             this.Grbx_Tags.Controls.Add(this.Grbx_ConnexionType);
+            this.Grbx_Tags.Controls.Add(this.Btn_ExportMesure);
             this.Grbx_Tags.Enabled = false;
             this.Grbx_Tags.Location = new System.Drawing.Point(278, 12);
             this.Grbx_Tags.Name = "Grbx_Tags";
-            this.Grbx_Tags.Size = new System.Drawing.Size(282, 264);
+            this.Grbx_Tags.Size = new System.Drawing.Size(392, 264);
             this.Grbx_Tags.TabIndex = 2;
             this.Grbx_Tags.TabStop = false;
             // 
-            // groupBox1
+            // Grbx_CorrectionNum
             // 
-            this.groupBox1.Controls.Add(this.BtnTestRead);
-            this.groupBox1.Controls.Add(this.TbxTestRead);
-            this.groupBox1.Controls.Add(this.TbxTestWrite);
-            this.groupBox1.Location = new System.Drawing.Point(6, 154);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(91, 104);
-            this.groupBox1.TabIndex = 1;
-            this.groupBox1.TabStop = false;
+            this.Grbx_CorrectionNum.Controls.Add(this.label1);
+            this.Grbx_CorrectionNum.Controls.Add(this.Nud_Alpha);
+            this.Grbx_CorrectionNum.Controls.Add(this.Lbl_Alpha);
+            this.Grbx_CorrectionNum.Controls.Add(this.Nud_Te);
+            this.Grbx_CorrectionNum.Controls.Add(this.Lbl_Te);
+            this.Grbx_CorrectionNum.Controls.Add(this.Nud_Kd);
+            this.Grbx_CorrectionNum.Controls.Add(this.Lbl_Kd);
+            this.Grbx_CorrectionNum.Controls.Add(this.Btn_Applied);
+            this.Grbx_CorrectionNum.Controls.Add(this.Grbx_Equation);
+            this.Grbx_CorrectionNum.Controls.Add(this.Nud_Td);
+            this.Grbx_CorrectionNum.Controls.Add(this.Lbl_Td);
+            this.Grbx_CorrectionNum.Location = new System.Drawing.Point(6, 85);
+            this.Grbx_CorrectionNum.Name = "Grbx_CorrectionNum";
+            this.Grbx_CorrectionNum.Size = new System.Drawing.Size(377, 173);
+            this.Grbx_CorrectionNum.TabIndex = 1;
+            this.Grbx_CorrectionNum.TabStop = false;
+            this.Grbx_CorrectionNum.Text = "Correction Numérique";
             // 
-            // BtnTestRead
+            // Btn_Applied
             // 
-            this.BtnTestRead.Location = new System.Drawing.Point(6, 71);
-            this.BtnTestRead.Name = "BtnTestRead";
-            this.BtnTestRead.Size = new System.Drawing.Size(79, 27);
-            this.BtnTestRead.TabIndex = 2;
-            this.BtnTestRead.Text = "Read";
-            this.BtnTestRead.UseVisualStyleBackColor = true;
-            this.BtnTestRead.Click += new System.EventHandler(this.BtnTestRead_Click);
+            this.Btn_Applied.Location = new System.Drawing.Point(298, 19);
+            this.Btn_Applied.Name = "Btn_Applied";
+            this.Btn_Applied.Size = new System.Drawing.Size(71, 26);
+            this.Btn_Applied.TabIndex = 1;
+            this.Btn_Applied.Text = "Appliquer";
+            this.Btn_Applied.UseVisualStyleBackColor = true;
+            this.Btn_Applied.Click += new System.EventHandler(this.Btn_Applied_Click);
             // 
-            // TbxTestRead
+            // Grbx_Equation
             // 
-            this.TbxTestRead.Enabled = false;
-            this.TbxTestRead.Location = new System.Drawing.Point(6, 45);
-            this.TbxTestRead.Name = "TbxTestRead";
-            this.TbxTestRead.Size = new System.Drawing.Size(79, 20);
-            this.TbxTestRead.TabIndex = 1;
+            this.Grbx_Equation.Controls.Add(this.Nud_GainOUT);
+            this.Grbx_Equation.Controls.Add(this.Lbl_GainOUT);
+            this.Grbx_Equation.Controls.Add(this.Mtbx_Yk1);
+            this.Grbx_Equation.Controls.Add(this.Lbl_GainIN);
+            this.Grbx_Equation.Controls.Add(this.Nud_GainIN);
+            this.Grbx_Equation.Controls.Add(this.Mtbx_Xk1);
+            this.Grbx_Equation.Controls.Add(this.Mtbx_Xk);
+            this.Grbx_Equation.Controls.Add(this.Lbl_Equation);
+            this.Grbx_Equation.Location = new System.Drawing.Point(6, 88);
+            this.Grbx_Equation.Name = "Grbx_Equation";
+            this.Grbx_Equation.Size = new System.Drawing.Size(363, 79);
+            this.Grbx_Equation.TabIndex = 0;
+            this.Grbx_Equation.TabStop = false;
             // 
-            // TbxTestWrite
+            // Nud_GainOUT
             // 
-            this.TbxTestWrite.Location = new System.Drawing.Point(6, 19);
-            this.TbxTestWrite.Name = "TbxTestWrite";
-            this.TbxTestWrite.Size = new System.Drawing.Size(79, 20);
-            this.TbxTestWrite.TabIndex = 0;
-            this.TbxTestWrite.TextChanged += new System.EventHandler(this.TbxTestWrite_TextChanged);
+            this.Nud_GainOUT.DecimalPlaces = 1;
+            this.Nud_GainOUT.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
+            this.Nud_GainOUT.Location = new System.Drawing.Point(271, 50);
+            this.Nud_GainOUT.Maximum = new decimal(new int[] {
+            30,
+            0,
+            0,
+            0});
+            this.Nud_GainOUT.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
+            this.Nud_GainOUT.Name = "Nud_GainOUT";
+            this.Nud_GainOUT.Size = new System.Drawing.Size(46, 20);
+            this.Nud_GainOUT.TabIndex = 2;
+            this.Nud_GainOUT.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
+            // 
+            // Lbl_GainOUT
+            // 
+            this.Lbl_GainOUT.AutoSize = true;
+            this.Lbl_GainOUT.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Lbl_GainOUT.Location = new System.Drawing.Point(181, 50);
+            this.Lbl_GainOUT.Name = "Lbl_GainOUT";
+            this.Lbl_GainOUT.Size = new System.Drawing.Size(84, 16);
+            this.Lbl_GainOUT.TabIndex = 3;
+            this.Lbl_GainOUT.Text = "Gain OUT :";
+            // 
+            // Mtbx_Yk1
+            // 
+            this.Mtbx_Yk1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Mtbx_Yk1.Location = new System.Drawing.Point(259, 13);
+            this.Mtbx_Yk1.Mask = "0.000";
+            this.Mtbx_Yk1.Name = "Mtbx_Yk1";
+            this.Mtbx_Yk1.Size = new System.Drawing.Size(46, 22);
+            this.Mtbx_Yk1.TabIndex = 2;
+            // 
+            // Lbl_GainIN
+            // 
+            this.Lbl_GainIN.AutoSize = true;
+            this.Lbl_GainIN.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Lbl_GainIN.Location = new System.Drawing.Point(43, 50);
+            this.Lbl_GainIN.Name = "Lbl_GainIN";
+            this.Lbl_GainIN.Size = new System.Drawing.Size(67, 16);
+            this.Lbl_GainIN.TabIndex = 3;
+            this.Lbl_GainIN.Text = "Gain IN :";
+            // 
+            // Nud_GainIN
+            // 
+            this.Nud_GainIN.DecimalPlaces = 1;
+            this.Nud_GainIN.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
+            this.Nud_GainIN.Location = new System.Drawing.Point(116, 50);
+            this.Nud_GainIN.Maximum = new decimal(new int[] {
+            30,
+            0,
+            0,
+            0});
+            this.Nud_GainIN.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
+            this.Nud_GainIN.Name = "Nud_GainIN";
+            this.Nud_GainIN.Size = new System.Drawing.Size(46, 20);
+            this.Nud_GainIN.TabIndex = 2;
+            this.Nud_GainIN.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
+            // 
+            // Mtbx_Xk1
+            // 
+            this.Mtbx_Xk1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Mtbx_Xk1.Location = new System.Drawing.Point(147, 13);
+            this.Mtbx_Xk1.Mask = "0.000";
+            this.Mtbx_Xk1.Name = "Mtbx_Xk1";
+            this.Mtbx_Xk1.Size = new System.Drawing.Size(46, 22);
+            this.Mtbx_Xk1.TabIndex = 2;
+            // 
+            // Mtbx_Xk
+            // 
+            this.Mtbx_Xk.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Mtbx_Xk.Location = new System.Drawing.Point(55, 15);
+            this.Mtbx_Xk.Mask = "0.000";
+            this.Mtbx_Xk.Name = "Mtbx_Xk";
+            this.Mtbx_Xk.Size = new System.Drawing.Size(46, 22);
+            this.Mtbx_Xk.TabIndex = 2;
+            // 
+            // Lbl_Equation
+            // 
+            this.Lbl_Equation.AutoSize = true;
+            this.Lbl_Equation.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Lbl_Equation.Location = new System.Drawing.Point(6, 16);
+            this.Lbl_Equation.Name = "Lbl_Equation";
+            this.Lbl_Equation.Size = new System.Drawing.Size(349, 16);
+            this.Lbl_Equation.TabIndex = 0;
+            this.Lbl_Equation.Text = "y(k) =               x(k) -              x(k -1) +              y(k-1) ";
             // 
             // Grbx_ConnexionType
             // 
@@ -229,28 +378,221 @@
             this.Rbtn_Analogic.UseVisualStyleBackColor = true;
             this.Rbtn_Analogic.CheckedChanged += new System.EventHandler(this.Rbtn_Analogic_CheckedChanged);
             // 
-            // MainForm
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(218, 20);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(16, 16);
+            this.label1.TabIndex = 10;
+            this.label1.Text = "s";
+            this.label1.Visible = false;
+            // 
+            // Nud_Alpha
+            // 
+            this.Nud_Alpha.DecimalPlaces = 1;
+            this.Nud_Alpha.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            196608});
+            this.Nud_Alpha.Location = new System.Drawing.Point(162, 46);
+            this.Nud_Alpha.Maximum = new decimal(new int[] {
+            30,
+            0,
+            0,
+            0});
+            this.Nud_Alpha.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            196608});
+            this.Nud_Alpha.Name = "Nud_Alpha";
+            this.Nud_Alpha.Size = new System.Drawing.Size(54, 20);
+            this.Nud_Alpha.TabIndex = 8;
+            this.Nud_Alpha.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
+            this.Nud_Alpha.Visible = false;
+            // 
+            // Nud_Te
+            // 
+            this.Nud_Te.DecimalPlaces = 3;
+            this.Nud_Te.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            196608});
+            this.Nud_Te.Location = new System.Drawing.Point(162, 19);
+            this.Nud_Te.Maximum = new decimal(new int[] {
+            30,
+            0,
+            0,
+            0});
+            this.Nud_Te.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            196608});
+            this.Nud_Te.Name = "Nud_Te";
+            this.Nud_Te.Size = new System.Drawing.Size(54, 20);
+            this.Nud_Te.TabIndex = 6;
+            this.Nud_Te.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            196608});
+            this.Nud_Te.Visible = false;
+            // 
+            // Lbl_Te
+            // 
+            this.Lbl_Te.AutoSize = true;
+            this.Lbl_Te.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Lbl_Te.Location = new System.Drawing.Point(122, 20);
+            this.Lbl_Te.Name = "Lbl_Te";
+            this.Lbl_Te.Size = new System.Drawing.Size(35, 16);
+            this.Lbl_Te.TabIndex = 7;
+            this.Lbl_Te.Text = "Te :";
+            this.Lbl_Te.Visible = false;
+            // 
+            // Lbl_Alpha
+            // 
+            this.Lbl_Alpha.AutoSize = true;
+            this.Lbl_Alpha.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Lbl_Alpha.Location = new System.Drawing.Point(122, 47);
+            this.Lbl_Alpha.Name = "Lbl_Alpha";
+            this.Lbl_Alpha.Size = new System.Drawing.Size(25, 16);
+            this.Lbl_Alpha.TabIndex = 9;
+            this.Lbl_Alpha.Text = "a :";
+            this.Lbl_Alpha.Visible = false;
+            // 
+            // Nud_Kd
+            // 
+            this.Nud_Kd.DecimalPlaces = 1;
+            this.Nud_Kd.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            196608});
+            this.Nud_Kd.Location = new System.Drawing.Point(52, 45);
+            this.Nud_Kd.Maximum = new decimal(new int[] {
+            30,
+            0,
+            0,
+            0});
+            this.Nud_Kd.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            196608});
+            this.Nud_Kd.Name = "Nud_Kd";
+            this.Nud_Kd.Size = new System.Drawing.Size(55, 20);
+            this.Nud_Kd.TabIndex = 4;
+            this.Nud_Kd.Value = new decimal(new int[] {
+            3,
+            0,
+            0,
+            65536});
+            this.Nud_Kd.Visible = false;
+            // 
+            // Nud_Td
+            // 
+            this.Nud_Td.DecimalPlaces = 4;
+            this.Nud_Td.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            196608});
+            this.Nud_Td.Location = new System.Drawing.Point(52, 19);
+            this.Nud_Td.Maximum = new decimal(new int[] {
+            30,
+            0,
+            0,
+            0});
+            this.Nud_Td.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            196608});
+            this.Nud_Td.Name = "Nud_Td";
+            this.Nud_Td.Size = new System.Drawing.Size(55, 20);
+            this.Nud_Td.TabIndex = 2;
+            this.Nud_Td.Value = new decimal(new int[] {
+            393,
+            0,
+            0,
+            262144});
+            this.Nud_Td.Visible = false;
+            // 
+            // Lbl_Td
+            // 
+            this.Lbl_Td.AutoSize = true;
+            this.Lbl_Td.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Lbl_Td.Location = new System.Drawing.Point(12, 20);
+            this.Lbl_Td.Name = "Lbl_Td";
+            this.Lbl_Td.Size = new System.Drawing.Size(35, 16);
+            this.Lbl_Td.TabIndex = 3;
+            this.Lbl_Td.Text = "Td :";
+            this.Lbl_Td.Visible = false;
+            // 
+            // Lbl_Kd
+            // 
+            this.Lbl_Kd.AutoSize = true;
+            this.Lbl_Kd.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Lbl_Kd.Location = new System.Drawing.Point(12, 46);
+            this.Lbl_Kd.Name = "Lbl_Kd";
+            this.Lbl_Kd.Size = new System.Drawing.Size(34, 16);
+            this.Lbl_Kd.TabIndex = 5;
+            this.Lbl_Kd.Text = "Kd :";
+            this.Lbl_Kd.Visible = false;
+            // 
+            // TimerMESURE
+            // 
+            this.TimerMESURE.Tick += new System.EventHandler(this.TimerMESURE_Tick);
+            // 
+            // Btn_ExportMesure
+            // 
+            this.Btn_ExportMesure.Location = new System.Drawing.Point(263, 19);
+            this.Btn_ExportMesure.Name = "Btn_ExportMesure";
+            this.Btn_ExportMesure.Size = new System.Drawing.Size(120, 26);
+            this.Btn_ExportMesure.TabIndex = 1;
+            this.Btn_ExportMesure.Text = "Exporter les mesures";
+            this.Btn_ExportMesure.UseVisualStyleBackColor = true;
+            this.Btn_ExportMesure.Click += new System.EventHandler(this.Btn_ExportMesure_Click);
+            // 
+            // Gravitron
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(572, 288);
+            this.ClientSize = new System.Drawing.Size(676, 288);
             this.Controls.Add(this.Grbx_Tags);
             this.Controls.Add(this.Grbx_Logs);
             this.Controls.Add(this.Grbx_connection);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.MaximizeBox = false;
-            this.Name = "MainForm";
-            this.Text = "MainForm";
+            this.Name = "Gravitron";
+            this.Text = "Gravitron";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.Grbx_connection.ResumeLayout(false);
             this.Grbx_connection.PerformLayout();
             this.Grbx_Logs.ResumeLayout(false);
             this.Grbx_Tags.ResumeLayout(false);
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            this.Grbx_CorrectionNum.ResumeLayout(false);
+            this.Grbx_CorrectionNum.PerformLayout();
+            this.Grbx_Equation.ResumeLayout(false);
+            this.Grbx_Equation.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Nud_GainOUT)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Nud_GainIN)).EndInit();
             this.Grbx_ConnexionType.ResumeLayout(false);
             this.Grbx_ConnexionType.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Nud_Alpha)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Nud_Te)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Nud_Kd)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Nud_Td)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -271,9 +613,27 @@
         private System.Windows.Forms.GroupBox Grbx_ConnexionType;
         private System.Windows.Forms.RadioButton Rbtn_Numeric;
         private System.Windows.Forms.RadioButton Rbtn_Analogic;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Button BtnTestRead;
-        private System.Windows.Forms.TextBox TbxTestRead;
-        private System.Windows.Forms.TextBox TbxTestWrite;
+        private System.Windows.Forms.GroupBox Grbx_CorrectionNum;
+        private System.Windows.Forms.GroupBox Grbx_Equation;
+        private System.Windows.Forms.Label Lbl_Equation;
+        private System.Windows.Forms.Button Btn_Applied;
+        private System.Windows.Forms.MaskedTextBox Mtbx_Yk1;
+        private System.Windows.Forms.MaskedTextBox Mtbx_Xk1;
+        private System.Windows.Forms.MaskedTextBox Mtbx_Xk;
+        private System.Windows.Forms.Label Lbl_GainIN;
+        private System.Windows.Forms.NumericUpDown Nud_GainIN;
+        private System.Windows.Forms.Label Lbl_GainOUT;
+        private System.Windows.Forms.NumericUpDown Nud_GainOUT;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.NumericUpDown Nud_Alpha;
+        private System.Windows.Forms.Label Lbl_Alpha;
+        private System.Windows.Forms.NumericUpDown Nud_Te;
+        private System.Windows.Forms.Label Lbl_Te;
+        private System.Windows.Forms.NumericUpDown Nud_Kd;
+        private System.Windows.Forms.Label Lbl_Kd;
+        private System.Windows.Forms.NumericUpDown Nud_Td;
+        private System.Windows.Forms.Label Lbl_Td;
+        private System.Windows.Forms.Timer TimerMESURE;
+        private System.Windows.Forms.Button Btn_ExportMesure;
     }
 }

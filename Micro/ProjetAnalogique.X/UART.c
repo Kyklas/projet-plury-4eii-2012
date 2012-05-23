@@ -8,7 +8,9 @@
 
 #include "UART.h"
 
-char Tags[32];
+// Variables de communication
+short Tags[32];
+float FeedBacks[5];
 
 /**
  * \fn void UART_Init ()
@@ -52,9 +54,9 @@ void UART_Send_char (char byte)
 void UART_Send_string (char * string)
 {
     int i=0;
-    while (string[i]!=0)
+    while (string[i]!=0)    // Pour chaque valeur de la chaine de caractère
     {
-        UART_Send_char(string[i]);
+        UART_Send_char(string[i]); // On envoie caractère par caractère
         i++;
     }
 }
@@ -62,52 +64,68 @@ void UART_Send_string (char * string)
 void UART_Send_Tab (char * tab, int size)
 {
     int i;
-    for (i=0; i<size ; i++)
-        UART_Send_char(tab[i]);
+    for (i=0; i<size ; i++) // Pour chaque octets du tableau
+        UART_Send_char(tab[i]); // On envoie octet par octet
 }
 
-void UART_Send_Log (char * log)
+void UART_Send_Log(char * log)
 {
     #define CMD 0xA0
-    UART_Send_char(CMD);
-    UART_Send_string(log);
-    UART_Send_char(0x00);
+    UART_Send_char(CMD);    // Mots de commande
+    UART_Send_string(log);  // Envoie de la chaine de caractère
+    UART_Send_char(0x00);   // Caractère de fin de trame
+}
+
+void UART_Update_Feedback()
+{
+// Compute feedback parameters
+    FeedBacks[0] = ((float) Tags[1]) * 0.001f;
+    FeedBacks[1] = ((float) Tags[2]) * 0.001f;
+    FeedBacks[2] = ((float) Tags[3]) * 0.001f;
+    FeedBacks[3] = ((float) Tags[4]) * 0.001f;
+    FeedBacks[4] = ((float) Tags[5]) * 0.001f;
 }
 
 inline void fonction_U2RXInterrupt(void)
 {
+    // variables internes
     static int i = 0;
     static int TagAdr;
-    static unsigned char RXbuffer[4];
+    static char RXbuffer[4];
     char TXbuffer[5];
 
-    unsigned char rx = U2RXREG;
-    if (rx & 0x80)      // Demande
+    unsigned char rx = U2RXREG;     // Octets reçu
+    if (rx & 0x80)      // En cas de commande
     {
-        if (rx & 0x40)  // Ecriture
+        if (rx & 0x40)  // si c'est une ecriture
         {
-            TagAdr = rx & 0x1F;
+            TagAdr = rx & 0x1F; // On stock l'adresse de valeur à modifier
             i = 0;
         }
-        else            // Lecture
+        else            // si c'est une lecture
         {
-            TagAdr = rx & 0x1F;
-            TXbuffer[0] = 0x80 | TagAdr;
-            TXbuffer[1] = (Tags[TagAdr] >> 12) & 0x0F;
-            TXbuffer[2] = (Tags[TagAdr] >> 8) & 0x0F;
-            TXbuffer[3] = (Tags[TagAdr] >> 4) & 0x0F;
-            TXbuffer[4] = (Tags[TagAdr]) & 0x0F;
-            UART_Send_Tab (TXbuffer, 5);
-            UART_Send_Log("Read : finish");
+            TagAdr = rx & 0x1F;      // On stock l'adresse de valeur à envoyer
+            TXbuffer[0] = 0x80 | TagAdr;    // Mot de commande
+            TXbuffer[1] = (Tags[TagAdr] >> 12) & 0x0F;  // Most MSB
+            TXbuffer[2] = (Tags[TagAdr] >> 8) & 0x0F;   // Least MSB
+            TXbuffer[3] = (Tags[TagAdr] >> 4) & 0x0F;   // Most LSB
+            TXbuffer[4] = (Tags[TagAdr]) & 0x0F;        // Least LSB
+
+            UART_Send_Tab (TXbuffer, 5);    // Envoie de la trame
+            UART_Send_Log("Read : finish"); // Envoie d'un Log
         }
     }
-    else    // Donnée
+    else    // En cas de donnée
     {
-        RXbuffer[i++] = rx;
-        if (i == 4)
+        RXbuffer[i++] = rx; // On stock chaque octet
+        if (i == 4)         // Lorsqu'on a tous les octects
         {
             Tags[TagAdr] = 0;
-            Tags[TagAdr] = (short)((short)(((RXbuffer[0] & 0x0F)<<12))|(short)(((RXbuffer[1] & 0x0F)<<8))|(short)(((RXbuffer[2] & 0x0F)<<4))|(short)(RXbuffer[3] & 0x0F));
+            Tags[TagAdr] |= (short)(((RXbuffer[0] & 0x0F)<<12));// Most MSB
+            Tags[TagAdr] |= (short)(((RXbuffer[1] & 0x0F)<<8)); // Least MSB
+            Tags[TagAdr] |= (short)(((RXbuffer[2] & 0x0F)<<4)); // Most LSB
+            Tags[TagAdr] |= (short)(RXbuffer[3] & 0x0F);        // Least LSB
+            UART_Update_Feedback();
             UART_Send_Log("Write : finish");
         }
     }

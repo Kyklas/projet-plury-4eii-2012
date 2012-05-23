@@ -57,8 +57,18 @@ namespace PRJPLR
             
             _tagNames[0] = "CorrectionType";
             Tags["CorrectionType"] = 0;
-            _tagNames[1] = "Test";
-            Tags["Test"] = 0;
+            _tagNames[1] = "Xk";
+            Tags["Xk"] = 0;
+            _tagNames[2] = "Xk1";
+            Tags["Xk1"] = 0;
+            _tagNames[3] = "Yk1";
+            Tags["Yk1"] = 0;
+            _tagNames[4] = "GainIN";
+            Tags["GainIN"] = 0;
+            _tagNames[5] = "GainOUT";
+            Tags["GainOUT"] = 0;
+            _tagNames[7] = "MESURE";
+            Tags["MESURE"] = 0;
         }
 
         public void Open(string portName)

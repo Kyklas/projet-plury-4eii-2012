@@ -27,8 +27,19 @@ void UART_Send_Log (char * log);
 
 void fonction_U2RXInterrupt(void);
 
-
-extern char Tags[32];
+/**
+ * \brief Variables de communication
+ */
+extern short Tags[32];
+extern float FeedBacks[5];
 #define ISNUMERIC Tags[0]
+#define ISOFF Tags[6]
+#define MESURE Tags[7]
+
+#define Xk   FeedBacks[0]
+#define Xk1  FeedBacks[1]
+#define Yk1  FeedBacks[2]
+#define GAININ FeedBacks[3]
+#define GAINOUT FeedBacks[4]
 
 #endif

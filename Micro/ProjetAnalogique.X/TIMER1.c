@@ -85,21 +85,20 @@ float output[2] = {0};
 inline void fonctionNumerique_T1Interrupt(void)
 {
     short ADC, DutyCycle;
-    ADC  = ADC_Convert(POT1);
-    input[0] = (float)(Vref - ADC);
-    output[0] = 8.272*input[0] - 7.917*input[1] + 0.2*output[1];
-    output[0]*=4.5;
-
-    // Veillessement des variables
-    input[1] = input[0];
-    output[1] = output[0];
-
-    if (input[0] > 950 || input[0] < -700)
+// Numérise la position et check la plage
+    ADC = Vref - ADC_Convert(POT1);
+    if (ADC > 950 || ADC < -700)
         goto protection;
-    if (output[0] > 408)
-        output[0] = 408;
-    if (output[0] < -408)
-        output[0] = -408;  //limitation a 80% de la PWM
+// Calcule la fonction d'asservissement
+    input[0] = GAININ * (float) ADC;
+    output[0] = Xk * input[0] - Xk1 * input[1] + Yk1 * output[1];
+// Veillessement des variables
+    output[1] = output[0];
+    input[1] = input[0];
+// Gain de sortie
+    output[0] *= GAINOUT;
+    if (output[0] > 408.0f) output[0] = 408.0f;
+    if (output[0] < -408.0f) output[0] = -408.0f;  //limitation a 80% de la PWM
 
 // ==========================================
 // Pilotage de la PWM
@@ -119,14 +118,15 @@ inline void fonctionNumerique_T1Interrupt(void)
     PWM_SetDutyCycle(DutyCycle);
     return;
 
-    protection :
+protection :
     PWM_SetDutyCycle(0);
     return;
-
 }
 
 void __attribute__((interrupt,no_auto_psv)) _T1Interrupt(void)
 {
+    static int d = 500;
+
     if (ISNUMERIC)
     {
         fonctionNumerique_T1Interrupt();
@@ -134,6 +134,14 @@ void __attribute__((interrupt,no_auto_psv)) _T1Interrupt(void)
     else
     {
         fonctionAnalog_T1Interrupt();
+    }
+
+    if (ISOFF)
+    {
+        PWM_SetDutyCycle(d--);
+        MODE1 = 1;
+        MODE2 = 0;
+        if (d < 0) d = 0;
     }
 
     IFS0bits.T1IF = 0; //Reset Timer1 interrupt flag and Return from ISR
