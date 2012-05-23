@@ -19,6 +19,9 @@
 \usepackage{subfig} % make it possible to include more than one captioned figure/table in a single float
 \usepackage{amsmath}
 \usepackage[frenchb]{babel}
+\usepackage{eurosym} %pour le symbole euro
+\usepackage[cdot]{SIunits}   % pour les unités (ohm,...)
+
 
 \usepackage{picins,caption}
 \usepackage{wrapfig}
@@ -45,7 +48,13 @@
 
 \pagebreak
 \section*{Introduction}
-Xavier
+
+Dans nos précédents rapports, nous avons détaillé le problème de l'asservissement en position du mobile et nous avons déterminé les paramètres d'un modèle analogique de correcteur. Par la suite, nous avons mis en place la théorie d'un protocole de communication série afin de faciliter les réglages et les mesures en temps réel. Dans le troisième rapport, nous avons décris l'avancement de la partie analogique du projet, de la conception de la maquette jusqu'à sa réalisation et ses tests. 
+
+\medskip
+
+Dans ce dernier rapport, nous allons nous concentrer sur la correction numérique. Nous commencerons par définir les caractéristiques du protocole série que nous avons décidé d'utiliser en lieu et place de celui défini dans le rapport de MCSE puis nous en expliciterons la programmation dans le microcontrôleur. Ensuite, nous aborderons brièvement la question de l'interface graphique mise en place et nous reviendrons également sur le changement intervenu dans la partie puissance avant de nous intéresser à la correction numérique à proprement parler. Enfin, nous clarifierons la question de la répartition des gains, en analogique comme en numérique, avant de conclure globalement sur le projet tout en proposant des possibilités d'améliorations que nous n'aurons malheureusement pas le temps de mettre en place. 
+
 
 \section{Communication}
 	La partie communication du projet peut paraître secondaire quand on considère l'application dans sa globalité. Pour quelles raisons un luminaire aurait il besoin de communiquer avec un dispositif informatique ? L'intérêt semble limité ...
@@ -100,7 +109,7 @@ La seconde solution impliquant l'ajout d'un composant externe, au détriment du 
 
 Le contrôleur circuit qui a été sélectionné est le FT232R de FTDI. Ce composant a été très simple à intégrer sur la carte du projet car il ne nécessite qu'une alimentation 5v et la liaison série pour fonctionner. De plus, il configure ses paramètres de transmission automatiquement en fonction de ceux communiqués par l'ordinateur à l'ouverture du port. Pour résumer ce composant est facile d'utilisation à défaut d'être peu couteux.
 
-\subsection{Elaboration d'un protocole}
+\subsection{Élaboration d'un protocole}
 Dans le rapport de MCSE, nous avions présenté un protocole basique, exploitant un format de trames fixe de 3 octets consécutifs. Le premier contenant l'index de la commande et les deux suivants le corps de la donnée envoyée. Nous nous sommes rendus compte que ce protocole ne couvrait pas tous nos besoins et en particulier la possibilité de transmettre des messages d'erreurs ou de log.
 
 \medskip
@@ -117,7 +126,7 @@ Les paramètres généraux utilisés dans la transmission série sont les suivan
 \end{description}
 
 \medskip
-Le baudrate est variable car le micro-contrôleur dispose d'un module capable de déterminer automatiquement la vitesse de transmission de la liaison. La seule condition à respecter est l'émission du caractère ASCII "U" avant toute communication. Ce caractère correspond à un motif de niveaux logiques hauts et bas alternés qui permettent au périphérique série du micro-contrôleur de calibrer son registre prescaler pour générer le bon baudrate.
+Le Baudrate est variable car le micro-contrôleur dispose d'un module capable de déterminer automatiquement la vitesse de transmission de la liaison. La seule condition à respecter est l'émission du caractère ASCII "U" avant toute communication. Ce caractère correspond à un motif de niveaux logiques hauts et bas alternés qui permettent au périphérique série du micro-contrôleur de calibrer son registre prescaler pour générer le bon Baudrate.
 
 \subsubsection{Différentes trames}
 \noindent
@@ -232,7 +241,32 @@ Le panneau de connexion requiert de l'utilisateur le choix du port série et la 
 La zone de messages logs liste chronologiquement les évènements de connexion et les messages textes envoyés par la maquette. Elle possède une fonctionnalité d'exportation permettant l'archivage des données dans un fichier texte.
 
 \section{Changement de Puissance}
-Xavier
+
+\subsection{Causes du changement}
+Au cours de nos tests pour valider le fonctionnement de nos correcteurs analogiques et numériques, nous avons essayé de faire léviter le mobile à la distance de 1,5 cm. Nous avons eu du mal à y parvenir car notre pont en H chauffait de manière trop importante et la dissipation thermique était tout juste suffisante. La correction en résultant était donc assez instable bien que fonctionnelle. 
+
+Nous avons donc voulu améliorer ce point en rajoutant un radiateur à notre pont en H. Cependant, ce dernier étant un composant CMS, il n'était pas possible d'ajouter facilement le radiateur. Nous avons alors tenté de coller le radiateur au plan de masse du dessous du circuit de puissance par le biais d'une grosse pastille d'étain. Malheureusement, notre pont en H CMS s'est dessoudé lors de l'opération.
+
+Nous avons alors tenté de le ressouder en utilisant le four à refusion. Bien que cela ait fonctionné, il semble que la conduction thermique ait été très largement amoindrie. Il est également possible que le pont en H ait été endommagé lors de la seconde utilisation du four à refusion. C'est à ce moment que nous avons décidé de changer de pont en H, optant pour un composant Multiwatt afin de nous fournir une plus grande marge de manœuvre pour l'asservissement en augmentant le courant maximum utilisable. 
+
+\subsection{Choix du nouveau pont en H}
+
+Après consultation du catalogue Farnell, nous avons choisi un L6203 de ST Microelectronics. Bien qu'un peu plus cher (7.44 \euro{} en unitaire), ce composant fonctionne de manière similaire à l'A4950 : on peut choisir le sens de parcours du courant dans le pont par le biais des mêmes entrées qu'avec l'A4950. Cependant, ce composant nécessite des condensateurs de Bootstrap (1 par sortie) et supporte jusqu'à 5 A au lieu des 3,5 A du A4950. De plus, son boitier Multiwatt nous assure une dissipation thermique largement meilleure qu'avant en plus de nous permettre de rajouter facilement un radiateur. En outre, le $R_{DSON}$ de ce pont est de \unit{0,3}{\ohm} au lieu des 1,3 $\ohm$ de l'A4950 : on chauffera donc beaucoup moins tout en dissipant mieux, augmentant ainsi sensiblement notre marge de manœuvre pour l'asservissement. Enfin, le L6203 dispose également d'une protection en courant mais n'implémente plus de protection en courant. Il faudrait rajouter une comparateur sur la sortie $V_{Sense})$ du pont en H, ce que nous ne ferons pas pour des raisons de simplifications et à cause du fait que les alimentations ne peuvent pas fournir de courant supérieur à ce que peut supporter notre pont. 
+Ci dessous, le schéma bloc du L6203. 
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width = 12cm]{SolutionNumerique/fonc_sch.png} 
+	\caption{Schéma bloc interne du L6203}
+\end{figure}
+
+\subsection{Fonctionnement du L6203}
+
+Après quelques mésaventures lors du routage (inversion de l'empreinte du pont en H), nous avons pu tester notre nouveau circuit de puissance. Celui-ci s'est avéré meilleure que le précédent, fournissant un asservissement plus stable en raison de sa plus grande tolérance au courant de plus grandes valeurs. La consommation a également été diminuée (entre 0,4 et 0,5 A) grâce à la baisse significative du $R_{DSON}$. Il aurait été possible d'optimiser le consommation au détriment de la position en amenant le mobile de sorte que la répulsion du champ magnétique soit compensée par le poids du mobile. 
+
+
+
+
 \section{Correction Numérique}
 
 Difference avec le rapport d'auto
@@ -255,7 +289,7 @@ Utilisation d'un outils :
 -> suivit des calculs via la série ( diff, avance de phase, sortie )
 
 dernière seance
--> 1 gain du montage différentiel
+-> 1 gain du montage différentiel (3.5) (1+(2*R1)/R2) ==> /2 à cause des capteurs ==> 1,75
 -> 2 validation avec matlab de la répartition du gain ( av ph, num)
 -> 3 validation avec l'asservissement numerique du mercredi du solex
 -> 4 essaye d'amélioration de l'asservissement numérique
@@ -265,6 +299,26 @@ dernière seance
 Xavier - Fred
 \subsection{Correcteur Analogique}
 \subsection{Correcteur Numérique}
+
+\section{Gimmicks}
+ 
+ En plus des asservissements numérique et analogiques, nous avons mis en place trois fonctionnalités additionnelles :
+ 
+ \medskip
+ 
+ - La première est d'ordre pratique. En temps normal, dès que l'on cesse d'asservir, le mobile chute. Cela provoque un bruit plutôt désagréable. Nous avons donc implémenté une fonctionnalité qui amène le mobile à se coller à la bobine lorsque l'on quitte l'application graphique. 
+ 
+ - Seconde fonctionnalité : tant que l'on est en analogique, on acquiert les mesures via la liaison série. Il est possible d'exporter ces mesures au format CSV afin de générer des courbes pour y suivre l'évolution de la position du mobile.
+ 
+  - La dernière est d'ordre artistique : lorsque le mobile vient se coller sur la bobine, on joue un air de musique connu \footnote{http://www.youtube.com/watch?v=Kh2AWswAMvw} est faisant varier la fréquence de la PWM. 
+  
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width = 4 cm]{SolutionNumerique/mario.png} 
+	\caption{Un air connu ?}
+\end{figure}
+ 
+ 
 \section*{Conclusion - Evolution}
 Xavier
 
