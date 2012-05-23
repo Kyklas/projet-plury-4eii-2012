@@ -247,7 +247,7 @@ Au cours de nos tests pour valider le fonctionnement de nos correcteurs analogiq
 
 Nous avons donc voulu améliorer ce point en rajoutant un radiateur à notre pont en H. Cependant, ce dernier étant un composant CMS, il n'était pas possible d'ajouter facilement le radiateur. Nous avons alors tenté de coller le radiateur au plan de masse du dessous du circuit de puissance par le biais d'une grosse pastille d'étain. Malheureusement, notre pont en H CMS s'est dessoudé lors de l'opération.
 
-Nous avons alors tenté de le ressouder en utilisant le four à refusion. Bien que cela ait fonctionné, il semble que la conduction thermique ait été très largement amoindrie. Il est également possible que le pont en H ait été endommagé lors de la seconde utilisation du four à refusion. C'est à ce moment que nous avons décidé de changer de pont en H, optant pour un composant Multiwatt afin de nous fournir une plus grande marge de manœuvre pour l'asservissement en augmentant le courant maximum utilisable. 
+Nous avons alors tenté de le ressouder en utilisant le four à refusion. Bien que cela ait fonctionné, il semble que la conduction thermique ait été très largement amoindrie. Il est également possible que le pont en H ait été endommagé lors de la seconde utilisation du four à refusion. Toujours est-il que le fonctionnement du pont est devenu encore moins satisfaisant qu'avant. C'est à ce moment que nous avons décidé de changer de pont en H, optant pour un composant Multiwatt afin de nous fournir une plus grande marge de manœuvre pour l'asservissement en augmentant le courant maximum utilisable. 
 
 \subsection{Choix du nouveau pont en H}
 
@@ -262,9 +262,15 @@ Ci dessous, le schéma bloc du L6203.
 
 \subsection{Fonctionnement du L6203}
 
-Après quelques mésaventures lors du routage (inversion de l'empreinte du pont en H), nous avons pu tester notre nouveau circuit de puissance. Celui-ci s'est avéré meilleure que le précédent, fournissant un asservissement plus stable en raison de sa plus grande tolérance au courant de plus grandes valeurs. La consommation a également été diminuée (entre 0,4 et 0,5 A) grâce à la baisse significative du $R_{DSON}$. Il aurait été possible d'optimiser le consommation au détriment de la position en amenant le mobile de sorte que la répulsion du champ magnétique soit compensée par le poids du mobile. 
+Après quelques mésaventures lors du routage (inversion de l'empreinte du pont en H), nous avons pu tester notre nouveau circuit de puissance. Celui-ci s'est avéré meilleure que le précédent, fournissant un asservissement plus stable en raison de sa plus grande tolérance au courant de plus grandes valeurs. La consommation a également été diminuée (entre 0,4 et 0,5 A) grâce à la baisse significative du $R_{DSON}$. Il aurait été possible d'optimiser le consommation au détriment de la position en amenant le mobile de sorte que la répulsion du champ magnétique soit compensée par le poids du mobile. Ci-dessous le routage de la carte de puissance. 
 
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width = 12cm]{SolutionNumerique/routage.png} 
+	\caption{Routage de la carte de puissance}
+\end{figure}
 
+Sur ce routage, on voit bien les deux condensateurs de Bootstrap. La pin $V_{Sense}$ n'étant pas utilisée, on la relie à la masse (la résistance n'a pas été mise au final). La pin $V_{Ref}$ est une source de tension interne et nécessite d'être reliée à la masse par le biais d'un condensateur. 
 
 
 \section{Correction Numérique}
@@ -274,14 +280,14 @@ Après quelques mésaventures lors du routage (inversion de l'empreinte du pont 
 					{SolutionNumerique/Systeme.pdf}
 	\caption{Système}
 \end{wrapfigure}
-La correction numérique découle du travaille effectué pour la correction analogique. La sortie du montage différentiel est utilisée comme entrée du nouveau correcteur. La consigne analogique est la consigne utilisé dans cette correction.
-Cette nouvelle implémentation est facile à implémenté et plus flexible. Les calculs réalisés pendant l'étude automatique du système donnent la forme du correcteur.
+La correction numérique découle du travail effectué pour la correction analogique. La sortie du montage différentiel est utilisée comme entrée du nouveau correcteur. La consigne analogique est la consigne utilisée dans cette correction.
+Cette nouvelle solution est facile à implémenter et plus flexible. Les calculs réalisés pendant l'étude d'automatique du système donnent la forme du correcteur.
 
 \[Co_{AvPh}(s)=\dfrac{1+ \tau_d \cdot s}{1 + a_d \cdot \tau_d \cdot s} \]
 
 \[Co_{AvPh}(z)=\dfrac{a \cdot z + b}{z + c}=\dfrac{\dfrac{z}{a_d}+\dfrac{T_e-\tau_d}{a_d \cdot \tau_d} }{z+\dfrac{T_e-a_d \cdot \tau_d}{a_d \cdot \tau_d}}\] 
 
-L'équation en $Z$ est obtenue avec une approximation par rectangle arrière soit $s=\frac{z-1}{T_e}$. L'équation récurente en découlant implanté dans le microcontrolleur est $out_0=a \cdot in_0 + b \cdot in_1 + c \cdot out_1$. $in_1$ et $out_1$ sont le vieillissement des valeurs $in_0$ et $out_0$.
+L'équation en $Z$ est obtenue avec une approximation des rectangle arrière soit $s=\frac{z-1}{T_e}$. L'équation récurrente en découlant implantée dans le microcontrolleur est $out_0=a \cdot in_0 + b \cdot in_1 + c \cdot out_1$. $in_1$ et $out_1$ sont le vieillissement des valeurs $in_0$ et $out_0$.
 
 \begin{wrapfigure}{r}{7cm}
 
@@ -294,15 +300,15 @@ Les valeurs des paramètres sont :
 
 \[\tau_d=0.03934 \; T_e=0.001 \; a_d=0.1\]
 
-La fréquence d'échantillonage $T_e$ a été choisi par rapport à celle utilisé en analogique. La fonction de transfere corespondant est la suivante et donne le lieu d'Evans ci-contre.
+La fréquence d'échantillonnage $T_e$ a été choisie par rapport à celle utilisée en analogique. La fonction de transfert correspondante est la suivante et donne le lieu d'Evans ci-contre.
 \[Co_{AvPh}(z)=\dfrac{10 z - 9.776}{z -0.7756}\]
 
-Lors de tests, les coefficients présentés ne permettent pas l'asservissement du mobile en position. Plusieurs causes sont possible, la précision des calculs ( virgule fixe, virgule flotant), gain inadéquat, saturations en sortie.
+Lors de tests, les coefficients présentés ne permettent pas l'asservissement du mobile en position. Plusieurs causes sont possibles, la précision des calculs ( virgule fixe, virgule flottante), gain inadéquat, saturations en sortie.
 
-L'asservissement en position a été obtenue en utilisant et adaptant les valeurs présentés dans le rapport d'automatique. Cependant ces valeurs correspondent à une fréquence d'échantillonage de 1.7ms et avec une approimation différente, le lieu d'Evans obtenue n'est pas celui recherché.
+L'asservissement en position a été obtenue en utilisant et adaptant les valeurs présentés dans le rapport d'automatique. Cependant ces valeurs correspondent à une fréquence d'échantillonage de 1.7ms et avec une approximation différente, le lieu d'Evans obtenue n'est pas celui recherché.
 \[  Co_{AvPh_{Rapport Auto Modifie}}(z) = \dfrac {8.272z - 7.915} {z - 0.9} \]
 
-La valeur $c=0.9$ a été modifier par rapport au correcteur présenté dans le rapport d'automatique. Ce changement a pour effet de déplacer le pôle de l'avance de phase.Il est alors remarqué que le gain théorique nécessaire pour la stabilité est de 5 contre 18.5 pour le correcteur précédent. Cependant la zone de stabilité théorique est très faible. Les oscillations observées lors des simulations confirment le résultat.
+La valeur $c=0.9$ a été modifiée par rapport au correcteur présenté dans le rapport d'automatique. Ce changement a pour effet de déplacer le pôle de l'avance de phase. Il est alors remarqué que le gain théorique nécessaire pour la stabilité est de 5 contre 18.5 pour le correcteur précédent. Cependant la zone de stabilité théorique est très faible. Les oscillations observées lors des simulations confirment le résultat.
 
 \begin{figure}[h!]
 	\centering
@@ -312,7 +318,7 @@ La valeur $c=0.9$ a été modifier par rapport au correcteur présenté dans le 
 	\caption{Correction Expérimental}
 \end{figure}
 
-Ce résultat apport des réponses au causes évoquées. Dans un premier temps il est préférable d'effectuer les calculs en virgule flotante pour simplifier la mise en oeuvre et observer le fonctionnement. Un surplus de gain ocasionne des oscillation rapide mais le mobile lévite toujours, une saturation est peut-être présente quelque part et empèche un gain élevé.
+Ce résultat apporte des réponses par rapport aux causes évoquées précédemment. Dans un premier temps, il est préférable d'effectuer les calculs en virgule flottante pour simplifier la mise en œuvre et observer le fonctionnement. Un surplus de gain occasionne des oscillations rapides mais le mobile lévite toujours, une saturation est peut-être présente quelque part et empêche un gain élevé.
 
 \begin{wrapfigure}{r}{7cm}
 	\vspace{-0.5cm}
@@ -320,12 +326,12 @@ Ce résultat apport des réponses au causes évoquées. Dans un premier temps il
 					{SolutionNumerique/SystemeCorrigeThoriqueAdapte.pdf}
 	\caption{Correction Théorique Ajusté}
 \end{wrapfigure}
-Il est possible d'ajuster la correction théorique pour obtenir un gain équivalant à l'asservissement précédent et un meilleur comportement vis à vis des ocsillations. La position du pôle du correcteur théorique est déplacé pour obtenir un gain théorique équivalant. 
+Il est possible d'ajuster la correction théorique pour obtenir un gain équivalant à l'asservissement précédent et un meilleur comportement vis à vis des oscillations. La position du pôle du correcteur théorique est déplacée pour obtenir un gain théorique équivalant. 
 \[  Co_{AvPh_{Theorique \; Modifie}}(z) = \dfrac {10z - 9.776} {z - 0.93} \]
 
-L'amortissement du correcteur est plus important que précedament. Les oscilltions en lévitation sont moins importantes.
+L'amortissement du correcteur est plus important que précédemment. Les oscillations en lévitation sont moins importantes.
 
-Le modèle utilisé pour l'élaboration des calculs théoriques est à relativiser, il est possible que la modélisation soit décalé avec notre sysème, imperfection de la bobine, des capteurs, ...
+Le modèle utilisé pour l'élaboration des calculs théoriques est à relativiser, il est possible que la modélisation soit décalée avec notre système, imperfection de la bobine, des capteurs, ...
 
 %\vspace{+5cm}
 %
@@ -365,22 +371,22 @@ La répartition des gains le long de la chaîne d'asservissement est la suivante
 \end{figure}
 
 Le gain du montage différentiel est donné par $G_{sous}=\frac{1}{2}\left( 1+2 \frac{R}{R0_{pot}+R0_{fix}}\right)$ avec $R=10k$, $R0_{pot}=7k$, $R0_{fix}=1k$. $G_{sous}=1.75$.
-Le gain d'aquisition est $G_{ADC}= \frac{Plage \; de \; sortie}{Plage \; d'entr \acute{e} e}=\frac{4096}{5V}$, 5V en entrée représenter sur 12bit. 
+Le gain d'acquisition est $G_{ADC}= \frac{Plage \; de \; sortie}{Plage \; d'entr \acute{e} e}=\frac{4096}{5V}$, 5V en entrée représenter sur 12 bits. 
 Le gain de correcteur est en fonction de l'asservissement utilisé.
 La PWM a deux modes, 9 bits et la plage représenté est 10V, $G_{PWM}= \frac{Plage \; de \; sortie}{Plage \; d'entr \acute{e} e}=\frac{10V}{1024}$.
 Le pont transforme $\pm5V$ en $\pm12V$, $G_{pont}=2.4$.
-Le gain de la bobine est estimé unitaire. Le gain totale est alors de $33.6$.
+Le gain de la bobine est estimé unitaire. Le gain total est alors de $33.6$.
 
 \subsection{Correcteur Analogique}
-Pour la solution analogique, le gain correcteur interne au micro-controller est 1. Le système est stable pour le gain de boucle totale, quelques oscillations peuvent être perçues. Le gain du montage avance de phase n'est pas évoqué par il est pris en compte dans le modèle.
+Pour la solution analogique, le gain du correcteur interne au micro-controller est de 1. Le système est stable pour le gain de boucle totale, quelques oscillations peuvent être perçues. Le gain du montage avance de phase n'est pas évoqué par il est pris en compte dans le modèle.
 \subsection{Correcteur Numérique}
-Les gains internes appliqué pendant les corrections numérique sont 0,75 et 0,4. Les gains de boucles ainsi obtenue sont respectivement 25,2 et 13,44. Le gain obtenue pour la première correction ne correspond pas au modèle qui possède un gain maximale de 18.4, cependant le mobile lévite. D'autre part pour la deuxième correction, le gain interne de 0.4 est une valeur limite basse ce qui ne concorde pas avec le gain élevé de 13,44 proche de la limite théorique du modèle de 17,2.
+Les gains internes appliqués pendant les corrections numérique sont 0,75 et 0,4. Les gains de boucles ainsi obtenue sont respectivement 25,2 et 13,44. Le gain obtenu pour la première correction ne correspond pas au modèle qui possède un gain maximale de 18.4, cependant le mobile lévite. D'autre part pour la deuxième correction, le gain interne de 0.4 est une valeur limite basse ce qui ne concorde pas avec le gain élevé de 13,44 proche de la limite théorique du modèle de 17,2.
 
-Il existe des corespondances floues entre les gains expérimentaux et ceux théoriques. Un approfondissement sur les calculs réalisés dans le micro-controlleur est nécessaire et possible grâce à la liaison série.
+Il existe des correspondances floues entre les gains expérimentaux et ceux théoriques. Un approfondissement sur les calculs réalisés dans le microcontrôleur est nécessaire et possible grâce à la liaison série.
 
 \section{Gimmicks}
  
- En plus des asservissements numérique et analogiques, nous avons mis en place trois fonctionnalités additionnelles :
+ En plus des asservissements numérique et analogique, nous avons mis en place trois fonctionnalités additionnelles :
  
  \medskip
  
@@ -388,7 +394,7 @@ Il existe des corespondances floues entre les gains expérimentaux et ceux théo
  
  - Seconde fonctionnalité : tant que l'on est en analogique, on acquiert les mesures via la liaison série. Il est possible d'exporter ces mesures au format CSV afin de générer des courbes pour y suivre l'évolution de la position du mobile.
  
-  - La dernière est d'ordre artistique : lorsque le mobile vient se coller sur la bobine, on joue un air de musique connu \footnote{http://www.youtube.com/watch?v=Kh2AWswAMvw} est faisant varier la fréquence de la PWM. 
+  - La dernière est d'ordre artistique : lorsque le mobile vient se coller sur la bobine, on joue un air de musique connu \footnote{http://www.youtube.com/watch?v=Kh2AWswAMvw} est faisant varier la fréquence de la PWM dans la bobine avec un rapport cyclique de 50% (pour se rapporcher d'une sinusoïde). 
   
 \begin{figure}[h!]
 	\centering
@@ -396,9 +402,22 @@ Il existe des corespondances floues entre les gains expérimentaux et ceux théo
 	\caption{Un air connu ?}
 \end{figure}
  
- 
-\section*{Conclusion - Evolution}
-Xavier
+ \pagebreak
+\section*{Conclusion - Évolution}
+
+Au cours de ce projet, nous aurons eu l'occasion de mettre en œuvre les connaissances que nous avons acquises pendant les semestres précédents. Nous sommes ainsi parvenu à concevoir une correction adaptée à notre système grâce à une étude d'automatique. Ensuite, en utilisant nos connaissances en électronique, nous avons réalisé ce correcteur ainsi que la boucle d'asservissement du système en choisissant nous-mêmes les composants nécessaires. Enfin, grâce à nos cours de microcontrôleur et de programmation, nous avons pu générer la PWM qui contrôle la bobine. Nous avons également mis en place une communication série asynchrone par USB avec un protocole de log pour envoyer et recevoir des données du microcontrôleur en plus de pouvoir gérer la correction numérique par le biais d'une interface graphique développée en C\#. 
+
+\medskip
+
+En terme de résultats, nous sommes parvenu à faire léviter le mobile aussi bien par un asservissement analogique qu'avec un asservissement numérique pour une consommation de l'ordre du demi Ampère. La communication série et l'interface sont fonctionnels et il est possible de passer sans difficultés de la correction analogique à la correction numérique en cours de fonctionnement. 
+
+\medskip
+
+Plusieurs améliorations peuvent encore être envisagées pour perfectionner notre solution :
+
+- Le contrôle de la consigne par le biais de l'interface graphique : nous avons envisagé d'implémenter cette fonctionnalité peu avant la dernière séance. Cependant, à cause de notre manière de gérer la consigne en analogique, il faudrait effectuer des modifications Hardware pour parvenir à gérer la consigne numériquement. Nous n'avons pas voulu risquer de compromettre le fonctionnement de notre solution en effectuant de telles modifications. 
+
+- L'affichage de courbes : avec davantage de temps, nous aurions pu afficher des courbes de position du mobile ou de valeur de PWM (reflétant la consommation) sur l'interface graphique
 
 \end{document}
 
