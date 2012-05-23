@@ -35,6 +35,14 @@ _FICD(ICS_PGx2); // DEBUG_ON
 
 int main(void)
 {
+// Configuration du correcteur par défaut
+    Tags[1] = 9999;
+    Tags[2] = 9776;
+    Tags[3] = 931;
+    Tags[4] = 2000;
+    Tags[5] = 200;
+    UART_Update_Feedback();
+
     // Initialisation des différents modules
     PLL_Init();
     IO_Init();

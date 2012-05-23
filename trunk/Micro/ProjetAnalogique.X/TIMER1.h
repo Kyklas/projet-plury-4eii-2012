@@ -17,6 +17,9 @@
  */
 void TIMER1_Init ();
 
-void fonction_T1Interrupt(void);
+// Fonction d'interruption
+void fonctionMarioTheme_T1Interrupt(void);
+void fonctionNumerique_T1Interrupt(void);
+void fonctionAnalog_T1Interrupt(void);
 
 #endif
