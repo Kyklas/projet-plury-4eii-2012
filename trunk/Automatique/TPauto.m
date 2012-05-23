@@ -78,6 +78,8 @@ Correct_d = C2d(Cor_av,Te,'foh')
 rltool(Sys_d);
 rltool(Sys_d * Correct_d);
 
+bode(Cor_av)
+
 %figure
 %rlocusplot(24*Sys_d * Correct_d)
 %figure
@@ -91,6 +93,8 @@ denz1=1;
 denz0=-0.9;
 correcteur_micro = tf([numz1 numz0],[denz1 denz0],Te)
 rltool(gain*Sys_d * correcteur_micro);
+
+% gain mico 0.75
 
 %%%% Test, correcteur numérique théorique, aprox arrière ( Zoh )
 
@@ -119,10 +123,11 @@ gain = 1;
 numz1=10;
 numz0=-9.776;
 denz1=1;
-denz0=-0.94;
+denz0=-0.93;
 correcteur_micro = tf([numz1 numz0],[denz1 denz0],Te)
 rltool(gain*Sys_d * correcteur_micro);
 
+% gain 0.4
 
 %%%%%%%%% Fin test numerique 1 %%%%%%%%%%
 
