@@ -37,7 +37,7 @@ Sys = Sys_elec * Sys_meca*Kc_Hall
    hold on;
  
  disp('Equation du Système Corrigé');
- Sys_Corr = 27*Sys*Cor_av 
+ Sys_Corr = 33.6*Sys*Cor_av 
  
   nichols(Sys_Corr);
   ngrid;
@@ -74,7 +74,7 @@ Te = 1*10^-3;
  disp('Equation numérique du système');
 Sys_d = C2d(Sys,Te,'ZOH')
  disp('Equation numérique du correcteur');
-Correct_d = C2d(Cor_av,Te,'foh')
+Correct_d = C2d(Cor_av,Te,'zoh')
 rltool(Sys_d);
 rltool(Sys_d * Correct_d);
 

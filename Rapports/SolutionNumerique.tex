@@ -268,42 +268,115 @@ Après quelques mésaventures lors du routage (inversion de l'empreinte du pont 
 
 
 \section{Correction Numérique}
+\begin{wrapfigure}{r}{7cm}
+		
+	\includegraphics[width = 7cm,trim=0 1.4cm 0 1.2cm ,clip=true]
+					{SolutionNumerique/Systeme.pdf}
+	\caption{Système}
+\end{wrapfigure}
+La correction numérique découle du travaille effectué pour la correction analogique. La sortie du montage différentiel est utilisée comme entrée du nouveau correcteur. La consigne analogique est la consigne utilisé dans cette correction.
+Cette nouvelle implémentation est facile à implémenté et plus flexible. Les calculs réalisés pendant l'étude automatique du système donnent la forme du correcteur.
 
-Difference avec le rapport d'auto
--> Foh vers Zoh
--> Fréquence de travail
+\[Co_{AvPh}(s)=\dfrac{1+ \tau_d \cdot s}{1 + a_d \cdot \tau_d \cdot s} \]
 
+\[Co_{AvPh}(z)=\dfrac{a \cdot z + b}{z + c}=\dfrac{\dfrac{z}{a_d}+\dfrac{T_e-\tau_d}{a_d \cdot \tau_d} }{z+\dfrac{T_e-a_d \cdot \tau_d}{a_d \cdot \tau_d}}\] 
+
+L'équation en $Z$ est obtenue avec une approximation par rectangle arrière soit $s=\frac{z-1}{T_e}$. L'équation récurente en découlant implanté dans le microcontrolleur est $out_0=a \cdot in_0 + b \cdot in_1 + c \cdot out_1$. $in_1$ et $out_1$ sont le vieillissement des valeurs $in_0$ et $out_0$.
+
+\begin{wrapfigure}{r}{7cm}
+
+	\includegraphics[width = 7cm,trim=0 1.4cm 0 0.7cm ,clip=true]
+					{SolutionNumerique/SystemeCorrigeThorique.pdf}
+	\caption{Système Corrigé Théorique}
+	\vspace{1cm}
+\end{wrapfigure}
+Les valeurs des paramètres sont :
+
+\[\tau_d=0.03934 \; T_e=0.001 \; a_d=0.1\]
+
+La fréquence d'échantillonage $T_e$ a été choisi par rapport à celle utilisé en analogique. La fonction de transfere corespondant est la suivante et donne le lieu d'Evans ci-contre.
+\[Co_{AvPh}(z)=\dfrac{10 z - 9.776}{z -0.7756}\]
+
+Lors de tests, les coefficients présentés ne permettent pas l'asservissement du mobile en position. Plusieurs causes sont possible, la précision des calculs ( virgule fixe, virgule flotant), gain inadéquat, saturations en sortie.
+
+L'asservissement en position a été obtenue en utilisant et adaptant les valeurs présentés dans le rapport d'automatique. Cependant ces valeurs correspondent à une fréquence d'échantillonage de 1.7ms et avec une approimation différente, le lieu d'Evans obtenue n'est pas celui recherché.
+\[  Co_{AvPh_{Rapport Auto Modifie}}(z) = \dfrac {8.272z - 7.915} {z - 0.9} \]
+
+La valeur $c=0.9$ a été modifier par rapport au correcteur présenté dans le rapport d'automatique. Ce changement a pour effet de déplacer le pôle de l'avance de phase.Il est alors remarqué que le gain théorique nécessaire pour la stabilité est de 5 contre 18.5 pour le correcteur précédent. Cependant la zone de stabilité théorique est très faible. Les oscillations observées lors des simulations confirment le résultat.
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width = 15cm,trim=0 1.4cm 0 0.7cm ,clip=true]
+					{SolutionNumerique/SystemeCorrigeSolex.pdf}
+	\label{CorrExpe}	
+	\caption{Correction Expérimental}
+\end{figure}
+
+Ce résultat apport des réponses au causes évoquées. Dans un premier temps il est préférable d'effectuer les calculs en virgule flotante pour simplifier la mise en oeuvre et observer le fonctionnement. Un surplus de gain ocasionne des oscillation rapide mais le mobile lévite toujours, une saturation est peut-être présente quelque part et empèche un gain élevé.
+
+\begin{wrapfigure}{r}{7cm}
+	\vspace{-0.5cm}
+	\includegraphics[width = 7cm,trim=0 1.4cm 0 0.7cm ,clip=true]
+					{SolutionNumerique/SystemeCorrigeThoriqueAdapte.pdf}
+	\caption{Correction Théorique Ajusté}
+\end{wrapfigure}
+Il est possible d'ajuster la correction théorique pour obtenir un gain équivalant à l'asservissement précédent et un meilleur comportement vis à vis des ocsillations. La position du pôle du correcteur théorique est déplacé pour obtenir un gain théorique équivalant. 
+\[  Co_{AvPh_{Theorique \; Modifie}}(z) = \dfrac {10z - 9.776} {z - 0.93} \]
+
+L'amortissement du correcteur est plus important que précedament. Les oscilltions en lévitation sont moins importantes.
+
+Le modèle utilisé pour l'élaboration des calculs théoriques est à relativiser, il est possible que la modélisation soit décalé avec notre sysème, imperfection de la bobine, des capteurs, ...
+
+%\vspace{+5cm}
+%
+%Difference avec le rapport d'auto
+%-> Foh vers Zoh
+%-> Fréquence de travail
+%
+%
+%
+%Questions / causes probables :
+%-> est-ce que le gain de l'avance de phase compte ( analogique ) ?
+%-> mauvais correcteur
+%-> mauvais modèle
+%-> mauvais calcul -> saturation, écretage, arondis
+%
+%Utilisation d'un outils :
+%-> suivit des calculs via la série ( diff, avance de phase, sortie )
+%
+%dernière seance
+%-> 1 gain du montage différentiel (3.5) (1+(2*R1)/R2) ==> /2 à cause des capteurs ==> 1,75
+%	7k + 1k = 8k ==== 3.5 ---- 1.75 de gain
+%-> 2 validation avec matlab de la répartition du gain ( av ph, num)
+%	1.75*3*5 = 26.25 ok pour du analogique
+%-> 3 validation avec l'asservissement numerique du mercredi du solex
+%	1.75*4.5 = 7.875 numerique solex, oups manque le gain 5
+%	1.75*5
+%-> 4 essaye d'amélioration de l'asservissement numérique
+%	pour un asservissement avec un zero correctement 
+
+
+\section{Répartition des gains}
+La répartition des gains le long de la chaîne d'asservissement est la suivante :
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width = 16cm]{SolutionNumerique/Gain.png} 
 	\caption{Chaine automatique des gains}
 \end{figure}
 
-Questions / causes probables :
--> est-ce que le gain de l'avance de phase compte ( analogique ) ?
--> mauvais correcteur
--> mauvais modèle
--> mauvais calcul -> saturation, écretage, arondis
+Le gain du montage différentiel est donné par $G_{sous}=\frac{1}{2}\left( 1+2 \frac{R}{R0_{pot}+R0_{fix}}\right)$ avec $R=10k$, $R0_{pot}=7k$, $R0_{fix}=1k$. $G_{sous}=1.75$.
+Le gain d'aquisition est $G_{ADC}= \frac{Plage \; de \; sortie}{Plage \; d'entr \acute{e} e}=\frac{4096}{5V}$, 5V en entrée représenter sur 12bit. 
+Le gain de correcteur est en fonction de l'asservissement utilisé.
+La PWM a deux modes, 9 bits et la plage représenté est 10V, $G_{PWM}= \frac{Plage \; de \; sortie}{Plage \; d'entr \acute{e} e}=\frac{10V}{1024}$.
+Le pont transforme $\pm5V$ en $\pm12V$, $G_{pont}=2.4$.
+Le gain de la bobine est estimé unitaire. Le gain totale est alors de $33.6$.
 
-Utilisation d'un outils :
--> suivit des calculs via la série ( diff, avance de phase, sortie )
-
-dernière seance
--> 1 gain du montage différentiel (3.5) (1+(2*R1)/R2) ==> /2 à cause des capteurs ==> 1,75
-	7k + 1k = 8k ==== 3.5 ---- 1.75 de gain
--> 2 validation avec matlab de la répartition du gain ( av ph, num)
-	1.75*3*5 = 26.25 ok pour du analogique
--> 3 validation avec l'asservissement numerique du mercredi du solex
-	1.75*4.5 = 7.875 numerique solex, oups manque le gain 5
-	1.75*5
--> 4 essaye d'amélioration de l'asservissement numérique
-	pour un asservissement avec un zero correctement 
-
-
-\section{Répartition des gains}
-Xavier - Fred
 \subsection{Correcteur Analogique}
+Pour la solution analogique, le gain correcteur interne au micro-controller est 1. Le système est stable pour le gain de boucle totale, quelques oscillations peuvent être perçues. Le gain du montage avance de phase n'est pas évoqué par il est pris en compte dans le modèle.
 \subsection{Correcteur Numérique}
+Les gains internes appliqué pendant les corrections numérique sont 0,75 et 0,4. Les gains de boucles ainsi obtenue sont respectivement 25,2 et 13,44. Le gain obtenue pour la première correction ne correspond pas au modèle qui possède un gain maximale de 18.4, cependant le mobile lévite. D'autre part pour la deuxième correction, le gain interne de 0.4 est une valeur limite basse ce qui ne concorde pas avec le gain élevé de 13,44 proche de la limite théorique du modèle de 17,2.
+
+Il existe des corespondances floues entre les gains expérimentaux et ceux théoriques. Un approfondissement sur les calculs réalisés dans le micro-controlleur est nécessaire et possible grâce à la liaison série.
 
 \section{Gimmicks}
  
