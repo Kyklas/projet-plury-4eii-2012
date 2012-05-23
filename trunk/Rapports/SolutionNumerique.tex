@@ -59,12 +59,6 @@ La communication a aussi un interêt pédagogique : nous avons fait le choix d'�
 	
 Dans l'univers de la communication péri-informatique, la liaison USB est figure souveraine. La première version de cette spécification a vue le jour en 1996 dans l'objectif de remplacer progressivement les anciennes connectiques lentes et incompatibles entre elles.
 
-%\begin{figure}[h!]
-%	\centering
-%	\includegraphics[width = 4cm]{SolutionNumerique/usb-logo.jpg} 
-%	\caption{Logo USB 2.0}
-%\end{figure}
-
 \begin{wrapfigure}{r}{5cm}
 	\includegraphics[width = 4cm]{SolutionNumerique/usb-logo.jpg}
 	\caption{Logo USB 2.0}
@@ -127,54 +121,72 @@ Le baudrate est variable car le micro-contrôleur dispose d'un module capable de
 
 \subsubsection{Différentes trames}
 \noindent
+Nomenclature des symboles utilisés dans le protocole :
+
+\medskip
+\begin{description}
+	\item[0] niveau bas logique
+	\item[1] niveau haut logique
+	\item[U] niveau indéfini (non interprété par le logiciel)
+	\item[X] niveau à préciser selon l'utilisation
+\end{description}
+
+\medskip
+\noindent
 Les différentes trames disponibles sont les suivantes :
 \medskip
 \begin{itemize}
-	\item Trame de contrôle : \\
+	\item\textbf{ Trame de contrôle :} \\
 
 		\begin{tabular} {|c|c|c|c|c|c|c|c|}
 			\hline
 			\textbf{typ} & \textbf{r/w} & \textbf{chr} & \textbf{ad4} & \textbf{ad3} & \textbf{ad2} & \textbf{ad1} & \textbf{ad0}\\
 			\hline
-			0 & 0 &  0 &  x &  x &  x &  x &  x \\ \hline
+			1 & X &  X &  ad4 &  ad3 &  ad2 &  ad1 &  ad0 \\ \hline
 		\end{tabular}
 
 		\begin{description}
 			\item[typ :] type de trame (0 : données | 1 : contrôle)
 			\item[r/w :] type de transfert (0 : lecture | 1 : écriture)
 			\item[chr :] type de données envoyées (0 : entiers 16 bits | 1 : chaine de caractères)
-			\item[ad4 ... ad0] destination de la donnée (entière) concernée (0 - 32)
+			\item[ad4 ... ad0] adresse de l'emplacement mémoire de la donnée (entière) envoyée (0 - 32)
 		\end{description}
 
+		La trame de contrôle est envoyée en premier et annonce une donnée de entière ou chaine de caractère. Elle est de type 0 pour la différencier des trames de données. Ceci permet de re-synchroniser la transmission en cas de perte d'un paquet de données. L'adresse de l'emplacement mémoire ne concerne pas les envois et réceptions de chaines.
+
+\medskip
+		En mode lecture (r/w = 0), le destinaire répond une trame de donnée entière ou plusieures trames de chaine directement après réception de la trame de contrôle. En mode écriture (r/w = 1), la trame de contrôle doit être immédiatement suivie d'une trame de donnée entière ou de plusieures trames de chaine.
+
+
 	\medskip
-	\item Trame de donnée entière : \\
+	\item\textbf{ Trame de donnée entière :} \\
 
 		\begin{tabular} {|c|c|c|c|c|c|c|c|c|}
 			\hline
 			\textbf{MSB :} & \textbf{typ} & \textbf{b06} & \textbf{b05} & \textbf{b04} & \textbf{b03} & \textbf{b02} & \textbf{b01} & \textbf{b00}\\
 			\hline
-			 & 0 & 0 &  0 &  0 &  d15 &  d14 &  d13 &  d12 \\ \hline
+			 & 0 & u &  u &  u &  d15 &  d14 &  d13 &  d12 \\ \hline
 		\end{tabular}
 
 		\begin{tabular} {|c|c|c|c|c|c|c|c|c|}
 			\hline
 			\textbf{MSB :} & \textbf{typ} & \textbf{b06} & \textbf{b05} & \textbf{b04} & \textbf{b03} & \textbf{b02} & \textbf{b01} & \textbf{b00}\\
 			\hline
-			 & 0 & 0 &  0 &  0 &  d11 &  d10 &  d09 &  d08 \\ \hline
+			 & 0 & u &  u &  u &  d11 &  d10 &  d09 &  d08 \\ \hline
 		\end{tabular}
 
 		\begin{tabular} {|c|c|c|c|c|c|c|c|c|}
 			\hline
 			\textbf{LSB : } & \textbf{typ} & \textbf{b06} & \textbf{b05} & \textbf{b04} & \textbf{b03} & \textbf{b02} & \textbf{b01} & \textbf{b00}\\
 			\hline
-			 & 0 & 0 &  0 &  0 &  d07 &  d06 &  d05&  d04 \\ \hline
+			 & 0 & u &  u &  u &  d07 &  d06 &  d05&  d04 \\ \hline
 		\end{tabular}
 
 		\begin{tabular} {|c|c|c|c|c|c|c|c|c|}
 			\hline
 			\textbf{LSB : } & \textbf{typ} & \textbf{b06} & \textbf{b05} & \textbf{b04} & \textbf{b03} & \textbf{b02} & \textbf{b01} & \textbf{b00}\\
 			\hline
-			 & 0 & 0 &  0 &  0 &  d03 &  d02 &  d01 &  d00 \\ \hline
+			 & 0 & u &  u &  u &  d03 &  d02 &  d01 &  d00 \\ \hline
 		\end{tabular}
 
 		\begin{description}
@@ -182,8 +194,10 @@ Les différentes trames disponibles sont les suivantes :
 			\item[d15 ... d00] valeur de la donnée 16 bits
 		\end{description}
 
+		Cette trame contient une donnée entière 16 bits à charger dans l'emplacement mémoire précisé dans la précédente trame de contrôle. On remarque que les bits b06, b05 et b04 ne sont pas utilisés. Ils peuvent être mis à profit pour intégrer un code détecteur d'erreur. Cette amélioration est envisageable dans une future version du projet.
+
 	\medskip
-	\item Trame de chaine de caractères : \\
+	\item\textbf{ Trame de chaine de caractères :} \\
 
 		\begin{tabular} {|c|c|c|c|c|c|c|c|}
 			\hline
@@ -197,14 +211,26 @@ Les différentes trames disponibles sont les suivantes :
 			\item[ch6 ... ch0] caractère table ASCII standard
 		\end{description}
 
-		Pour terminer l'envoi d'une chaine, il suffit d'envoyer une trame ne contenant que des zéros. Ceci correspondant à l'envoi du caractère ASCII de terminaison.
+		Cette trame transmet caractère par caractère une chaine de texte. Pour distinguer les trames de données des trames de contrôle, on ne transmet que les 7 premiers bits de chaque caractère et on force le 8 ème à 0. Ce format autorise la représentation des caractères appartenant à la table ASCII standard mais pas à celle étendue. Pour terminer la transmission d'une chaine, il suffit d'envoyer une trame ne contenant que des zéros. Ceci équivaut à l'envoi du caractère de terminaison.
 
 \end{itemize}
 
 \subsection{Implantation du protocole}
+Le présent protocole a été programmé dans la routine d'interruption de réception des données séries du micro-contrôleur ainsi que dans l'application interface. Il rend possible des liaisons bidirectionnelles où le micro-contrôleur comme l'application interface sont capables d'envoyer des trames de contrôle. En définitive, seul le sens application interface vers micro-contrôleur a été implémenté, l'autre sens ne présentant que peu d'intérêt.
 
 \section{Interface}
-Romain
+Afin de faciliter la phase de débuggage et pour rêgler pratiquement les paramètres du correcteur numérique, nous avons développé une petite application interface en C\char35. Le programme consiste en une simple fenêtre présentant une section de connexion, une section de configuration et un espace de texte pour afficher les messages de logs.
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width = 12cm]{SolutionNumerique/IHM.png} 
+	\caption{Interface de l'application de contrôle}
+\end{figure}
+
+Le panneau de connexion requiert de l'utilisateur le choix du port série et la vitesse de transfert. Une fois la connexion établie, les autres sections grisées deviennent accessibles. 
+
+La zone de messages logs liste chronologiquement les évènements de connexion et les messages textes envoyés par la maquette. Elle possède une fonctionnalité d'exportation permettant l'archivage des données dans un fichier texte.
+
 \section{Changement de Puissance}
 Xavier
 \section{Correction Numérique}
@@ -212,6 +238,12 @@ Xavier
 Difference avec le rapport d'auto
 -> Foh vers Zoh
 -> Fréquence de travail
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width = 16cm]{SolutionNumerique/Gain.png} 
+	\caption{Chaine automatique des gains}
+\end{figure}
 
 Questions / causes probables :
 -> est-ce que le gain de l'avance de phase compte ( analogique ) ?
