@@ -48,6 +48,7 @@
 
 \pagebreak
 \section*{Introduction}
+\addcontentsline{toc}{chapter}{Introduction}
 
 Dans nos précédents rapports, nous avons détaillé le problème de l'asservissement en position du mobile et nous avons déterminé les paramètres d'un modèle analogique de correcteur. Par la suite, nous avons mis en place la théorie d'un protocole de communication série afin de faciliter les réglages et les mesures en temps réel. Dans le troisième rapport, nous avons décrit l'avancement de la partie analogique du projet, de la conception de la maquette jusqu'à sa réalisation et ses tests. 
 
@@ -62,7 +63,7 @@ Dans ce dernier rapport, nous allons nous concentrer sur la correction numériqu
 \medskip
 Dans les faits, cette fonctionnalité a été implémentée dans une optique d'assistance au développement. Elle s'est avérée utile pour mettre au point l'asservissement numérique et faciliter le réglage des coefficients de la fonction de transfert du correcteur. Elle permet aussi désormais de collecter diverses informations liées à l'automatique pour analyser la qualité (stabilité) de l'asservissement. On imagine que cette liaison série ne sera pas intégrée dans le produit final, sauf si les spécifications devaient évoluer vers un appareil nécessitant de la connectivité. On peut penser à l'intégration dans un réseau domotique via des technologies Zigbee ou même au travers le Wifi.
 
-La communication a aussi un interêt pédagogique : nous avons fait le choix d'établir un protocole dédié sur une liaison de type série prise en charge par une connexion USB. Nous avons préféré cette solution à celle présentée dans la partie MCSE du projet pour plusieurs raisons qui vont être détaillées.
+La communication a aussi un intérêt pédagogique : nous avons fait le choix d'établir un protocole dédié sur une liaison de type série prise en charge par une connexion USB. Nous avons préféré cette solution à celle présentée dans la partie MCSE du projet pour plusieurs raisons qui vont être détaillées.
 
 \subsection{Choix de la liaison USB}
 	
@@ -78,7 +79,7 @@ Ce document normalise à la fois :
 \medskip
 \begin{itemize}
 	\item un protocole complet de communication série maitre vers esclaves
-	\item le matériel nécessaire pour faire transister l'information (câble, prises ...)
+	\item le matériel nécessaire pour faire transiter l'information (câble, prises ...)
 	\item toutes les caractéristiques électriques et mécaniques associées
 	\item des classes de pilotes standards couvrant un nombre important d'applications génériques.
 \end{itemize}
@@ -92,14 +93,14 @@ Notre application étant destinée à communiquer avec un ordinateur et l'USB fo
 
 \medskip
 \begin{enumerate}
-	\item Choisir un micro-contrôleur disposant de fonctionnalités USB
+	\item Choisir un microcontrôleur disposant de fonctionnalités USB
 	\item Utiliser un contrôleur USB externe
 \end{enumerate}
 
 \medskip
-La première solution est la plus polyvalente car elle permet d'implanter n'importe quelle classe de périphérique dans le programme du micro-contrôleur en se basant sur une bibliothèque USB fournie par le constructeur. Ceci nécessite une étude approfondie de la documentation associée et la rédaction de descripteurs USBs. Etant donné l'aspect auxiliaire de la communication, ce surcroit de développement a été écarté.
+La première solution est la plus polyvalente car elle permet d'implanter n'importe quelle classe de périphérique dans le programme du microcontrôleur en se basant sur une bibliothèque USB fournie par le constructeur. Ceci nécessite une étude approfondie de la documentation associée et la rédaction de descripteurs USBs. Etant donné l'aspect auxiliaire de la communication, ce surcroit de développement a été écarté.
 
-La seconde solution impliquant l'ajout d'un composant externe, au détriment du coût, a été retenue pour l'aisance de développement qu'elle apporte. Cette solution clef en main convertit une liaison série TTL en provenance du micro-contrôleur en liaison USB de manière presque transparente.
+La seconde solution impliquant l'ajout d'un composant externe, au détriment du coût, a été retenue pour l'aisance de développement qu'elle apporte. Cette solution clef en main convertit une liaison série TTL en provenance du microcontrôleur en liaison USB de manière presque transparente.
 
 \begin{figure}[h!]
 	\centering
@@ -126,7 +127,7 @@ Les paramètres généraux utilisés dans la transmission série sont les suivan
 \end{description}
 
 \medskip
-Le Baudrate est variable car le micro-contrôleur dispose d'un module capable de déterminer automatiquement la vitesse de transmission de la liaison. La seule condition à respecter est l'émission du caractère ASCII "U" avant toute communication. Ce caractère correspond à un motif de niveaux logiques hauts et bas alternés qui permettent au périphérique série du micro-contrôleur de calibrer son registre prescaler pour générer le bon Baudrate.
+Le Baudrate est variable car le microcontrôleur dispose d'un module capable de déterminer automatiquement la vitesse de transmission de la liaison. La seule condition à respecter est l'émission du caractère ASCII "U" avant toute communication. Ce caractère correspond à un motif de niveaux logiques hauts et bas alternés qui permettent au périphérique série du microcontrôleur de calibrer son registre prescaler pour générer le bon Baudrate.
 
 \subsubsection{Différentes trames}
 \noindent
@@ -164,7 +165,7 @@ Les différentes trames disponibles sont les suivantes :
 		La trame de contrôle est envoyée en premier et annonce une donnée entière ou une chaine de caractère. Elle est de type 0 pour la différencier des trames de données. Ceci permet de re-synchroniser la transmission en cas de perte d'un paquet de données. L'adresse de l'emplacement mémoire ne concerne pas les envois et réceptions de chaines.
 
 \medskip
-		En mode lecture (r/w = 0), le destinaire répond une trame de donnée entière ou plusieures trames de chaine directement après réception de la trame de contrôle. En mode écriture (r/w = 1), la trame de contrôle doit être immédiatement suivie d'une trame de donnée entière ou de plusieures trames de chaine.
+		En mode lecture (r/w = 0), le destinataire répond une trame de donnée entière ou plusieurs trames de chaine directement après réception de la trame de contrôle. En mode écriture (r/w = 1), la trame de contrôle doit être immédiatement suivie d'une trame de donnée entière ou de plusieurs trames de chaine.
 
 
 	\medskip
@@ -225,11 +226,11 @@ Les différentes trames disponibles sont les suivantes :
 \end{itemize}
 
 \subsection{Implantation du protocole}
-Le présent protocole a été programmé dans la routine d'interruption de réception des données séries du micro-contrôleur ainsi que dans l'application interface. Il rend possible des liaisons bidirectionnelles où le micro-contrôleur comme l'application interface sont capables d'envoyer des trames de contrôle. En définitive, seul le sens application interface vers micro-contrôleur a été implémenté, l'autre sens ne présentant que peu d'intérêt.
+Le présent protocole a été programmé dans la routine d'interruption de réception des données séries du microcontrôleur ainsi que dans l'application interface. Il rend possible des liaisons bidirectionnelles où le microcontrôleur comme l'application interface sont capables d'envoyer des trames de contrôle. En définitive, seul le sens application interface vers microcontrôleur a été implémenté, l'autre sens ne présentant que peu d'intérêt.
 
 \section{Interface}
 \subsection{Fonctionnement}
-Afin de faciliter la phase de débuggage et pour rêgler pratiquement les paramètres du correcteur numérique, nous avons développé une petite application interface en C\char35. Le programme consiste en une simple fenêtre présentant une section de connexion, une section de configuration et un espace de texte pour afficher les messages de logs.
+Afin de faciliter la phase de déboggage et pour régler pratiquement les paramètres du correcteur numérique, nous avons développé une petite application interface en C\char35. Le programme consiste en une simple fenêtre présentant une section de connexion, une section de configuration et un espace de texte pour afficher les messages de logs.
 
 \begin{figure}[h!]
 	\centering
@@ -242,15 +243,15 @@ Le panneau de connexion requiert de l'utilisateur le choix du port série et la 
 La zone de messages logs liste chronologiquement les évènements de connexion et les messages textes envoyés par la maquette. Elle possède une fonctionnalité d'exportation permettant l'archivage des données dans un fichier texte.
 
 Dès que la connexion entre le PC et la carte est établie, L'interface graphique demande le mode de correction en cours :  \textbf{analogique} ou \textbf{numérique}, on peut ensuite le modifier via les \textit{radiobuttons}. 
-Par défaut, lorsque la carte démarre, c'est la correction analogique qui est mise en place. Pour passer en correction numérique, il faut donc connecter avec un PC.
+Par défaut, lorsque la carte démarre, c'est la correction analogique qui est mise en place. Pour passer en correction numérique, il faut donc se connecter avec un PC.
 
-Lorsque la correction numérique est demandé, on lit dans un premier temps tout les paramètres de corrections stockés dans le microcontrôleur, on peut alors modifier différents paramètre : \textit{$K_d$}, \textit{$T_d$}, \textit{$T_e$}, \textit{$\alpha$}, il faut ensuite appliquer les modifications. A ce moment, l'équation de récurrence est calculé et envoyé au microcontrôleur. Une fois que ces différents fonctionnalités ont été mise en place, nous nous sommes amusé à réaliser quelques "Gimmicks" décrits à la fin du rapports.
+Lorsque la correction numérique est demandée, on lit dans un premier temps tous les paramètres de correction stockés dans le microcontrôleur puis on peut les modifier : \textit{$K_d$}, \textit{$T_d$}, \textit{$T_e$}, \textit{$\alpha$}. Il faut ensuite appliquer les changements avec un \textit{button}. A ce moment, les coefficients de l'équation de récurrence sont normalisés et envoyés au microcontrôleur. Une fois que ces différentes fonctionnalités ont été mises en place, nous nous sommes adonné à la réalisation de quelques "Gimmicks" décrits à la fin du rapport.
 
-\subsection{Technologie utilisé}
-Pour réaliser cette interface, nous avons utilisé Visual Studio 2010. C'est une application "Windows Forms" réalisé avec les différents objets du Microsoft .NET Framework 4. Visual Studio permet de réaliser des interface graphique simple très rapidement, c'est pourquoi nous avons décider d'utiliser ce dernier. 
-Pour la communication série, nous utilisons l'objet "SerialPort" du Framework .NET, cette objet permet un accès rapide et sans trop de contraintes au port série.
+\subsection{Technologie utilisée}
+Pour réaliser cette interface, nous avons utilisé Visual Studio 2010. C'est une application "Windows Forms" composée des différents objets du Framework Microsoft .NET 4. Visual Studio permet de réaliser des interfaces graphiques simples très rapidement, c'est pourquoi nous avons décidé d'utiliser ce dernier. 
+Pour la communication série, nous utilisons l'objet "SerialPort" du Framework .NET, cet objet permet un accès rapide et sans trop de contraintes au port série.
 
-Pour utiliser l'interface graphique, il faut donc installer le Framework .NET 4, qui est par défaut installer avec Windows 7.
+Pour utiliser l'interface graphique, il faut donc installer le Framework .NET 4 qui est par défaut installé avec Windows 7.
 
 \section{Changement de Puissance}
 
@@ -301,7 +302,7 @@ Cette nouvelle solution est facile à implémenter et plus flexible. Les calculs
 
 \[Co_{AvPh}(z)=\dfrac{a \cdot z + b}{z + c}=\dfrac{\dfrac{z}{a_d}+\dfrac{T_e-\tau_d}{a_d \cdot \tau_d} }{z+\dfrac{T_e-a_d \cdot \tau_d}{a_d \cdot \tau_d}}\] 
 
-L'équation en $Z$ est obtenue avec une approximation des rectangles arrière, soit $s=\frac{z-1}{T_e}$. L'équation de récurrence en découlant implantée dans le microcontrolleur est $out_0=a \cdot in_0 + b \cdot in_1 + c \cdot out_1$. 
+L'équation en $Z$ est obtenue avec une approximation des rectangles arrière, soit $s=\frac{z-1}{T_e}$. L'équation de récurrence en découlant implantée dans le microcontrôleur est $out_0=a \cdot in_0 + b \cdot in_1 + c \cdot out_1$. 
 $in_1$ et $out_1$ sont le vieillissement des valeurs $in_0$ et $out_0$.
 
 \begin{wrapfigure}{r}{7cm}
@@ -320,17 +321,17 @@ La fréquence d'échantillonnage $T_e$ a été choisie par rapport à celle util
 
 Lors des tests, les coefficients présentés ne permettent pas l'asservissement du mobile en position. Plusieurs causes sont possibles : la précision des calculs (virgule fixe, virgule flottante), le gain inadéquat ou encore des saturations en sortie.
 
-L'asservissement en position a été obtenu en utilisant et adaptant les valeurs présentées dans le rapport d'automatique. Cependant ces valeurs correspondent à une fréquence d'échantillonage de 1.7ms avec une approximation différente, le lieu d'Evans obtenu n'est pas celui recherché.
+L'asservissement en position a été obtenu en utilisant et adaptant les valeurs présentées dans le rapport d'automatique. Cependant ces valeurs correspondent à une fréquence d'échantillonnage de 1.7ms avec une approximation différente, le lieu d'Evans obtenu n'est pas celui recherché.
 \[  Co_{AvPh_{Rapport Auto Modifie}}(z) = \dfrac {8.272z - 7.915} {z - 0.9} \]
 
-La valeur $c=0.9$ a été modifiée par rapport au correcteur présenté dans le rapport d'automatique. Ce changement a pour effet de déplacer le pôle de l'avance de phase. (INCORRECT) Il est alors remarqué que le gain théorique nécessaire pour la stabilité est de 5 contre 18.5 pour le correcteur précédent. Cependant la zone de stabilité théorique est très faible. Les oscillations observées lors des simulations confirment le résultat.
+La valeur $c=0.9$ a été modifiée par rapport au correcteur présenté dans le rapport d'automatique. Ce changement a pour effet de déplacer le pôle de l'avance de phase. On remarque alors que le gain théorique nécessaire pour la stabilité est de 5 contre 18.5 pour le correcteur précédent. Cependant la zone de stabilité théorique est très faible. Les oscillations observées lors des simulations confirment le résultat.
 
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width = 13cm,trim=0 1.4cm 0 0.7cm ,clip=true]
 					{SolutionNumerique/SystemeCorrigeSolex.pdf}
 	\label{CorrExpe}	
-	\caption{Correction Expérimental}
+	\caption{Correction Expérimentale}
 \end{figure}
 
 Ce résultat apporte des réponses par rapport aux causes évoquées précédemment. Dans un premier temps, il est préférable d'effectuer les calculs en virgule flottante pour simplifier la mise en œuvre et observer le fonctionnement. Un surplus de gain occasionne des oscillations rapides mais le mobile lévite toujours, une saturation est peut-être présente quelque part et empêche un gain élevé.
@@ -339,14 +340,14 @@ Ce résultat apporte des réponses par rapport aux causes évoquées précédemm
 	\vspace{-0.5cm}
 	\includegraphics[width = 7cm,trim=0 1.4cm 0 0.7cm ,clip=true]
 					{SolutionNumerique/SystemeCorrigeThoriqueAdapte.pdf}
-	\caption{Correction Théorique Ajusté}
+	\caption{Correction Théorique Ajustée}
 \end{wrapfigure}
 Il est possible d'ajuster la correction théorique pour obtenir un gain équivalant à l'asservissement précédent et un meilleur comportement vis à vis des oscillations. La position du pôle du correcteur théorique est déplacée pour obtenir un gain théorique équivalant. 
 \[  Co_{AvPh_{Theorique \; Modifie}}(z) = \dfrac {10z - 9.776} {z - 0.93} \]
 
 L'amortissement du correcteur est plus important que précédemment. Les oscillations en lévitation sont moins importantes.
 
-Le modèle utilisé pour l'élaboration des calculs théoriques est à relativiser, il est possible que la modélisation soit décalée par rapport notre système, imperfection de la bobine, des capteurs, ...
+Le modèle utilisé pour l'élaboration des calculs théoriques est à relativiser, il est possible que la modélisation soit décalée par rapport notre système à cause d'imperfections de la bobine ou des capteurs.
 
 %\vspace{+5cm}
 %
@@ -378,6 +379,7 @@ Le modèle utilisé pour l'élaboration des calculs théoriques est à relativis
 
 
 \section{Répartition des gains}
+
 La répartition des gains le long de la chaîne d'asservissement est la suivante :
 \begin{figure}[h!]
 	\centering
@@ -385,31 +387,44 @@ La répartition des gains le long de la chaîne d'asservissement est la suivante
 	\caption{Chaine automatique des gains}
 \end{figure}
 
-Le gain du montage différentiel est donné par $G_{sous}=\frac{1}{2}\left( 1+2 \frac{R}{R0_{pot}+R0_{fix}}\right)$ avec $R=10k$, $R0_{pot}=7k$, $R0_{fix}=1k$. $G_{sous}=1.75$.
-Le gain d'acquisition est $G_{ADC}= \frac{Plage \; de \; sortie}{Plage \; d'entr \acute{e} e}=\frac{4096}{5V}$, 5V en entrée représenter sur 12 bits. 
+\pagebreak
+
+\noindent 
+\begin{enumerate}
+\item[$G_{sous}$ : ]
+Le gain du montage différentiel est donné par : \\ $G_{sous}=\frac{1}{2}\left( 1+2 \frac{R}{R0_{pot}+R0_{fix}}\right)$ avec $R=10k\ohm$, $R0_{pot}=7k\ohm$, $R0_{fix}=1k\ohm$ \\ ce qui donne $G_{sous}=1,75$.
+\item[$G_{ADC}$ : ]
+Le gain d'acquisition est : \\ $G_{ADC}= \frac{Plage \; de \; sortie}{Plage \; d'entr \acute{e} e}=\frac{4096}{5V}$, 5V en entrée représentée sur 12 bits. 
+\item[$G_{Corr.}$ : ]
 Le gain de correcteur est en fonction de l'asservissement utilisé.
-La PWM a deux modes, 9 bits et la plage représenté est 10V, $G_{PWM}= \frac{Plage \; de \; sortie}{Plage \; d'entr \acute{e} e}=\frac{10V}{1024}$.
-Le pont transforme $\pm5V$ en $\pm12V$, $G_{pont}=2.4$.
-Le gain de la bobine est estimé unitaire. Le gain total est alors de $33.6$.
+\item[$G_{PWM}$ : ]
+La PWM a deux modes, 9 bits et la plage représentée est 10V. \\ $G_{PWM}= \frac{Plage \; de \; sortie}{Plage \; d'entr \acute{e} e}=\frac{10V}{1024}$.
+\item[$G_{Pont}$ : ]
+Le pont transforme $\pm5V$ en $\pm12V$ ce qui donne $G_{pont}=2,4$.
+\item[$G_{Bob}$ : ]
+Le gain de la bobine est pris en compte dans le modèle du correcteur. 
+\item[$G_{Total}$ : ]
+Le gain total est alors de $33,6$.
+\end{enumerate}
 
 \subsection{Correcteur Analogique}
-Pour la solution analogique, le gain du correcteur interne au micro-controller est de 1. Le système est stable pour le gain de boucle totale, quelques oscillations peuvent être perçues. Le gain du montage avance de phase n'est pas évoqué par il est pris en compte dans le modèle.
+Pour la solution analogique, le gain du correcteur interne au microcontrôleur est de 1. Le système est stable pour le gain de boucle total bien que quelques oscillations puissent être perçues. Le gain du montage avance de phase n'est pas évoqué car il est pris en compte dans le modèle.
 \subsection{Correcteur Numérique}
-Les gains internes appliqués pendant les corrections numérique sont 0,75 et 0,4. Les gains de boucles ainsi obtenue sont respectivement 25,2 et 13,44. Le gain obtenu pour la première correction ne correspond pas au modèle qui possède un gain maximale de 18.4, cependant le mobile lévite. D'autre part pour la deuxième correction, le gain interne de 0.4 est une valeur limite basse ce qui ne concorde pas avec le gain élevé de 13,44 proche de la limite théorique du modèle de 17,2.
+Les gains internes appliqués pendant les corrections numériques expérimentales et théorique ajustée sont de 0,75 et 0,4. Les gains de boucle ainsi obtenus sont respectivement 25,2 et 13,44. Le gain obtenu pour la première correction ne correspond pas au modèle qui possède un gain maximal de 18.4, cependant le mobile lévite. D'autre part, pour la correction théorique ajustée, le gain interne de 0.4 est une valeur limite basse ce qui ne concorde pas avec le gain élevé de 13,44 proche de la limite théorique du modèle de 17,2.
 
-Il existe des correspondances floues entre les gains expérimentaux et ceux théoriques. Un approfondissement sur les calculs réalisés dans le microcontrôleur est nécessaire et possible grâce à la liaison série.
+Il existe des correspondances floues entre les gains expérimentaux et ceux théoriques. Une analyse approfondie sur les calculs réalisés dans le microcontrôleur et des plages d'entrée des valeurs serait nécessaire et possible grâce à la liaison série.
 
 \section{Gimmicks}
  
- En plus des asservissements numérique et analogique, nous avons mis en place trois fonctionnalités additionnelles :
+ En plus des asservissements numériques et analogique, nous avons mis en place trois fonctionnalités additionnelles :
  
  \medskip
  
- - La première est d'ordre pratique. En temps normal, dès que l'on cesse d'asservir, le mobile chute. Cela provoque un bruit plutôt désagréable. Nous avons donc implémenté une fonctionnalité qui amène le mobile à se coller à la bobine lorsque l'on quitte l'application graphique. 
+ - La première est d'ordre pratique. En temps normal, dès que l'on cesse d'asservir, le mobile chute. Cela provoque un bruit plutôt désagréable (et  accessoirement on casserait l'ampoule dans le cas d'une lampe). Nous avons donc implémenté une fonctionnalité qui amène le mobile à se coller à la bobine lorsque l'on quitte l'application graphique. 
  
  - Seconde fonctionnalité : tant que l'on est en analogique, on acquiert les mesures via la liaison série. Il est possible d'exporter ces mesures au format CSV afin de générer des courbes pour y suivre l'évolution de la position du mobile.
  
-  - La dernière est d'ordre artistique : lorsque le mobile vient se coller sur la bobine, on joue un air de musique connu \footnote{http://www.youtube.com/watch?v=Kh2AWswAMvw} est faisant varier la fréquence de la PWM dans la bobine avec un rapport cyclique de 50\% (pour se rapprocher d'une sinusoïde). 
+  - La dernière est d'ordre artistique : lorsque le mobile vient se coller sur la bobine, on joue un air de musique connu \footnote{http://www.youtube.com/watch?v=Kh2AWswAMvw} est faisant varier la fréquence de la PWM dans la bobine avec un rapport cyclique de 50\%. 
   
 \begin{figure}[h!]
 	\centering
@@ -417,22 +432,35 @@ Il existe des correspondances floues entre les gains expérimentaux et ceux thé
 	\caption{Un air connu ?}
 \end{figure}
  
- \pagebreak
 \section*{Conclusion - Évolution}
+\addcontentsline{toc}{chapter}{Conclusion - Évolution} 
 
-Au cours de ce projet, nous aurons eu l'occasion de mettre en œuvre les connaissances que nous avons acquises pendant les semestres précédents. Nous sommes ainsi parvenu à concevoir une correction adaptée à notre système grâce à une étude d'automatique. Ensuite, en utilisant nos connaissances en électronique, nous avons réalisé ce correcteur ainsi que la boucle d'asservissement du système en choisissant nous-mêmes les composants nécessaires. Enfin, grâce à nos cours de microcontrôleur et de programmation, nous avons pu générer la PWM qui contrôle la bobine. Nous avons également mis en place une communication série asynchrone par USB avec un protocole de log pour envoyer et recevoir des données du microcontrôleur en plus de pouvoir gérer la correction numérique par le biais d'une interface graphique développée en C\#. 
+Au cours de ce projet, nous aurons eu l'occasion de mettre en œuvre les connaissances que nous avons acquises pendant les semestres précédents. Nous sommes ainsi parvenus à concevoir une correction adaptée à notre système grâce à une étude d'automatique. Ensuite, en utilisant nos connaissances en électronique, nous avons réalisé ce correcteur ainsi que la boucle d'asservissement du système en choisissant nous-mêmes les composants nécessaires. Enfin, grâce à nos cours de microcontrôleur et de programmation, nous avons pu générer la PWM qui contrôle la bobine. Nous avons également mis en place une communication série asynchrone par USB avec un protocole de log pour envoyer et recevoir des données du microcontrôleur en plus de pouvoir gérer la correction numérique par le biais d'une interface graphique développée en C\#. 
 
 \medskip
 
-En terme de résultats, nous sommes parvenu à faire léviter le mobile aussi bien par un asservissement analogique qu'avec un asservissement numérique pour une consommation de l'ordre du demi Ampère. La communication série et l'interface sont fonctionnels et il est possible de passer sans difficultés de la correction analogique à la correction numérique en cours de fonctionnement. 
+En termes de résultats, nous sommes parvenu à faire léviter le mobile aussi bien par un asservissement analogique qu'avec un asservissement numérique pour une consommation de l'ordre du demi Ampère. La communication série et l'interface sont fonctionnels et il est possible de passer sans difficultés de la correction analogique à la correction numérique en cours de fonctionnement. 
 
 \medskip
 
 Plusieurs améliorations peuvent encore être envisagées pour perfectionner notre solution :
 
-- Le contrôle de la consigne par le biais de l'interface graphique : nous avons envisagé d'implémenter cette fonctionnalité peu avant la dernière séance. Cependant, à cause de la manière dont la consigne analogique est généré, il est nécesaire d'effectuer des modifications Hardware pour parvenir à gérer la consigne numériquement. Nous n'avons pas voulu risquer de compromettre le fonctionnement de notre solution en effectuant de telles modifications.
+- Le contrôle de la consigne par le biais de l'interface graphique : nous avons envisagé d'implémenter cette fonctionnalité peu avant la dernière séance. Cependant, à cause de la manière dont la consigne analogique est généré, il est nécessaire d'effectuer des modifications hardware pour parvenir à gérer la consigne numériquement. Nous n'avons pas voulu risquer de compromettre le fonctionnement de notre solution en effectuant de telles modifications.
 
 - L'affichage de courbes : avec davantage de temps, nous aurions pu afficher des courbes de position du mobile ou de valeur de PWM (reflétant la consommation) sur l'interface graphique
+
+\pagebreak
+\section*{Annexes}
+\addcontentsline{toc}{chapter}{Annexes}
+
+Les codes microcontrôleur et les codes de l'IHM seront fournis dans une archive séparée. 
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width = 12 cm]{SolutionNumerique/levitation.png} 
+	\caption{Tadaaa !}
+\end{figure}
+ 
 
 \end{document}
 
