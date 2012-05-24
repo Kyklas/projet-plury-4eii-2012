@@ -49,24 +49,24 @@
 \pagebreak
 \section*{Introduction}
 
-Dans nos précédents rapports, nous avons détaillé le problème de l'asservissement en position du mobile et nous avons déterminé les paramètres d'un modèle analogique de correcteur. Par la suite, nous avons mis en place la théorie d'un protocole de communication série afin de faciliter les réglages et les mesures en temps réel. Dans le troisième rapport, nous avons décris l'avancement de la partie analogique du projet, de la conception de la maquette jusqu'à sa réalisation et ses tests. 
+Dans nos précédents rapports, nous avons détaillé le problème de l'asservissement en position du mobile et nous avons déterminé les paramètres d'un modèle analogique de correcteur. Par la suite, nous avons mis en place la théorie d'un protocole de communication série afin de faciliter les réglages et les mesures en temps réel. Dans le troisième rapport, nous avons décrit l'avancement de la partie analogique du projet, de la conception de la maquette jusqu'à sa réalisation et ses tests. 
 
 \medskip
 
-Dans ce dernier rapport, nous allons nous concentrer sur la correction numérique. Nous commencerons par définir les caractéristiques du protocole série que nous avons décidé d'utiliser en lieu et place de celui défini dans le rapport de MCSE puis nous en expliciterons la programmation dans le microcontrôleur. Ensuite, nous aborderons brièvement la question de l'interface graphique mise en place et nous reviendrons également sur le changement intervenu dans la partie puissance avant de nous intéresser à la correction numérique à proprement parler. Enfin, nous clarifierons la question de la répartition des gains, en analogique comme en numérique, avant de conclure globalement sur le projet tout en proposant des possibilités d'améliorations que nous n'aurons malheureusement pas le temps de mettre en place. 
+Dans ce dernier rapport, nous allons nous concentrer sur la correction numérique. Nous commencerons par définir les caractéristiques du protocole série que nous avons décidé d'utiliser en lieu et place de celui défini dans le rapport de MCSE, puis nous en expliciterons la programmation dans le microcontrôleur. Ensuite, nous aborderons brièvement la question de l'interface graphique mise en place et nous reviendrons également sur le changement intervenu dans la partie puissance avant de nous intéresser à la correction numérique à proprement parler. Enfin, nous clarifierons la question de la répartition des gains, en analogique comme en numérique, avant de conclure globalement sur le projet tout en proposant des possibilités d'améliorations que nous n'aurons malheureusement pas le temps de mettre en place. 
 
 
 \section{Communication}
-	La partie communication du projet peut paraître secondaire quand on considère l'application dans sa globalité. Pour quelles raisons un luminaire aurait il besoin de communiquer avec un dispositif informatique ? L'intérêt semble limité ...
+	La partie communication du projet peut paraître secondaire quand on considère l'application dans sa globalité. Pour quelles raisons un luminaire aurait-il besoin de communiquer avec un dispositif informatique ? L'intérêt semble limité ...
 
 \medskip
 Dans les faits, cette fonctionnalité a été implémentée dans une optique d'assistance au développement. Elle s'est avérée utile pour mettre au point l'asservissement numérique et faciliter le réglage des coefficients de la fonction de transfert du correcteur. Elle permet aussi désormais de collecter diverses informations liées à l'automatique pour analyser la qualité (stabilité) de l'asservissement. On imagine que cette liaison série ne sera pas intégrée dans le produit final, sauf si les spécifications devaient évoluer vers un appareil nécessitant de la connectivité. On peut penser à l'intégration dans un réseau domotique via des technologies Zigbee ou même au travers le Wifi.
 
-La communication a aussi un interêt pédagogique : nous avons fait le choix d'établir un protocole dédié sur une liaison de type série prise en charge par une connection USB. Nous avons préféré cette solution à celle présentée dans la partie MCSE du projet pour plusieures raisons qui vont être détaillées.
+La communication a aussi un interêt pédagogique : nous avons fait le choix d'établir un protocole dédié sur une liaison de type série prise en charge par une connexion USB. Nous avons préféré cette solution à celle présentée dans la partie MCSE du projet pour plusieurs raisons qui vont être détaillées.
 
 \subsection{Choix de la liaison USB}
 	
-Dans l'univers de la communication péri-informatique, la liaison USB est figure souveraine. La première version de cette spécification a vue le jour en 1996 dans l'objectif de remplacer progressivement les anciennes connectiques lentes et incompatibles entre elles.
+Dans l'univers de la communication péri-informatique, la liaison USB est figure souveraine. La première version de cette spécification a vu le jour en 1996 dans l'objectif de remplacer progressivement les anciennes connectiques lentes et incompatibles entre elles.
 
 \begin{wrapfigure}{r}{5cm}
 	\includegraphics[width = 4cm]{SolutionNumerique/usb-logo.jpg}
@@ -78,7 +78,7 @@ Ce document normalise à la fois :
 \medskip
 \begin{itemize}
 	\item un protocole complet de communication série maitre vers esclaves
-	\item le matériel nécessaire pour faire transister l'information (cable, prises ...)
+	\item le matériel nécessaire pour faire transister l'information (câble, prises ...)
 	\item toutes les caractéristiques électriques et mécaniques associées
 	\item des classes de pilotes standards couvrant un nombre important d'applications génériques.
 \end{itemize}
@@ -107,10 +107,10 @@ La seconde solution impliquant l'ajout d'un composant externe, au détriment du 
 	\caption{Diagramme interne du FT232}
 \end{figure}
 
-Le contrôleur circuit qui a été sélectionné est le FT232R de FTDI. Ce composant a été très simple à intégrer sur la carte du projet car il ne nécessite qu'une alimentation 5v et la liaison série pour fonctionner. De plus, il configure ses paramètres de transmission automatiquement en fonction de ceux communiqués par l'ordinateur à l'ouverture du port. Pour résumer ce composant est facile d'utilisation à défaut d'être peu couteux.
+Le circuit contrôleur qui a été sélectionné est le FT232R de FTDI. Ce composant a été très simple à intégrer sur la carte du projet car il ne nécessite qu'une alimentation 5V et la liaison série pour fonctionner. De plus, il configure ses paramètres de transmission automatiquement en fonction de ceux communiqués par l'ordinateur à l'ouverture du port. Pour résumer ce composant est facile d'utilisation à défaut d'être peu couteux.
 
 \subsection{Élaboration d'un protocole}
-Dans le rapport de MCSE, nous avions présenté un protocole basique, exploitant un format de trames fixe de 3 octets consécutifs. Le premier contenant l'index de la commande et les deux suivants le corps de la donnée envoyée. Nous nous sommes rendus compte que ce protocole ne couvrait pas tous nos besoins et en particulier la possibilité de transmettre des messages d'erreurs ou de log.
+Dans le rapport de MCSE, nous avions présenté un protocole basique, exploitant un format de trames fixes de 3 octets consécutifs. Le premier contenant l'index de la commande et les deux suivants le corps de la donnée envoyée. Nous nous sommes rendus compte que ce protocole ne couvrait pas tous nos besoins et en particulier la possibilité de transmettre des messages d'erreurs ou de log.
 
 \medskip
 Nous avons donc programmé un autre protocole, plus évolué et plus évolutif. Celui ci est capable de transmettre plusieurs types de trames à longueur variable et d'inclure des codes de gestion d'erreur de transmission (au besoin).
@@ -161,7 +161,7 @@ Les différentes trames disponibles sont les suivantes :
 			\item[ad4 ... ad0] adresse de l'emplacement mémoire de la donnée (entière) envoyée (0 - 32)
 		\end{description}
 
-		La trame de contrôle est envoyée en premier et annonce une donnée de entière ou chaine de caractère. Elle est de type 0 pour la différencier des trames de données. Ceci permet de re-synchroniser la transmission en cas de perte d'un paquet de données. L'adresse de l'emplacement mémoire ne concerne pas les envois et réceptions de chaines.
+		La trame de contrôle est envoyée en premier et annonce une donnée entière ou une chaine de caractère. Elle est de type 0 pour la différencier des trames de données. Ceci permet de re-synchroniser la transmission en cas de perte d'un paquet de données. L'adresse de l'emplacement mémoire ne concerne pas les envois et réceptions de chaines.
 
 \medskip
 		En mode lecture (r/w = 0), le destinaire répond une trame de donnée entière ou plusieures trames de chaine directement après réception de la trame de contrôle. En mode écriture (r/w = 1), la trame de contrôle doit être immédiatement suivie d'une trame de donnée entière ou de plusieures trames de chaine.
@@ -220,7 +220,7 @@ Les différentes trames disponibles sont les suivantes :
 			\item[ch6 ... ch0] caractère table ASCII standard
 		\end{description}
 
-		Cette trame transmet caractère par caractère une chaine de texte. Pour distinguer les trames de données des trames de contrôle, on ne transmet que les 7 premiers bits de chaque caractère et on force le 8 ème à 0. Ce format autorise la représentation des caractères appartenant à la table ASCII standard mais pas à celle étendue. Pour terminer la transmission d'une chaine, il suffit d'envoyer une trame ne contenant que des zéros. Ceci équivaut à l'envoi du caractère de terminaison.
+		Cette trame transmet une chaine de texte caractère par caractère. Pour distinguer les trames de données des trames de contrôle, on ne transmet que les 7 premiers bits de chaque caractère et on force le 8 ème à 0. Ce format autorise la représentation des caractères appartenant à la table ASCII standard mais pas à celle étendue. Pour terminer la transmission d'une chaine, il suffit d'envoyer une trame ne contenant que des zéros. Ceci équivaut à l'envoi du caractère de terminaison.
 
 \end{itemize}
 
@@ -251,7 +251,9 @@ Nous avons alors tenté de le ressouder en utilisant le four à refusion. Bien q
 
 \subsection{Choix du nouveau pont en H}
 
-Après consultation du catalogue Farnell, nous avons choisi un L6203 de ST Microelectronics. Bien qu'un peu plus cher (7.44 \euro{} en unitaire), ce composant fonctionne de manière similaire à l'A4950 : on peut choisir le sens de parcours du courant dans le pont par le biais des mêmes entrées qu'avec l'A4950. Cependant, ce composant nécessite des condensateurs de Bootstrap (1 par sortie) et supporte jusqu'à 5 A au lieu des 3,5 A du A4950. De plus, son boitier Multiwatt nous assure une dissipation thermique largement meilleure qu'avant en plus de nous permettre de rajouter facilement un radiateur. En outre, le $R_{DSON}$ de ce pont est de \unit{0,3}{\ohm} au lieu des 1,3 $\ohm$ de l'A4950 : on chauffera donc beaucoup moins tout en dissipant mieux, augmentant ainsi sensiblement notre marge de manœuvre pour l'asservissement. Enfin, le L6203 dispose également d'une protection en courant mais n'implémente plus de protection en courant. Il faudrait rajouter une comparateur sur la sortie $V_{Sense})$ du pont en H, ce que nous ne ferons pas pour des raisons de simplifications et à cause du fait que les alimentations ne peuvent pas fournir de courant supérieur à ce que peut supporter notre pont. 
+Après consultation du catalogue Farnell, nous avons choisi un L6203 de ST Microelectronics. Bien qu'un peu plus cher (7.44 \euro{} en unitaire), ce composant fonctionne de manière similaire à l'A4950 : on peut choisir le sens de parcours du courant dans le pont par le biais des mêmes entrées qu'avec l'A4950. Cependant, ce composant nécessite des condensateurs de Bootstrap (1 par sortie) et supporte jusqu'à 5 A au lieu des 3,5 A du A4950. De plus, son boitier Multiwatt nous assure une dissipation thermique largement meilleure qu'avant en plus de nous permettre de rajouter facilement un radiateur. En outre, le $R_{DSON}$ de ce pont est de \unit{0,3}{\ohm} au lieu des 1,3 $\ohm$ de l'A4950 : on chauffera donc beaucoup moins tout en dissipant mieux, augmentant ainsi sensiblement notre marge de manœuvre pour l'asservissement. Enfin, le L6203 dispose également d'une protection thermique mais n'implémente plus de protection en courant. Il faudrait rajouter un comparateur sur la sortie $V_{Sense}$ du pont en H, ce que nous ne ferons pas pour des raisons de simplifications et à cause du fait que nous avons mis en place des protections empêchant un courant supérieur à 3 A de passer, ce qui est inférieur à ce que peut supporter notre pont. 
+
+
 Ci dessous, le schéma bloc du L6203. 
 
 \begin{figure}[h!]
@@ -262,7 +264,7 @@ Ci dessous, le schéma bloc du L6203.
 
 \subsection{Fonctionnement du L6203}
 
-Après quelques mésaventures lors du routage (inversion de l'empreinte du pont en H), nous avons pu tester notre nouveau circuit de puissance. Celui-ci s'est avéré meilleure que le précédent, fournissant un asservissement plus stable en raison de sa plus grande tolérance au courant de plus grandes valeurs. La consommation a également été diminuée (entre 0,4 et 0,5 A) grâce à la baisse significative du $R_{DSON}$. Il aurait été possible d'optimiser le consommation au détriment de la position en amenant le mobile de sorte que la répulsion du champ magnétique soit compensée par le poids du mobile. Ci-dessous le routage de la carte de puissance. 
+Après quelques mésaventures lors du routage (inversion de l'empreinte du pont en H), nous avons pu tester notre nouveau circuit de puissance. Celui-ci s'est avéré meilleur que le précédent, fournissant un asservissement plus stable en raison de sa plus grande tolérance aux plus grands courants. La consommation a également été diminuée (entre 0,4 et 0,5 A) grâce à la baisse significative du $R_{DSON}$. Il aurait été possible d'optimiser la consommation au détriment de la position en amenant le mobile de sorte que la répulsion du champ magnétique soit compensée par le poids du mobile. Ci-dessous le routage de la carte de puissance. 
 
 \begin{figure}[h!]
 	\centering
@@ -287,7 +289,7 @@ Cette nouvelle solution est facile à implémenter et plus flexible. Les calculs
 
 \[Co_{AvPh}(z)=\dfrac{a \cdot z + b}{z + c}=\dfrac{\dfrac{z}{a_d}+\dfrac{T_e-\tau_d}{a_d \cdot \tau_d} }{z+\dfrac{T_e-a_d \cdot \tau_d}{a_d \cdot \tau_d}}\] 
 
-L'équation en $Z$ est obtenue avec une approximation des rectangles arrière, soit $s=\frac{z-1}{T_e}$. L'équation récurrente en découlant implantée dans le microcontrolleur est $out_0=a \cdot in_0 + b \cdot in_1 + c \cdot out_1$. 
+L'équation en $Z$ est obtenue avec une approximation des rectangles arrière, soit $s=\frac{z-1}{T_e}$. L'équation de récurrence en découlant implantée dans le microcontrolleur est $out_0=a \cdot in_0 + b \cdot in_1 + c \cdot out_1$. 
 $in_1$ et $out_1$ sont le vieillissement des valeurs $in_0$ et $out_0$.
 
 \begin{wrapfigure}{r}{7cm}
@@ -304,12 +306,12 @@ Les valeurs des paramètres sont :
 La fréquence d'échantillonnage $T_e$ a été choisie par rapport à celle utilisée en analogique. La fonction de transfert correspondante est la suivante et donne le lieu d'Evans ci-contre.
 \[Co_{AvPh}(z)=\dfrac{10 z - 9.776}{z -0.7756}\]
 
-Lors de tests, les coefficients présentés ne permettent pas l'asservissement du mobile en position. Plusieurs causes sont possibles, la précision des calculs ( virgule fixe, virgule flottante), gain inadéquat, saturations en sortie.
+Lors des tests, les coefficients présentés ne permettent pas l'asservissement du mobile en position. Plusieurs causes sont possibles : la précision des calculs (virgule fixe, virgule flottante), le gain inadéquat ou encore des saturations en sortie.
 
-L'asservissement en position a été obtenue en utilisant et adaptant les valeurs présentés dans le rapport d'automatique. Cependant ces valeurs correspondent à une fréquence d'échantillonage de 1.7ms avec une approximation différente, le lieu d'Evans obtenue n'est pas celui recherché.
+L'asservissement en position a été obtenu en utilisant et adaptant les valeurs présentées dans le rapport d'automatique. Cependant ces valeurs correspondent à une fréquence d'échantillonage de 1.7ms avec une approximation différente, le lieu d'Evans obtenu n'est pas celui recherché.
 \[  Co_{AvPh_{Rapport Auto Modifie}}(z) = \dfrac {8.272z - 7.915} {z - 0.9} \]
 
-La valeur $c=0.9$ a été modifiée par rapport au correcteur présenté dans le rapport d'automatique. Ce changement a pour effet de déplacer le pôle de l'avance de phase. Il est alors remarqué que le gain théorique nécessaire pour la stabilité est de 5 contre 18.5 pour le correcteur précédent. Cependant la zone de stabilité théorique est très faible. Les oscillations observées lors des simulations confirment le résultat.
+La valeur $c=0.9$ a été modifiée par rapport au correcteur présenté dans le rapport d'automatique. Ce changement a pour effet de déplacer le pôle de l'avance de phase. (INCORRECT) Il est alors remarqué que le gain théorique nécessaire pour la stabilité est de 5 contre 18.5 pour le correcteur précédent. Cependant la zone de stabilité théorique est très faible. Les oscillations observées lors des simulations confirment le résultat.
 
 \begin{figure}[h!]
 	\centering
@@ -395,7 +397,7 @@ Il existe des correspondances floues entre les gains expérimentaux et ceux thé
  
  - Seconde fonctionnalité : tant que l'on est en analogique, on acquiert les mesures via la liaison série. Il est possible d'exporter ces mesures au format CSV afin de générer des courbes pour y suivre l'évolution de la position du mobile.
  
-  - La dernière est d'ordre artistique : lorsque le mobile vient se coller sur la bobine, on joue un air de musique connu \footnote{http://www.youtube.com/watch?v=Kh2AWswAMvw} est faisant varier la fréquence de la PWM dans la bobine avec un rapport cyclique de 50% (pour se rapporcher d'une sinusoïde). 
+  - La dernière est d'ordre artistique : lorsque le mobile vient se coller sur la bobine, on joue un air de musique connu \footnote{http://www.youtube.com/watch?v=Kh2AWswAMvw} est faisant varier la fréquence de la PWM dans la bobine avec un rapport cyclique de 50\% (pour se rapprocher d'une sinusoïde). 
   
 \begin{figure}[h!]
 	\centering
