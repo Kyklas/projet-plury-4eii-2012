@@ -287,7 +287,8 @@ Cette nouvelle solution est facile à implémenter et plus flexible. Les calculs
 
 \[Co_{AvPh}(z)=\dfrac{a \cdot z + b}{z + c}=\dfrac{\dfrac{z}{a_d}+\dfrac{T_e-\tau_d}{a_d \cdot \tau_d} }{z+\dfrac{T_e-a_d \cdot \tau_d}{a_d \cdot \tau_d}}\] 
 
-L'équation en $Z$ est obtenue avec une approximation des rectangle arrière soit $s=\frac{z-1}{T_e}$. L'équation récurrente en découlant implantée dans le microcontrolleur est $out_0=a \cdot in_0 + b \cdot in_1 + c \cdot out_1$. $in_1$ et $out_1$ sont le vieillissement des valeurs $in_0$ et $out_0$.
+L'équation en $Z$ est obtenue avec une approximation des rectangles arrière, soit $s=\frac{z-1}{T_e}$. L'équation récurrente en découlant implantée dans le microcontrolleur est $out_0=a \cdot in_0 + b \cdot in_1 + c \cdot out_1$. 
+$in_1$ et $out_1$ sont le vieillissement des valeurs $in_0$ et $out_0$.
 
 \begin{wrapfigure}{r}{7cm}
 
@@ -305,14 +306,14 @@ La fréquence d'échantillonnage $T_e$ a été choisie par rapport à celle util
 
 Lors de tests, les coefficients présentés ne permettent pas l'asservissement du mobile en position. Plusieurs causes sont possibles, la précision des calculs ( virgule fixe, virgule flottante), gain inadéquat, saturations en sortie.
 
-L'asservissement en position a été obtenue en utilisant et adaptant les valeurs présentés dans le rapport d'automatique. Cependant ces valeurs correspondent à une fréquence d'échantillonage de 1.7ms et avec une approximation différente, le lieu d'Evans obtenue n'est pas celui recherché.
+L'asservissement en position a été obtenue en utilisant et adaptant les valeurs présentés dans le rapport d'automatique. Cependant ces valeurs correspondent à une fréquence d'échantillonage de 1.7ms avec une approximation différente, le lieu d'Evans obtenue n'est pas celui recherché.
 \[  Co_{AvPh_{Rapport Auto Modifie}}(z) = \dfrac {8.272z - 7.915} {z - 0.9} \]
 
 La valeur $c=0.9$ a été modifiée par rapport au correcteur présenté dans le rapport d'automatique. Ce changement a pour effet de déplacer le pôle de l'avance de phase. Il est alors remarqué que le gain théorique nécessaire pour la stabilité est de 5 contre 18.5 pour le correcteur précédent. Cependant la zone de stabilité théorique est très faible. Les oscillations observées lors des simulations confirment le résultat.
 
 \begin{figure}[h!]
 	\centering
-	\includegraphics[width = 15cm,trim=0 1.4cm 0 0.7cm ,clip=true]
+	\includegraphics[width = 13cm,trim=0 1.4cm 0 0.7cm ,clip=true]
 					{SolutionNumerique/SystemeCorrigeSolex.pdf}
 	\label{CorrExpe}	
 	\caption{Correction Expérimental}
@@ -331,7 +332,7 @@ Il est possible d'ajuster la correction théorique pour obtenir un gain équival
 
 L'amortissement du correcteur est plus important que précédemment. Les oscillations en lévitation sont moins importantes.
 
-Le modèle utilisé pour l'élaboration des calculs théoriques est à relativiser, il est possible que la modélisation soit décalée avec notre système, imperfection de la bobine, des capteurs, ...
+Le modèle utilisé pour l'élaboration des calculs théoriques est à relativiser, il est possible que la modélisation soit décalée par rapport notre système, imperfection de la bobine, des capteurs, ...
 
 %\vspace{+5cm}
 %
@@ -415,7 +416,7 @@ En terme de résultats, nous sommes parvenu à faire léviter le mobile aussi bi
 
 Plusieurs améliorations peuvent encore être envisagées pour perfectionner notre solution :
 
-- Le contrôle de la consigne par le biais de l'interface graphique : nous avons envisagé d'implémenter cette fonctionnalité peu avant la dernière séance. Cependant, à cause de notre manière de gérer la consigne en analogique, il faudrait effectuer des modifications Hardware pour parvenir à gérer la consigne numériquement. Nous n'avons pas voulu risquer de compromettre le fonctionnement de notre solution en effectuant de telles modifications. 
+- Le contrôle de la consigne par le biais de l'interface graphique : nous avons envisagé d'implémenter cette fonctionnalité peu avant la dernière séance. Cependant, à cause de la manière dont la consigne analogique est généré, il est nécesaire d'effectuer des modifications Hardware pour parvenir à gérer la consigne numériquement. Nous n'avons pas voulu risquer de compromettre le fonctionnement de notre solution en effectuant de telles modifications.
 
 - L'affichage de courbes : avec davantage de temps, nous aurions pu afficher des courbes de position du mobile ou de valeur de PWM (reflétant la consommation) sur l'interface graphique
 
