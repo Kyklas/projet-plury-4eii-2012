@@ -228,6 +228,7 @@ Les différentes trames disponibles sont les suivantes :
 Le présent protocole a été programmé dans la routine d'interruption de réception des données séries du micro-contrôleur ainsi que dans l'application interface. Il rend possible des liaisons bidirectionnelles où le micro-contrôleur comme l'application interface sont capables d'envoyer des trames de contrôle. En définitive, seul le sens application interface vers micro-contrôleur a été implémenté, l'autre sens ne présentant que peu d'intérêt.
 
 \section{Interface}
+\subsection{Fonctionnement}
 Afin de faciliter la phase de débuggage et pour rêgler pratiquement les paramètres du correcteur numérique, nous avons développé une petite application interface en C\char35. Le programme consiste en une simple fenêtre présentant une section de connexion, une section de configuration et un espace de texte pour afficher les messages de logs.
 
 \begin{figure}[h!]
@@ -239,6 +240,17 @@ Afin de faciliter la phase de débuggage et pour rêgler pratiquement les param�
 Le panneau de connexion requiert de l'utilisateur le choix du port série et la vitesse de transfert. Une fois la connexion établie, les autres sections grisées deviennent accessibles. 
 
 La zone de messages logs liste chronologiquement les évènements de connexion et les messages textes envoyés par la maquette. Elle possède une fonctionnalité d'exportation permettant l'archivage des données dans un fichier texte.
+
+Dès que la connexion entre le PC et la carte est établie, L'interface graphique demande le mode de correction en cours :  \textbf{analogique} ou \textbf{numérique}, on peut ensuite le modifier via les \textit{radiobuttons}. 
+Par défaut, lorsque la carte démarre, c'est la correction analogique qui est mise en place. Pour passer en correction numérique, il faut donc connecter avec un PC.
+
+Lorsque la correction numérique est demandé, on lit dans un premier temps tout les paramètres de corrections stockés dans le microcontrôleur, on peut alors modifier différents paramètre : \textit{$K_d$}, \textit{$T_d$}, \textit{$T_e$}, \textit{$\alpha$}, il faut ensuite appliquer les modifications. A ce moment, l'équation de récurrence est calculé et envoyé au microcontrôleur. Une fois que ces différents fonctionnalités ont été mise en place, nous nous sommes amusé à réaliser quelques "Gimmicks" décrits à la fin du rapports.
+
+\subsection{Technologie utilisé}
+Pour réaliser cette interface, nous avons utilisé Visual Studio 2010. C'est une application "Windows Forms" réalisé avec les différents objets du Microsoft .NET Framework 4. Visual Studio permet de réaliser des interface graphique simple très rapidement, c'est pourquoi nous avons décider d'utiliser ce dernier. 
+Pour la communication série, nous utilisons l'objet "SerialPort" du Framework .NET, cette objet permet un accès rapide et sans trop de contraintes au port série.
+
+Pour utiliser l'interface graphique, il faut donc installer le Framework .NET 4, qui est par défaut installer avec Windows 7.
 
 \section{Changement de Puissance}
 
