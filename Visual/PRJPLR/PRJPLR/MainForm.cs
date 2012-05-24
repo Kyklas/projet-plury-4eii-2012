@@ -155,12 +155,10 @@ namespace PRJPLR
         private void Btn_ExportMesure_Click(object sender, EventArgs e)
         {
             StreamWriter logsTxt = new StreamWriter("Mesures.csv", false);
-            int i = 0;
-            logsTxt.WriteLine("Temps;Mesure;");
+            logsTxt.WriteLine("Mesure;");
             foreach (short m in Mesures)
             {
-                i++;
-                logsTxt.WriteLine(i.ToString() + ";" + m.ToString() + ";");
+                logsTxt.WriteLine(m.ToString() + ";");
             }
             logsTxt.Close();
         }
